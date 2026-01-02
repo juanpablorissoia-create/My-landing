@@ -148,7 +148,7 @@
         /* ===== BOTÓN WHATSAPP PRINCIPAL ===== */
         .cta-container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0 auto 80px;
             text-align: center;
         }
         .btn-whatsapp {
@@ -181,6 +181,79 @@
             color: var(--text-secondary);
         }
 
+        /* ===== FORMULARIO DE CONSULTA (NUEVO) ===== */
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+        .form-title {
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: var(--text-primary);
+        }
+        .form-question {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: left;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .form-textarea {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: var(--secondary-dark);
+            color: var(--text-primary);
+            font-size: 16px;
+            resize: vertical;
+            min-height: 140px;
+            margin-bottom: 24px;
+        }
+        .form-textarea::placeholder {
+            color: var(--text-secondary);
+        }
+        .form-small-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: left;
+            margin-bottom: 12px;
+        }
+        .form-email {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: var(--secondary-dark);
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+        .form-email::placeholder {
+            color: var(--text-secondary);
+        }
+        .btn-form-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 48px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-cyber) 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+        }
+        .btn-form-submit:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(139, 92, 246, 0.5);
+        }
+
         /* ===== BOTÓN WHATSAPP FLOTANTE ===== */
         .btn-whatsapp-floating {
             position: fixed;
@@ -207,15 +280,9 @@
             height: 40px;
         }
         @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
         /* ===== FOOTER ===== */
@@ -255,33 +322,15 @@
         }
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            main {
-                padding: 60px 0 40px;
-            }
-            .hero-title {
-                margin-bottom: 32px;
-            }
-            .btn-whatsapp {
-                padding: 18px 32px;
-                font-size: 16px;
-            }
-            .section-title {
-                margin-bottom: 12px;
-            }
-            .section-subtitle {
-                margin-bottom: 40px;
-                font-size: 18px;
-            }
-            .btn-whatsapp-floating {
-                width: 56px;
-                height: 56px;
-                bottom: 20px;
-                right: 20px;
-            }
-            .btn-whatsapp-floating img {
-                width: 36px;
-                height: 36px;
-            }
+            main { padding: 60px 0 40px; }
+            .hero-title { margin-bottom: 32px; }
+            .btn-whatsapp { padding: 18px 32px; font-size: 16px; }
+            .section-title { margin-bottom: 12px; }
+            .section-subtitle { margin-bottom: 40px; font-size: 18px; }
+            .cta-container { margin-bottom: 60px; }
+            .btn-whatsapp-floating { width: 56px; height: 56px; bottom: 20px; right: 20px; }
+            .btn-whatsapp-floating img { width: 36px; height: 36px; }
+            .form-container { padding: 0 16px; }
         }
     </style>
 </head>
@@ -314,6 +363,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="cta-container">
                     <a href="https://wa.me/543517578864?text=Hola!%20Vi%20el%20video%20y%20quiero%20saber%20m%C3%A1s%20sobre%20el%20programa%20de%20IA%20%F0%9F%A4%96"
                        class="btn-whatsapp"
@@ -323,9 +373,30 @@
                     </a>
                     <span class="btn-secondary-text">Resuelve tus dudas y agenda tu llamada estratégica gratuita</span>
                 </div>
+
+                <!-- FORMULARIO DE CONSULTA (NUEVO) -->
+                <div class="form-container">
+                    <h3 class="form-title">¿Tienes alguna duda o consulta?</h3>
+                    <form action="https://formsubmit.co/TU_EMAIL_AQUI" method="POST">
+                        <!-- Reemplaza TU_EMAIL_AQUI por tu correo real (ej: tuemail@gmail.com) -->
+                        <input type="hidden" name="_subject" value="Nueva consulta desde la landing page">
+                        <input type="hidden" name="_next" value="https://tu-dominio.com/gracias.html"> <!-- Opcional: página de gracias -->
+
+                        <p class="form-question">¿Cuál es el problema que más te aqueja en tu negocio hoy?</p>
+                        <textarea class="form-textarea" name="problema" placeholder="Describe aquí tu situación o duda..." required></textarea>
+
+                        <p class="form-small-text">Para responder tu duda necesitamos que rellenes el espacio de abajo con tu correo electrónico</p>
+                        <input type="email" class="form-email" name="email" placeholder="tuemail@ejemplo.com" required>
+
+                        <button type="submit" class="btn-form-submit">
+                            Enviar consulta
+                        </button>
+                    </form>
+                </div>
             </section>
         </div>
     </main>
+
     <!-- FOOTER -->
     <footer>
         <div class="container">
