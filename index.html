@@ -1,519 +1,524 @@
-
-import React, { useState, useEffect } from 'react';
-import { Brain, CheckCircle, ArrowRight, ArrowLeft, Calendar, Mail } from 'lucide-react';
-
-const SistemaCerebro = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [showResults, setShowResults] = useState(false);
-  const [formData, setFormData] = useState({
-    nombre: '',
-    email: '',
-    dolorPrincipal: '',
-    horasPerdidas: '',
-    objetivo90Dias: ''
-  });
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // URLs de integración - Reemplazar con las URLs reales
-  const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
-  const CALENDAR_URL = 'https://calendar.app.google/YOUR_CALENDAR_LINK';
-
-  const questions = [
-    {
-      id: 'nombre',
-      text: '¿Cómo te llamas?',
-      type: 'text',
-      placeholder: 'Tu nombre completo'
-    },
-    {
-      id: 'email',
-      text: '¿Cuál es tu email profesional?',
-      type: 'email',
-      placeholder: 'tu@email.com'
-    },
-    {
-      id: 'dolorPrincipal',
-      text: '¿Qué te duele más en este momento?',
-      type: 'choice',
-      options: [
-        { value: 'leads', label: 'Pérdida de leads', icon: '📞', desc: 'Mensajes que no contesto, oportunidades que se escapan', points: 30 },
-        { value: 'contenido', label: 'Contenido inconsistente', icon: '✍️', desc: 'Ideas que no publico, presencia irregular', points: 20 },
-        { value: 'tiempo', label: 'Tiempo perdido', icon: '⏰', desc: 'Buscando archivos, organizando caos', points: 25 },
-        { value: 'todo', label: 'Todo junto', icon: '🔥', desc: 'Caos general en mi operación', points: 40 }
-      ]
-    },
-    {
-      id: 'horasPerdidas',
-      text: '¿Cuántas horas semanales pierdes en organización?',
-      type: 'choice',
-      options: [
-        { value: '5', label: 'Menos de 5h', icon: '😐', desc: 'Molesto pero manejable', points: 10 },
-        { value: '5-10', label: '5-10h', icon: '😟', desc: 'Afecta mi productividad', points: 25 },
-        { value: '10-15', label: '10-15h', icon: '😩', desc: 'Limita mi crecimiento', points: 40 },
-        { value: '15+', label: 'Más de 15h', icon: '🚨', desc: 'Urgente, necesito solución ya', points: 50 }
-      ]
-    },
-    {
-      id: 'objetivo90Dias',
-      text: '¿Cuál es tu objetivo principal para los próximos 90 días?',
-      type: 'choice',
-      options: [
-        { value: 'sistematizar', label: 'Sistematizar', icon: '⚙️', desc: 'Trabajar menos con más resultados', points: 20 },
-        { value: 'crecer', label: 'Crecer', icon: '📈', desc: 'Aumentar clientes e ingresos', points: 25 },
-        { value: 'lanzar', label: 'Lanzar', icon: '🚀', desc: 'Producto o programa nuevo', points: 30 },
-        { value: 'sobrevivir', label: 'Sobrevivir', icon: '🆘', desc: 'Solo orden para no volverme loco', points: 35 }
-      ]
-    }
-  ];
-
-  // Calcular puntuación total
-  const calculateScore = () => {
-    let total = 0;
-    questions.forEach(q => {
-      if (q.type === 'choice' && formData[q.id]) {
-        const option = q.options.find(opt => opt.value === formData[q.id]);
-        if (option) total += option.points;
-      }
-    });
-    return total;
-  };
-
-  // Obtener resultado personalizado basado en puntuación
-  const getResult = () => {
-    const score = calculateScore();
-    if (score <= 59) {
-      return {
-        emoji: '🧠',
-        title: '¡Buen control operativo!',
-        description: `Hola ${formData.nombre}, tienes una base sólida pero hay oportunidades claras de optimización. Con algunos ajustes estratégicos, podrías recuperar entre 5-8 horas semanales adicionales.`,
-        urgency: 40,
-        recommendations: [
-          'Automatizar tareas repetitivas que aún haces manualmente',
-          'Implementar plantillas para acelerar tu creación de contenido',
-          'Centralizar información dispersa en múltiples herramientas'
-        ]
-      };
-    } else if (score <= 99) {
-      return {
-        emoji: '⚠️',
-        title: '¡Oportunidad de mejora significativa!',
-        description: `${formData.nombre}, tu operación tiene áreas críticas que están limitando tu crecimiento. El caos que experimentas te está costando entre 10-15 horas semanales que podrías invertir en escalar tu negocio.`,
-        urgency: 70,
-        recommendations: [
-          'Diseñar sistema de captura y seguimiento de leads automático',
-          'Crear flujos de trabajo estandarizados para tus procesos clave',
-          'Implementar herramientas de gestión centralizada sin código',
-          'Establecer rutinas diarias que prevengan el caos recurrente'
-        ]
-      };
-    } else {
-      return {
-        emoji: '🚨',
-        title: '¡Intervención prioritaria necesaria!',
-        description: `${formData.nombre}, tu situación requiere atención inmediata. El nivel de desorganización actual está afectando seriamente tu capacidad de generar ingresos y crecer. Estás perdiendo más de 15 horas semanales en caos operativo.`,
-        urgency: 95,
-        recommendations: [
-          'URGENTE: Auditoría completa de tu operación actual',
-          'Implementación inmediata de sistema CRM para recuperar leads perdidos',
-          'Automatización de respuestas y seguimientos críticos',
-          'Creación de tu "cerebro digital" centralizado en 7 días',
-          'Protocolo de emergencia para detener la sangría de oportunidades'
-        ]
-      };
-    }
-  };
-
-  // Validar campo actual
-  const validateCurrentField = () => {
-    const question = questions[currentQuestion];
-    const value = formData[question.id];
-    const newErrors = {};
-
-    if (question.type === 'text' && (!value || value.trim() === '')) {
-      newErrors[question.id] = 'Este campo es requerido';
-    } else if (question.type === 'email') {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!value || !emailRegex.test(value)) {
-        newErrors[question.id] = 'Por favor ingresa un email válido';
-      }
-    } else if (question.type === 'choice' && !value) {
-      newErrors[question.id] = 'Por favor selecciona una opción';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Navegar a siguiente pregunta
-  const handleNext = () => {
-    if (validateCurrentField()) {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-      } else {
-        submitToGoogleForms();
-      }
-    }
-  };
-
-  // Navegar a pregunta anterior
-  const handlePrevious = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-      setErrors({});
-    }
-  };
-
-  // Enviar datos a Google Forms
-  const submitToGoogleForms = async () => {
-    setIsSubmitting(true);
-    
-    // Aquí se enviarían los datos a Google Forms
-    // Por ahora simulamos el envío
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setShowResults(true);
-    }, 1000);
-
-    // Código real para Google Forms (descomentar y configurar):
-    /*
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('entry.XXXXXX', formData.nombre);
-      formDataToSend.append('entry.YYYYYY', formData.email);
-      formDataToSend.append('entry.ZZZZZZ', formData.dolorPrincipal);
-      formDataToSend.append('entry.AAAAAA', formData.horasPerdidas);
-      formDataToSend.append('entry.BBBBBB', formData.objetivo90Dias);
-      
-      await fetch(GOOGLE_FORM_URL, {
-        method: 'POST',
-        body: formDataToSend,
-        mode: 'no-cors'
-      });
-      
-      setIsSubmitting(false);
-      setShowResults(true);
-    } catch (error) {
-      console.error('Error al enviar formulario:', error);
-      setIsSubmitting(false);
-      setShowResults(true);
-    }
-    */
-  };
-
-  // Scroll suave al inicio al cambiar de pregunta
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentQuestion, showResults]);
-
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
-  const currentQ = questions[currentQuestion];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      {/* Header fijo */}
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Brain className="w-8 h-8 text-indigo-600" />
-            <span className="text-xl font-bold text-gray-900">SistemaCerebro</span>
-          </div>
-          {!showResults && (
-            <button
-              onClick={() => setCurrentQuestion(0)}
-              className="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
-            >
-              Diagnóstico Gratis
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SistemaCerebro - Diagnóstico Gratuito</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce {
+            animation: bounce 1s infinite;
+        }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header Fijo -->
+    <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+                <span class="text-xl font-bold text-gray-900">SistemaCerebro</span>
+            </div>
+            <button onclick="resetDiagnostico()" class="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+                Diagnóstico Gratis
             </button>
-          )}
         </div>
-      </header>
+    </header>
 
-      {/* Hero Section */}
-      {currentQuestion === 0 && !showResults && (
-        <section className="pt-32 pb-20 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Tu caos digital tiene solución en{' '}
-              <span className="text-indigo-600">7 días</span>
-            </h1>
-            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-              Descubre en 5 preguntas tu plan personalizado para recuperar 10-15 horas semanales
-            </p>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-3xl mx-auto">
-              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div className="text-2xl font-bold text-indigo-600 mb-1">10-15h</div>
-                <div className="text-sm text-gray-600">recuperadas/semana</div>
-              </div>
-              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div className="text-2xl font-bold text-indigo-600 mb-1">+40%</div>
-                <div className="text-sm text-gray-600">conversión leads</div>
-              </div>
-              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div className="text-2xl font-bold text-indigo-600 mb-1">7 días</div>
-                <div className="text-sm text-gray-600">implementación</div>
-              </div>
-              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                <div className="text-2xl font-bold text-indigo-600 mb-1">100%</div>
-                <div className="text-sm text-gray-600">sin código</div>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mb-8">
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              <span>Sin compromiso • 5 minutos • Resultados inmediatos</span>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Sección de Diagnóstico */}
-      {!showResults ? (
-        <section className="pb-20 px-4">
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-              {/* Encabezado del cuestionario */}
-              <div className="mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-3">
-                  Diagnóstico de Productividad Digital
-                </h2>
-                <p className="text-gray-600 mb-6">
-                  Responde 5 preguntas cuidadosamente diseñadas para identificar exactamente dónde estás perdiendo tiempo y oportunidades.
+    <!-- Contenido Principal -->
+    <div id="app-container">
+        <!-- Hero Section -->
+        <section id="hero-section" class="pt-32 pb-20 px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                    Tu caos digital tiene solución en <span class="text-indigo-600">7 días</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+                    Descubre en 5 preguntas tu plan personalizado para recuperar 10-15 horas semanales
                 </p>
                 
-                {/* Barra de progreso */}
-                <div className="relative">
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-indigo-600 to-cyan-500 transition-all duration-500 ease-out"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                  <div className="text-sm text-gray-600 mt-2 text-right">
-                    Pregunta {currentQuestion + 1} de {questions.length} • {Math.round(progress)}% completado
-                  </div>
-                </div>
-              </div>
-
-              {/* Pregunta actual */}
-              <div className="mb-8">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-                  {currentQ.text}
-                </h3>
-
-                {/* Input de texto */}
-                {currentQ.type === 'text' && (
-                  <input
-                    type="text"
-                    value={formData[currentQ.id]}
-                    onChange={(e) => setFormData({ ...formData, [currentQ.id]: e.target.value })}
-                    placeholder={currentQ.placeholder}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none transition-colors text-lg"
-                  />
-                )}
-
-                {/* Input de email */}
-                {currentQ.type === 'email' && (
-                  <input
-                    type="email"
-                    value={formData[currentQ.id]}
-                    onChange={(e) => setFormData({ ...formData, [currentQ.id]: e.target.value })}
-                    placeholder={currentQ.placeholder}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none transition-colors text-lg"
-                  />
-                )}
-
-                {/* Opciones de selección */}
-                {currentQ.type === 'choice' && (
-                  <div className="space-y-3">
-                    {currentQ.options.map((option) => (
-                      <button
-                        key={option.value}
-                        onClick={() => setFormData({ ...formData, [currentQ.id]: option.value })}
-                        className={`w-full text-left p-5 rounded-xl border-2 transition-all hover:shadow-md ${
-                          formData[currentQ.id] === option.value
-                            ? 'border-indigo-500 bg-indigo-50'
-                            : 'border-gray-200 hover:border-gray-300'
-                        }`}
-                      >
-                        <div className="flex items-start gap-4">
-                          <span className="text-3xl">{option.icon}</span>
-                          <div className="flex-1">
-                            <div className="font-semibold text-gray-900 mb-1">{option.label}</div>
-                            <div className="text-sm text-gray-600">{option.desc}</div>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                {/* Mensaje de error */}
-                {errors[currentQ.id] && (
-                  <div className="mt-3 text-red-600 text-sm flex items-center gap-2">
-                    <span>⚠️</span>
-                    <span>{errors[currentQ.id]}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Botones de navegación */}
-              <div className="flex gap-3">
-                {currentQuestion > 0 && (
-                  <button
-                    onClick={handlePrevious}
-                    className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <ArrowLeft className="w-5 h-5" />
-                    Anterior
-                  </button>
-                )}
-                <button
-                  onClick={handleNext}
-                  disabled={isSubmitting}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    'Procesando...'
-                  ) : currentQuestion === questions.length - 1 ? (
-                    <>
-                      Ver mi diagnóstico
-                      <CheckCircle className="w-5 h-5" />
-                    </>
-                  ) : (
-                    <>
-                      Continuar
-                      <ArrowRight className="w-5 h-5" />
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      ) : (
-        /* Sección de Resultados */
-        <section className="pt-32 pb-20 px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-              {/* Emoji animado */}
-              <div className="text-center mb-8">
-                <div className="text-7xl mb-4 animate-bounce inline-block">
-                  {getResult().emoji}
-                </div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                  {getResult().title}
-                </h2>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  {getResult().description}
-                </p>
-              </div>
-
-              {/* Barra de urgencia */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">Nivel de urgencia</span>
-                  <span className="text-sm font-bold text-indigo-600">{getResult().urgency}%</span>
-                </div>
-                <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full transition-all duration-1000 ease-out ${
-                      getResult().urgency >= 80
-                        ? 'bg-red-500'
-                        : getResult().urgency >= 60
-                        ? 'bg-yellow-500'
-                        : 'bg-green-500'
-                    }`}
-                    style={{ width: `${getResult().urgency}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Plan de acción */}
-              <div className="mb-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Tu plan de acción personalizado:
-                </h3>
-                <div className="space-y-3">
-                  {getResult().recommendations.map((rec, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
-                      <CheckCircle className="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700">{rec}</span>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-3xl mx-auto">
+                    <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                        <div class="text-2xl font-bold text-indigo-600 mb-1">10-15h</div>
+                        <div class="text-sm text-gray-600">recuperadas/semana</div>
                     </div>
-                  ))}
+                    <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                        <div class="text-2xl font-bold text-indigo-600 mb-1">+40%</div>
+                        <div class="text-sm text-gray-600">conversión leads</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                        <div class="text-2xl font-bold text-indigo-600 mb-1">7 días</div>
+                        <div class="text-sm text-gray-600">implementación</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                        <div class="text-2xl font-bold text-indigo-600 mb-1">100%</div>
+                        <div class="text-sm text-gray-600">sin código</div>
+                    </div>
                 </div>
-              </div>
 
-              {/* CTA principal */}
-              <div className="bg-gradient-to-br from-indigo-50 to-cyan-50 rounded-xl p-6 mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  Siguiente paso: Diagnóstico detallado gratuito
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  En una sesión de 30 minutos analizaremos tu situación específica y diseñaremos tu sistema personalizado. Sin compromiso, sin costo.
-                </p>
-                <a
-                  href={CALENDAR_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl"
-                >
-                  <Calendar className="w-5 h-5" />
-                  Agendar mi sesión gratuita de 30 minutos
-                </a>
-              </div>
-
-              {/* Nota de seguimiento */}
-              <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <Mail className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                <div className="text-sm text-green-800">
-                  <strong>Datos guardados.</strong> Nos pondremos en contacto contigo en las próximas 24 horas con recursos adicionales personalizados para tu situación.
+                <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-8">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Sin compromiso • 5 minutos • Resultados inmediatos</span>
                 </div>
-              </div>
+
+                <button onclick="startDiagnostico()" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl text-lg">
+                    Iniciar diagnóstico gratis
+                </button>
             </div>
-          </div>
         </section>
-      )}
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <Brain className="w-6 h-6 text-indigo-400" />
-              <span className="font-semibold">SistemaCerebro</span>
+        <!-- Sección de Diagnóstico -->
+        <section id="diagnostico-section" class="hidden pb-20 px-4 pt-32">
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                    <!-- Encabezado -->
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-3">Diagnóstico de Productividad Digital</h2>
+                        <p class="text-gray-600 mb-6">
+                            Responde 5 preguntas cuidadosamente diseñadas para identificar exactamente dónde estás perdiendo tiempo y oportunidades.
+                        </p>
+                        
+                        <!-- Barra de progreso -->
+                        <div class="relative">
+                            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-600 to-cyan-500 transition-all duration-500" style="width: 20%"></div>
+                            </div>
+                            <div id="progress-text" class="text-sm text-gray-600 mt-2 text-right">
+                                Pregunta 1 de 5 • 20% completado
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta -->
+                    <div id="question-container" class="mb-8"></div>
+
+                    <!-- Error -->
+                    <div id="error-message" class="hidden mt-3 text-red-600 text-sm flex items-center gap-2 mb-4">
+                        <span>⚠️</span>
+                        <span id="error-text"></span>
+                    </div>
+
+                    <!-- Botones de navegación -->
+                    <div class="flex gap-3">
+                        <button id="prev-btn" onclick="previousQuestion()" class="hidden flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                            ← Anterior
+                        </button>
+                        <button id="next-btn" onclick="nextQuestion()" class="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl">
+                            Continuar →
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div className="flex gap-6 text-sm text-gray-400">
-              <button
-                onClick={() => {
-                  setCurrentQuestion(0);
-                  setShowResults(false);
-                  setFormData({
-                    nombre: '',
-                    email: '',
-                    dolorPrincipal: '',
-                    horasPerdidas: '',
-                    objetivo90Dias: ''
-                  });
-                  setErrors({});
-                }}
-                className="hover:text-white transition-colors"
-              >
-                Reiniciar diagnóstico
-              </button>
-              <a href="mailto:contacto@sistemacerebro.com" className="hover:text-white transition-colors">
-                Contacto
-              </a>
+        </section>
+
+        <!-- Sección de Resultados -->
+        <section id="results-section" class="hidden pt-32 pb-20 px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+                    <div class="text-center mb-8">
+                        <div id="result-emoji" class="text-7xl mb-4 animate-bounce inline-block">🧠</div>
+                        <h2 id="result-title" class="text-4xl font-bold text-gray-900 mb-4"></h2>
+                        <p id="result-description" class="text-lg text-gray-600 leading-relaxed"></p>
+                    </div>
+
+                    <!-- Barra de urgencia -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-medium text-gray-700">Nivel de urgencia</span>
+                            <span id="urgency-percent" class="text-sm font-bold text-indigo-600">0%</span>
+                        </div>
+                        <div class="h-4 bg-gray-200 rounded-full overflow-hidden">
+                            <div id="urgency-bar" class="h-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Plan de acción -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Tu plan de acción personalizado:</h3>
+                        <div id="recommendations-list" class="space-y-3"></div>
+                    </div>
+
+                    <!-- CTA principal -->
+                    <div class="bg-gradient-to-br from-indigo-50 to-cyan-50 rounded-xl p-6 mb-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">
+                            Siguiente paso: Diagnóstico detallado gratuito
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            En una sesión de 30 minutos analizaremos tu situación específica y diseñaremos tu sistema personalizado. Sin compromiso, sin costo.
+                        </p>
+                        <a href="https://calendar.app.google/RDVGp9yp9QYHf3J57" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl">
+                            📅 Agendar mi sesión gratuita de 30 minutos
+                        </a>
+                    </div>
+
+                    <!-- Nota -->
+                    <div class="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <span class="text-green-600 text-xl">✉️</span>
+                        <div class="text-sm text-green-800">
+                            <strong>Datos guardados.</strong> Nos pondremos en contacto contigo en las próximas 24 horas con recursos adicionales personalizados para tu situación.
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div className="text-center text-sm text-gray-500 mt-4">
-            © 2026 SistemaCerebro. Todos los derechos reservados.
-          </div>
-        </div>
-      </footer>
+        </section>
     </div>
-  );
-};
 
-export default SistemaCerebro;
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    <span class="font-semibold">SistemaCerebro</span>
+                </div>
+                <div class="flex gap-6 text-sm text-gray-400">
+                    <button onclick="resetDiagnostico()" class="hover:text-white transition-colors">
+                        Reiniciar diagnóstico
+                    </button>
+                    <a href="mailto:contacto@sistemacerebro.com" class="hover:text-white transition-colors">
+                        Contacto
+                    </a>
+                </div>
+            </div>
+            <div class="text-center text-sm text-gray-500 mt-4">
+                © 2026 SistemaCerebro. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Estado de la aplicación
+        let currentQuestion = 0;
+        let formData = {
+            nombre: '',
+            email: '',
+            dolorPrincipal: '',
+            horasPerdidas: '',
+            objetivo90Dias: ''
+        };
+
+        // Definición de preguntas
+        const questions = [
+            {
+                id: 'nombre',
+                text: '¿Cómo te llamas?',
+                type: 'text',
+                placeholder: 'Tu nombre completo'
+            },
+            {
+                id: 'email',
+                text: '¿Cuál es tu email profesional?',
+                type: 'email',
+                placeholder: 'tu@email.com'
+            },
+            {
+                id: 'dolorPrincipal',
+                text: '¿Qué te duele más en este momento?',
+                type: 'choice',
+                options: [
+                    { value: 'leads', label: 'Pérdida de leads', icon: '📞', desc: 'Mensajes que no contesto, oportunidades que se escapan', points: 30 },
+                    { value: 'contenido', label: 'Contenido inconsistente', icon: '✍️', desc: 'Ideas que no publico, presencia irregular', points: 20 },
+                    { value: 'tiempo', label: 'Tiempo perdido', icon: '⏰', desc: 'Buscando archivos, organizando caos', points: 25 },
+                    { value: 'todo', label: 'Todo junto', icon: '🔥', desc: 'Caos general en mi operación', points: 40 }
+                ]
+            },
+            {
+                id: 'horasPerdidas',
+                text: '¿Cuántas horas semanales pierdes en organización?',
+                type: 'choice',
+                options: [
+                    { value: '5', label: 'Menos de 5h', icon: '😐', desc: 'Molesto pero manejable', points: 10 },
+                    { value: '5-10', label: '5-10h', icon: '😟', desc: 'Afecta mi productividad', points: 25 },
+                    { value: '10-15', label: '10-15h', icon: '😩', desc: 'Limita mi crecimiento', points: 40 },
+                    { value: '15+', label: 'Más de 15h', icon: '🚨', desc: 'Urgente, necesito solución ya', points: 50 }
+                ]
+            },
+            {
+                id: 'objetivo90Dias',
+                text: '¿Cuál es tu objetivo principal para los próximos 90 días?',
+                type: 'choice',
+                options: [
+                    { value: 'sistematizar', label: 'Sistematizar', icon: '⚙️', desc: 'Trabajar menos con más resultados', points: 20 },
+                    { value: 'crecer', label: 'Crecer', icon: '📈', desc: 'Aumentar clientes e ingresos', points: 25 },
+                    { value: 'lanzar', label: 'Lanzar', icon: '🚀', desc: 'Producto o programa nuevo', points: 30 },
+                    { value: 'sobrevivir', label: 'Sobrevivir', icon: '🆘', desc: 'Solo orden para no volverme loco', points: 35 }
+                ]
+            }
+        ];
+
+        // Iniciar diagnóstico
+        function startDiagnostico() {
+            document.getElementById('hero-section').classList.add('hidden');
+            document.getElementById('diagnostico-section').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        // Resetear diagnóstico
+        function resetDiagnostico() {
+            currentQuestion = 0;
+            formData = { nombre: '', email: '', dolorPrincipal: '', horasPerdidas: '', objetivo90Dias: '' };
+            document.getElementById('hero-section').classList.remove('hidden');
+            document.getElementById('diagnostico-section').classList.add('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+            hideError();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Renderizar pregunta actual
+        function renderQuestion() {
+            const question = questions[currentQuestion];
+            const container = document.getElementById('question-container');
+            
+            let html = `<h3 class="text-2xl font-semibold text-gray-900 mb-6">${question.text}</h3>`;
+
+            if (question.type === 'text' || question.type === 'email') {
+                html += `
+                    <input 
+                        type="${question.type}" 
+                        id="input-${question.id}"
+                        value="${formData[question.id]}"
+                        placeholder="${question.placeholder}"
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none transition-colors text-lg"
+                        onchange="updateFormData('${question.id}', this.value)"
+                    />
+                `;
+            } else if (question.type === 'choice') {
+                html += '<div class="space-y-3">';
+                question.options.forEach(option => {
+                    const isSelected = formData[question.id] === option.value;
+                    html += `
+                        <button 
+                            onclick="selectOption('${question.id}', '${option.value}')"
+                            class="w-full text-left p-5 rounded-xl border-2 transition-all hover:shadow-md ${isSelected ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'}"
+                        >
+                            <div class="flex items-start gap-4">
+                                <span class="text-3xl">${option.icon}</span>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-gray-900 mb-1">${option.label}</div>
+                                    <div class="text-sm text-gray-600">${option.desc}</div>
+                                </div>
+                            </div>
+                        </button>
+                    `;
+                });
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+            updateProgress();
+            updateButtons();
+            hideError();
+        }
+
+        // Actualizar datos del formulario
+        function updateFormData(field, value) {
+            formData[field] = value;
+        }
+
+        // Seleccionar opción
+        function selectOption(field, value) {
+            formData[field] = value;
+            renderQuestion();
+        }
+
+        // Actualizar progreso
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = 
+                `Pregunta ${currentQuestion + 1} de ${questions.length} • ${Math.round(progress)}% completado`;
+        }
+
+        // Actualizar botones
+        function updateButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (currentQuestion > 0) {
+                prevBtn.classList.remove('hidden');
+            } else {
+                prevBtn.classList.add('hidden');
+            }
+
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.innerHTML = 'Ver mi diagnóstico ✓';
+            } else {
+                nextBtn.innerHTML = 'Continuar →';
+            }
+        }
+
+        // Validar campo actual
+        function validateCurrentField() {
+            const question = questions[currentQuestion];
+            const value = formData[question.id];
+
+            if (question.type === 'text' && (!value || value.trim() === '')) {
+                showError('Este campo es requerido');
+                return false;
+            }
+
+            if (question.type === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!value || !emailRegex.test(value)) {
+                    showError('Por favor ingresa un email válido');
+                    return false;
+                }
+            }
+
+            if (question.type === 'choice' && !value) {
+                showError('Por favor selecciona una opción');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Mostrar error
+        function showError(message) {
+            document.getElementById('error-message').classList.remove('hidden');
+            document.getElementById('error-text').textContent = message;
+        }
+
+        // Ocultar error
+        function hideError() {
+            document.getElementById('error-message').classList.add('hidden');
+        }
+
+        // Siguiente pregunta
+        function nextQuestion() {
+            if (!validateCurrentField()) return;
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                submitForm();
+            }
+        }
+
+        // Pregunta anterior
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Enviar formulario
+        function submitForm() {
+            // Aquí puedes agregar el código para enviar a Google Forms
+            // Por ahora solo mostramos los resultados
+            showResults();
+        }
+
+        // Calcular puntuación
+        function calculateScore() {
+            let total = 0;
+            questions.forEach(q => {
+                if (q.type === 'choice' && formData[q.id]) {
+                    const option = q.options.find(opt => opt.value === formData[q.id]);
+                    if (option) total += option.points;
+                }
+            });
+            return total;
+        }
+
+        // Obtener resultado
+        function getResult() {
+            const score = calculateScore();
+            if (score <= 59) {
+                return {
+                    emoji: '🧠',
+                    title: '¡Buen control operativo!',
+                    description: `Hola ${formData.nombre}, tienes una base sólida pero hay oportunidades claras de optimización. Con algunos ajustes estratégicos, podrías recuperar entre 5-8 horas semanales adicionales.`,
+                    urgency: 40,
+                    urgencyColor: 'bg-green-500',
+                    recommendations: [
+                        'Automatizar tareas repetitivas que aún haces manualmente',
+                        'Implementar plantillas para acelerar tu creación de contenido',
+                        'Centralizar información dispersa en múltiples herramientas'
+                    ]
+                };
+            } else if (score <= 99) {
+                return {
+                    emoji: '⚠️',
+                    title: '¡Oportunidad de mejora significativa!',
+                    description: `${formData.nombre}, tu operación tiene áreas críticas que están limitando tu crecimiento. El caos que experimentas te está costando entre 10-15 horas semanales que podrías invertir en escalar tu negocio.`,
+                    urgency: 70,
+                    urgencyColor: 'bg-yellow-500',
+                    recommendations: [
+                        'Diseñar sistema de captura y seguimiento de leads automático',
+                        'Crear flujos de trabajo estandarizados para tus procesos clave',
+                        'Implementar herramientas de gestión centralizada sin código',
+                        'Establecer rutinas diarias que prevengan el caos recurrente'
+                    ]
+                };
+            } else {
+                return {
+                    emoji: '🚨',
+                    title: '¡Intervención prioritaria necesaria!',
+                    description: `${formData.nombre}, tu situación requiere atención inmediata. El nivel de desorganización actual está afectando seriamente tu capacidad de generar ingresos y crecer. Estás perdiendo más de 15 horas semanales en caos operativo.`,
+                    urgency: 95,
+                    urgencyColor: 'bg-red-500',
+                    recommendations: [
+                        'URGENTE: Auditoría completa de tu operación actual',
+                        'Implementación inmediata de sistema CRM para recuperar leads perdidos',
+                        'Automatización de respuestas y seguimientos críticos',
+                        'Creación de tu "cerebro digital" centralizado en 7 días',
+                        'Protocolo de emergencia para detener la sangría de oportunidades'
+                    ]
+                };
+            }
+        }
+
+        // Mostrar resultados
+        function showResults() {
+            const result = getResult();
+            
+            document.getElementById('diagnostico-section').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+            
+            document.getElementById('result-emoji').textContent = result.emoji;
+            document.getElementById('result-title').textContent = result.title;
+            document.getElementById('result-description').textContent = result.description;
+            document.getElementById('urgency-percent').textContent = result.urgency + '%';
+            
+            const urgencyBar = document.getElementById('urgency-bar');
+            urgencyBar.className = `h-full transition-all duration-1000 ${result.urgencyColor}`;
+            setTimeout(() => {
+                urgencyBar.style.width = result.urgency + '%';
+            }, 100);
+            
+            const recList = document.getElementById('recommendations-list');
+            recList.innerHTML = result.recommendations.map(rec => `
+                <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
+                    <svg class="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-gray-700">${rec}</span>
+                </div>
+            `).join('');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
