@@ -1,33 +1,758 @@
-const HeroSection = () => {
-  return (
-    <section className="px-5 py-16 text-center max-w-3xl mx-auto">
-      <h1 className="text-3xl sm:text-4xl font-bold leading-tight">
-        Tu negocio no está roto.  
-        <br className="hidden sm:block" />
-        Está <span className="underline decoration-2">desordenado</span>.
-      </h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Cerebro | Diagnóstico Gratuito</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">🧠 SistemaCerebro</div>
+            <a href="#cuestionario" class="cta-header">Diagnóstico Gratis →</a>
+        </header>
 
-      <p className="mt-5 text-base sm:text-lg text-gray-600 leading-relaxed">
-        Si sentís que todo depende de vos, que vivís apagando incendios y que
-        cada día se te acumulan más tareas… no es falta de ganas.
-        <br className="hidden sm:block" />
-        Es falta de estructura.
-      </p>
+        <!-- Hero -->
+        <section class="hero">
+            <h1 class="hero-title">Tu caos digital tiene <span class="highlight">solución</span> en 7 días</h1>
+            <p class="hero-subtitle">Responde 5 preguntas y descubre tu plan personalizado para recuperar horas perdidas cada semana.</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">10-15h</span>
+                    <span class="stat-label">Recuperadas/semana</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">+40%</span>
+                    <span class="stat-label">Conversión leads</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">7 días</span>
+                    <span class="stat-label">Implementación</span>
+                </div>
+            </div>
+        </section>
 
-      <p className="mt-4 text-base sm:text-lg text-gray-600">
-        Nosotros ordenamos el caos para que vuelvas a tener control.
-      </p>
+        <!-- Cuestionario -->
+        <section class="questionnaire" id="cuestionario">
+            <div class="questionnaire-header">
+                <h2>Diagnóstico de Productividad Digital</h2>
+                <p>Responde 5 preguntas para recibir tu evaluación personalizada</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
 
-      <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-        <button className="w-full sm:w-auto px-6 py-4 rounded-xl bg-black text-white text-base font-medium">
-          Necesito ordenar esto ya
-        </button>
-        <button className="w-full sm:w-auto px-6 py-4 rounded-xl border text-base font-medium">
-          Ver cómo funciona
-        </button>
-      </div>
-    </section>
-  );
+            <!-- FORMULARIO ACTUALIZADO CON GOOGLE FORMS -->
+            <form id="diagnosisForm" 
+                  action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfrZJ6D9XYbEe7TeS7tDFRCsxCKrUvZ5eHwPWlurafa8y05Vg/formResponse"
+                  method="POST"
+                  target="hiddenFrame">
+                
+                <!-- Campos ocultos para Google Forms -->
+                <input type="hidden" name="fvv" value="1">
+                <input type="hidden" name="pageHistory" value="0">
+                
+                <!-- Pregunta 1: Nombre (entry.2075494202) -->
+                <div class="question active" id="q1">
+                    <h3>1. ¿Cómo te llamas? <span class="required">*</span></h3>
+                    <div class="contact-form">
+                        <div class="input-group">
+                            <input type="text" 
+                                   id="entry_2075494202" 
+                                   name="entry.2075494202" 
+                                   placeholder="Tu nombre completo" 
+                                   required
+                                   class="form-input"
+                                   oninput="saveToLocalStorage('name', this.value)">
+                        </div>
+                    </div>
+                    <button type="button" class="btn-next" onclick="validateQuestion(1, 'text')">Siguiente →</button>
+                </div>
+
+                <!-- Pregunta 2: Email (entry.1328353491) -->
+                <div class="question" id="q2">
+                    <h3>2. ¿Cuál es tu email profesional? <span class="required">*</span></h3>
+                    <div class="contact-form">
+                        <div class="input-group">
+                            <input type="email" 
+                                   id="entry_1328353491" 
+                                   name="entry.1328353491" 
+                                   placeholder="ejemplo@email.com" 
+                                   required
+                                   class="form-input"
+                                   oninput="saveToLocalStorage('email', this.value)">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn-back" onclick="prevQuestion(1)">← Anterior</button>
+                        <button type="button" class="btn-next" onclick="validateQuestion(2, 'email')">Siguiente →</button>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3: Dolor principal (entry.966237849) -->
+                <div class="question" id="q3">
+                    <h3>3. ¿Qué te duele más en este momento? <span class="required">*</span></h3>
+                    <div class="options">
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.966237849" 
+                                   value="Pérdida de leads" 
+                                   required
+                                   onclick="saveToLocalStorage('pain', 'Pérdida de leads')">
+                            <div class="option-content">
+                                <span class="option-emoji">📞</span>
+                                <span class="option-text">Pérdida de leads</span>
+                                <p class="option-desc">Mensajes que no contesto, oportunidades que se enfrían</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.966237849" 
+                                   value="Contenido inconsistente"
+                                   onclick="saveToLocalStorage('pain', 'Contenido inconsistente')">
+                            <div class="option-content">
+                                <span class="option-emoji">✍️</span>
+                                <span class="option-text">Contenido inconsistente</span>
+                                <p class="option-desc">Ideas que no convierto en posts/reels</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.966237849" 
+                                   value="Tiempo perdido"
+                                   onclick="saveToLocalStorage('pain', 'Tiempo perdido')">
+                            <div class="option-content">
+                                <span class="option-emoji">⏰</span>
+                                <span class="option-text">Tiempo perdido</span>
+                                <p class="option-desc">Buscando archivos, saltando entre apps</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.966237849" 
+                                   value="Todo junto"
+                                   onclick="saveToLocalStorage('pain', 'Todo junto')">
+                            <div class="option-content">
+                                <span class="option-emoji">🔥</span>
+                                <span class="option-text">Todo junto</span>
+                                <p class="option-desc">Siento que no avanzo por el caos general</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn-back" onclick="prevQuestion(2)">← Anterior</button>
+                        <button type="button" class="btn-next" onclick="validateQuestion(3, 'radio')">Siguiente →</button>
+                    </div>
+                </div>
+
+                <!-- Pregunta 4: Horas perdidas (entry.1755668548) -->
+                <div class="question" id="q4">
+                    <h3>4. ¿Cuántas horas semanales pierdes en organización? <span class="required">*</span></h3>
+                    <div class="options">
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.1755668548" 
+                                   value="Menos de 5h" 
+                                   required
+                                   onclick="saveToLocalStorage('hours', 'Menos de 5h')">
+                            <div class="option-content">
+                                <span class="option-emoji">😐</span>
+                                <span class="option-text">Menos de 5h</span>
+                                <p class="option-desc">Molesto pero manejable</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.1755668548" 
+                                   value="5-10h"
+                                   onclick="saveToLocalStorage('hours', '5-10h')">
+                            <div class="option-content">
+                                <span class="option-emoji">😟</span>
+                                <span class="option-text">5-10h</span>
+                                <p class="option-desc">Afecta mi productividad seriamente</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.1755668548" 
+                                   value="10-15h"
+                                   onclick="saveToLocalStorage('hours', '10-15h')">
+                            <div class="option-content">
+                                <span class="option-emoji">😩</span>
+                                <span class="option-text">10-15h</span>
+                                <p class="option-desc">Limita mi capacidad de crecimiento</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.1755668548" 
+                                   value="Más de 15h"
+                                   onclick="saveToLocalStorage('hours', 'Más de 15h')">
+                            <div class="option-content">
+                                <span class="option-emoji">🚨</span>
+                                <span class="option-text">Más de 15h</span>
+                                <p class="option-desc">Urgente, necesito solución ya</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn-back" onclick="prevQuestion(3)">← Anterior</button>
+                        <button type="button" class="btn-next" onclick="validateQuestion(4, 'radio')">Siguiente →</button>
+                    </div>
+                </div>
+
+                <!-- Pregunta 5: Objetivo (entry.1765053966) -->
+                <div class="question" id="q5">
+                    <h3>5. ¿Cuál es tu objetivo principal para los próximos 90 días? <span class="required">*</span></h3>
+                    <div class="options">
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.1765053966" 
+                                   value="Sistematizar" 
+                                   required
+                                   onclick="saveToLocalStorage('goal', 'Sistematizar')">
+                            <div class="option-content">
+                                <span class="option-emoji">⚙️</span>
+                                <span class="option-text">Sistematizar</span>
+                                <p class="option-desc">Trabajar menos horas con más resultados</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.1765053966" 
+                                   value="Crecer"
+                                   onclick="saveToLocalStorage('goal', 'Crecer')">
+                            <div class="option-content">
+                                <span class="option-emoji">📈</span>
+                                <span class="option-text">Crecer</span>
+                                <p class="option-desc">Aumentar clientes/ingresos significativamente</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.1765053966" 
+                                   value="Lanzar"
+                                   onclick="saveToLocalStorage('goal', 'Lanzar')">
+                            <div class="option-content">
+                                <span class="option-emoji">🚀</span>
+                                <span class="option-text">Lanzar</span>
+                                <p class="option-desc">Sacar un producto/programa nuevo al mercado</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" 
+                                   name="entry.1765053966" 
+                                   value="Sobrevivir"
+                                   onclick="saveToLocalStorage('goal', 'Sobrevivir')">
+                            <div class="option-content">
+                                <span class="option-emoji">🆘</span>
+                                <span class="option-text">Sobrevivir</span>
+                                <p class="option-desc">Solo quiero orden para no volverme loco/a</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn-back" onclick="prevQuestion(4)">← Anterior</button>
+                        <button type="button" class="btn-next" onclick="calculateScoreAndSubmit()">Ver mi diagnóstico →</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Resultado del cuestionario -->
+            <div class="result" id="result">
+                <div class="result-content">
+                    <div class="result-emoji" id="resultEmoji">🧠</div>
+                    <h2 id="resultTitle">Analizando tus respuestas...</h2>
+                    <p id="resultText" class="result-text"></p>
+                    
+                    <div class="score-display">
+                        <span class="score-label">Nivel de urgencia:</span>
+                        <div class="score-bar">
+                            <div class="score-fill" id="urgencyScore"></div>
+                        </div>
+                        <span class="score-value" id="scoreValue">0%</span>
+                    </div>
+                    
+                    <div class="recommendation" id="recommendation">
+                        <h4>Tu plan recomendado:</h4>
+                        <ul id="recommendationList"></ul>
+                    </div>
+                    
+                    <!-- BOTÓN ACTUALIZADO CON GOOGLE CALENDAR -->
+                    <a href="https://calendar.app.google/nouPtky3ovsPPMmf8" 
+                       class="btn-calendly" 
+                       target="_blank"
+                       id="calendarLink">
+                        🗓️ Agendar diagnóstico detallado (30 min gratis)
+                    </a>
+                    
+                    <p class="result-note">
+                        ✅ Datos enviados correctamente. Te contactaremos en 24 horas si no agendaste.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Iframe oculto para envío del formulario -->
+            <iframe name="hiddenFrame" style="display: none;"></iframe>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 Sistema Cerebro. Creado para liberar el potencial de creadores y coaches.</p>
+            <p class="footer-links">
+                <a href="#" onclick="resetQuestionnaire()">Reiniciar cuestionario</a> • 
+                <a href="mailto:hola@sistemacerebro.com">Contacto</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>// Configuración de Google Forms (TUS DATOS)
+const FORM_CONFIG = {
+    actionUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfrZJ6D9XYbEe7TeS7tDFRCsxCKrUvZ5eHwPWlurafa8y05Vg/formResponse",
+    fields: {
+        name: "entry.2075494202",
+        email: "entry.1328353491",
+        pain: "entry.966237849",
+        hours: "entry.1755668548",
+        goal: "entry.1765053966"
+    }
 };
 
-export default HeroSection;
+// Variables globales
+let currentQuestion = 1;
+let userScore = 0;
+const totalQuestions = 5;
+
+// Mapeo de puntuaciones (basado en tus preguntas)
+const SCORE_MAP = {
+    pain: {
+        "Pérdida de leads": 25,
+        "Contenido inconsistente": 20,
+        "Tiempo perdido": 30,
+        "Todo junto": 40
+    },
+    hours: {
+        "Menos de 5h": 10,
+        "5-10h": 25,
+        "10-15h": 35,
+        "Más de 15h": 50
+    },
+    goal: {
+        "Sistematizar": 20,
+        "Crecer": 25,
+        "Lanzar": 35,
+        "Sobrevivir": 40
+    }
+};
+
+// Resultados según puntuación
+const RESULT_TEMPLATES = {
+    low: {
+        emoji: "😌",
+        title: "¡Buen control operativo!",
+        text: "Tienes bases sólidas, pero hay optimizaciones que pueden liberarte más tiempo.",
+        recommendations: [
+            "Automatización básica de seguimiento de leads",
+            "Plantillas para contenido recurrente",
+            "Sistema de archivo centralizado"
+        ]
+    },
+    medium: {
+        emoji: "🎯",
+        title: "¡Oportunidad de mejora significativa!",
+        text: "El desorden está limitando tu crecimiento. Con ajustes estratégicos, podrías duplicar tu productividad.",
+        recommendations: [
+            "Sistema operativo completo en Notion",
+            "Flujos automatizados para leads",
+            "Calendario editorial integrado",
+            "Kit de IA para respuestas frecuentes"
+        ]
+    },
+    high: {
+        emoji: "🚨",
+        title: "¡Intervención prioritaria necesaria!",
+        text: "Estás perdiendo oportunidades valiosas cada semana. Necesitas un sistema inmediato para no seguir dejando dinero sobre la mesa.",
+        recommendations: [
+            "Implementación URGENTE de sistema central",
+            "Recuperación de leads perdidos (protocolo especial)",
+            "Entrenamiento intensivo de 5 días",
+            "Soporte prioritario semanal"
+        ]
+    }
+};
+
+// Local Storage para no perder datos
+function saveToLocalStorage(key, value) {
+    localStorage.setItem(`sistema_cerebro_${key}`, value);
+}
+
+function loadFromLocalStorage(key) {
+    return localStorage.getItem(`sistema_cerebro_${key}`);
+}
+
+// Navegación entre preguntas
+function nextQuestion(nextId) {
+    if (!validateCurrentQuestion()) {
+        showError("Por favor, completa la pregunta actual.");
+        return;
+    }
+    
+    document.getElementById(`q${currentQuestion}`).classList.remove('active');
+    document.getElementById(`q${nextId}`).classList.add('active');
+    updateProgressBar(nextId);
+    currentQuestion = nextId;
+}
+
+function prevQuestion(prevId) {
+    document.getElementById(`q${currentQuestion}`).classList.remove('active');
+    document.getElementById(`q${prevId}`).classList.add('active');
+    updateProgressBar(prevId);
+    currentQuestion = prevId;
+}
+
+// Validación por tipo de pregunta
+function validateQuestion(qNumber, type) {
+    let isValid = false;
+    let errorMessage = "";
+    
+    switch(type) {
+        case 'text':
+            const textInput = document.querySelector(`#q${qNumber} .form-input`);
+            isValid = textInput.value.trim().length >= 2;
+            errorMessage = "Por favor, ingresa tu nombre completo (mínimo 2 caracteres).";
+            break;
+            
+        case 'email':
+            const emailInput = document.querySelector(`#q${qNumber} .form-input`);
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            isValid = emailRegex.test(emailInput.value.trim());
+            errorMessage = "Por favor, ingresa un email válido.";
+            break;
+            
+        case 'radio':
+            const radioSelected = document.querySelector(`#q${qNumber} input[type="radio"]:checked`);
+            isValid = radioSelected !== null;
+            errorMessage = "Por favor, selecciona una opción.";
+            break;
+    }
+    
+    if (isValid) {
+        nextQuestion(qNumber + 1);
+    } else {
+        showError(errorMessage);
+    }
+}
+
+function validateCurrentQuestion() {
+    const questionEl = document.getElementById(`q${currentQuestion}`);
+    
+    if (currentQuestion <= 2) {
+        // Preguntas 1-2: Campos de texto/email
+        const input = questionEl.querySelector('.form-input');
+        if (!input || !input.value.trim()) return false;
+        
+        if (currentQuestion === 2) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(input.value.trim());
+        }
+        return input.value.trim().length >= 2;
+    } else {
+        // Preguntas 3-5: Radio buttons
+        return questionEl.querySelector('input[type="radio"]:checked') !== null;
+    }
+}
+
+// Actualizar barra de progreso
+function updateProgressBar(questionId) {
+    const progressPercentage = (questionId / totalQuestions) * 100;
+    document.getElementById('progressFill').style.width = `${progressPercentage}%`;
+}
+
+// Mostrar errores
+function showError(message) {
+    // Crear o actualizar elemento de error
+    let errorEl = document.querySelector('.error-message');
+    if (!errorEl) {
+        errorEl = document.createElement('div');
+        errorEl.className = 'error-message';
+        document.querySelector(`#q${currentQuestion}`).appendChild(errorEl);
+    }
+    
+    errorEl.textContent = message;
+    errorEl.style.display = 'block';
+    
+    // Ocultar después de 3 segundos
+    setTimeout(() => {
+        errorEl.style.display = 'none';
+    }, 3000);
+}
+
+// Calcular puntuación y enviar formulario
+function calculateScoreAndSubmit() {
+    if (!validateCurrentQuestion()) {
+        showError("Por favor, completa la pregunta actual.");
+        return;
+    }
+    
+    // Calcular puntuación
+    userScore = 0;
+    
+    // Obtener valores de las respuestas
+    const painValue = document.querySelector('input[name="entry.966237849"]:checked')?.value;
+    const hoursValue = document.querySelector('input[name="entry.1755668548"]:checked')?.value;
+    const goalValue = document.querySelector('input[name="entry.1765053966"]:checked')?.value;
+    
+    // Sumar puntuaciones
+    if (painValue && SCORE_MAP.pain[painValue]) {
+        userScore += SCORE_MAP.pain[painValue];
+    }
+    if (hoursValue && SCORE_MAP.hours[hoursValue]) {
+        userScore += SCORE_MAP.hours[hoursValue];
+    }
+    if (goalValue && SCORE_MAP.goal[goalValue]) {
+        userScore += SCORE_MAP.goal[goalValue];
+    }
+    
+    // Enviar formulario a Google Forms
+    submitToGoogleForms();
+    
+    // Mostrar resultados
+    showResult();
+}
+
+// Enviar datos a Google Forms
+function submitToGoogleForms() {
+    // Los datos se envían automáticamente mediante el formulario HTML
+    // porque está configurado con action y method POST
+    
+    // Forzar envío del formulario
+    document.getElementById('diagnosisForm').submit();
+    
+    // Registrar en consola para debugging
+    console.log('Formulario enviado a Google Forms');
+    console.log('Puntuación calculada:', userScore);
+}
+
+// Mostrar resultados
+function showResult() {
+    // Ocultar última pregunta
+    document.getElementById(`q${currentQuestion}`).classList.remove('active');
+    document.getElementById('diagnosisForm').style.display = 'none';
+    
+    // Determinar nivel según puntuación
+    let resultLevel;
+    if (userScore >= 100) {
+        resultLevel = 'high';
+    } else if (userScore >= 60) {
+        resultLevel = 'medium';
+    } else {
+        resultLevel = 'low';
+    }
+    
+    const template = RESULT_TEMPLATES[resultLevel];
+    
+    // Actualizar UI con resultados
+    document.getElementById('resultEmoji').textContent = template.emoji;
+    document.getElementById('resultTitle').textContent = template.title;
+    document.getElementById('resultText').textContent = template.text;
+    
+    // Actualizar barra de puntuación
+    const scorePercentage = Math.min(Math.round((userScore / 130) * 100), 100);
+    document.getElementById('urgencyScore').style.width = `${scorePercentage}%`;
+    document.getElementById('scoreValue').textContent = `${scorePercentage}%`;
+    
+    // Actualizar recomendaciones
+    const recList = document.getElementById('recommendationList');
+    recList.innerHTML = '';
+    template.recommendations.forEach(rec => {
+        const li = document.createElement('li');
+        li.textContent = rec;
+        recList.appendChild(li);
+    });
+    
+    // Configurar link de Google Calendar
+    const calendarLink = document.getElementById('calendarLink');
+    if (resultLevel === 'high') {
+        calendarLink.innerHTML = '🚨 AGENDAR CONSULTA URGENTE (30 min gratis)';
+        calendarLink.style.background = '#EF4444';
+    }
+    
+    // Mostrar resultado
+    document.getElementById('result').style.display = 'block';
+    
+    // Desplazar hacia el resultado
+    document.getElementById('result').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+    
+    // Guardar en localStorage para no perder datos
+    localStorage.setItem('sistema_cerebro_last_score', userScore);
+    localStorage.setItem('sistema_cerebro_last_level', resultLevel);
+}
+
+// Reiniciar cuestionario
+function resetQuestionnaire() {
+    // Reiniciar variables
+    currentQuestion = 1;
+    userScore = 0;
+    
+    // Reiniciar UI
+    document.querySelectorAll('.question').forEach(q => {
+        q.classList.remove('active');
+    });
+    document.getElementById('q1').classList.add('active');
+    
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('diagnosisForm').style.display = 'block';
+    document.getElementById('diagnosisForm').reset();
+    updateProgressBar(1);
+    
+    // Limpiar localStorage
+    const keys = ['name', 'email', 'pain', 'hours', 'goal'];
+    keys.forEach(key => {
+        localStorage.removeItem(`sistema_cerebro_${key}`);
+    });
+    
+    // Desplazar hacia el cuestionario
+    document.getElementById('cuestionario').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+// Cargar datos guardados al iniciar
+function loadSavedData() {
+    // Cargar datos en campos si existen
+    const savedName = loadFromLocalStorage('name');
+    const savedEmail = loadFromLocalStorage('email');
+    
+    if (savedName) {
+        document.getElementById('entry_2075494202').value = savedName;
+    }
+    if (savedEmail) {
+        document.getElementById('entry_1328353491').value = savedEmail;
+    }
+}
+
+// Inicializar
+document.addEventListener('DOMContentLoaded', function() {
+    updateProgressBar(1);
+    loadSavedData();
+    
+    // Prevenir envío duplicado
+    document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
+        // Permitir que el formulario se envíe normalmente
+        // ya que tenemos target="hiddenFrame"
+        setTimeout(() => {
+            // Después de 1 segundo, asegurarse de que se muestre el resultado
+            if (document.getElementById('result').style.display !== 'block') {
+                showResult();
+            }
+        }, 1000);
+    });
+});/* Mantén todo el CSS anterior que te envié y AÑADE esto: */
+
+/* Estilos para campos requeridos */
+.required {
+    color: #EF4444;
+    font-weight: bold;
+}
+
+/* Mejoras para opciones */
+.option-desc {
+    font-size: 0.85rem;
+    color: #64748B;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+/* Mensajes de error */
+.error-message {
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #DC2626;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mejora para el formulario */
+.form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #E2E8F0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #FFFFFF;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #5B6BF0;
+    box-shadow: 0 0 0 3px rgba(91, 107, 240, 0.1);
+}
+
+.form-input::placeholder {
+    color: #94A3B8;
+}
+
+/* Mejora para el botón de calendario */
+.btn-calendly {
+    display: inline-block;
+    background: #10B981;
+    color: white;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.btn-calendly:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
+}
+
+/* Responsive adicional */
+@media (max-width: 640px) {
+    .option-content {
+        padding: 15px;
+    }
+    
+    .option-emoji {
+        font-size: 1.5rem;
+    }
+    
+    .btn-calendly {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+}tu-repositorio/
+├── index.html      (el archivo que te acabo de dar)
+├── style.css       (CSS completo con mejoras)
+├── script.js       (JavaScript actualizado)
+└── README.md       (instrucciones opcional)
