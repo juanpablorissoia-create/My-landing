@@ -756,3 +756,769 @@ document.addEventListener('DOMContentLoaded', function() {
 ├── style.css       (CSS completo con mejoras)
 ├── script.js       (JavaScript actualizado)
 └── README.md       (instrucciones opcional)
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Cerebro | Diagnóstico Gratuito</title>
+    <meta name="description" content="Transforma tu caos digital en productividad sistemática. Diagnóstico personalizado en 5 preguntas.">
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%234F46E5%22>🧠</text></svg>">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Sistema Cerebro | Diagnóstico Gratuito">
+    <meta property="og:description" content="Transforma tu caos digital en productividad sistemática">
+    <meta property="og:type" content="website">
+</head>
+<body class="font-sans text-gray-800 bg-gradient-to-br from-gray-50 to-white">
+    <!-- Cursor personalizado (opcional, elimina si no te gusta) -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Header minimalista -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+        <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-md">
+                    <span class="text-white text-xl">🧠</span>
+                </div>
+                <span class="font-display font-semibold text-gray-900 text-lg tracking-tight">SistemaCerebro</span>
+            </div>
+            <a href="#diagnostico" class="btn-primary text-sm px-5 py-2.5">
+                Diagnóstico Gratis
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="pt-24 pb-16">
+        <div class="container mx-auto px-6">
+            <!-- Badge de lanzamiento -->
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-8">
+                <span class="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+                Lanzamiento exclusivo
+            </div>
+
+            <!-- Título principal -->
+            <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight max-w-3xl">
+                Tu caos digital
+                <span class="relative inline-block">
+                    <span class="relative z-10">tiene solución</span>
+                    <svg class="absolute -bottom-2 left-0 w-full h-3 text-secondary/30" viewBox="0 0 200 10">
+                        <path d="M0,5 Q50,0 100,5 T200,5" fill="none" stroke="currentColor" stroke-width="8"/>
+                    </svg>
+                </span>
+                en 7 días
+            </h1>
+
+            <!-- Subtítulo -->
+            <p class="text-xl text-gray-600 mt-6 mb-10 max-w-2xl leading-relaxed">
+                Descubre en 5 preguntas tu plan personalizado para recuperar 
+                <span class="font-semibold text-primary">10-15 horas semanales</span> 
+                y convertir tu desorden en sistema.
+            </p>
+
+            <!-- Estadísticas -->
+            <div class="flex flex-wrap gap-6 mb-12">
+                <div class="stat-card">
+                    <div class="stat-number">10-15h</div>
+                    <div class="stat-label">Horas recuperadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">+40%</div>
+                    <div class="stat-label">Conversión leads</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7 días</div>
+                    <div class="stat-label">Implementación</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Sin código</div>
+                </div>
+            </div>
+
+            <!-- CTA inicial -->
+            <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                <a href="#diagnostico" class="btn-primary-lg group">
+                    <span>Iniciar diagnóstico gratis</span>
+                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </a>
+                <p class="text-sm text-gray-500 flex items-center">
+                    <svg class="w-4 h-4 mr-2 text-success" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Sin compromiso • 5 minutos • Resultados inmediatos
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sección de Diagnóstico -->
+    <section id="diagnostico" class="py-16 bg-gradient-to-b from-white to-gray-50">
+        <div class="container mx-auto px-6">
+            <!-- Encabezado del cuestionario -->
+            <div class="max-w-2xl mx-auto text-center mb-12">
+                <h2 class="font-display text-3xl font-semibold text-gray-900 mb-4">
+                    Diagnóstico de Productividad Digital
+                </h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Responde 5 preguntas cuidadosamente diseñadas para analizar tus patrones 
+                    de trabajo y recibir un plan de acción personalizado.
+                </p>
+                
+                <!-- Barra de progreso -->
+                <div class="mt-8">
+                    <div class="flex justify-between text-sm text-gray-500 mb-2">
+                        <span>Progreso del diagnóstico</span>
+                        <span id="progressText">0%</span>
+                    </div>
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div id="progressBar" class="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-500 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del cuestionario -->
+            <div class="max-w-2xl mx-auto">
+                <!-- Formulario Google Forms -->
+                <form id="diagnosisForm" 
+                      action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfrZJ6D9XYbEe7TeS7tDFRCsxCKrUvZ5eHwPWlurafa8y05Vg/formResponse"
+                      method="POST"
+                      target="hiddenFrame"
+                      class="space-y-8">
+                    
+                    <input type="hidden" name="fvv" value="1">
+                    <input type="hidden" name="pageHistory" value="0">
+                    
+                    <!-- Pregunta 1 -->
+                    <div class="question-card active" id="q1">
+                        <div class="question-header">
+                            <span class="question-number">01</span>
+                            <h3 class="question-title">¿Cómo te llamas?</h3>
+                        </div>
+                        <div class="mt-6">
+                            <input type="text" 
+                                   id="entry_2075494202" 
+                                   name="entry.2075494202" 
+                                   placeholder="Tu nombre completo" 
+                                   required
+                                   class="input-field"
+                                   oninput="saveResponse('name', this.value)">
+                        </div>
+                        <div class="question-footer">
+                            <button type="button" onclick="nextQuestion(2)" class="btn-next">
+                                Continuar
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div class="question-card" id="q2">
+                        <div class="question-header">
+                            <span class="question-number">02</span>
+                            <h3 class="question-title">¿Cuál es tu email profesional?</h3>
+                        </div>
+                        <div class="mt-6">
+                            <input type="email" 
+                                   id="entry_1328353491" 
+                                   name="entry.1328353491" 
+                                   placeholder="ejemplo@email.com" 
+                                   required
+                                   class="input-field"
+                                   oninput="saveResponse('email', this.value)">
+                        </div>
+                        <div class="question-footer">
+                            <button type="button" onclick="prevQuestion(1)" class="btn-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                                Anterior
+                            </button>
+                            <button type="button" onclick="nextQuestion(3)" class="btn-next">
+                                Continuar
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 3 -->
+                    <div class="question-card" id="q3">
+                        <div class="question-header">
+                            <span class="question-number">03</span>
+                            <h3 class="question-title">¿Qué te duele más en este momento?</h3>
+                        </div>
+                        <div class="mt-6 space-y-3">
+                            <label class="option-card">
+                                <input type="radio" name="entry.966237849" value="Pérdida de leads" required onclick="saveResponse('pain', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">📞</div>
+                                    <div>
+                                        <div class="option-title">Pérdida de leads</div>
+                                        <div class="option-description">Mensajes que no contesto, oportunidades que se enfrían</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.966237849" value="Contenido inconsistente" onclick="saveResponse('pain', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">✍️</div>
+                                    <div>
+                                        <div class="option-title">Contenido inconsistente</div>
+                                        <div class="option-description">Ideas que no convierto en posts/reels</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.966237849" value="Tiempo perdido" onclick="saveResponse('pain', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">⏰</div>
+                                    <div>
+                                        <div class="option-title">Tiempo perdido</div>
+                                        <div class="option-description">Buscando archivos, saltando entre apps</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.966237849" value="Todo junto" onclick="saveResponse('pain', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">🔥</div>
+                                    <div>
+                                        <div class="option-title">Todo junto</div>
+                                        <div class="option-description">Siento que no avanzo por el caos general</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="question-footer">
+                            <button type="button" onclick="prevQuestion(2)" class="btn-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                                Anterior
+                            </button>
+                            <button type="button" onclick="nextQuestion(4)" class="btn-next">
+                                Continuar
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 4 -->
+                    <div class="question-card" id="q4">
+                        <div class="question-header">
+                            <span class="question-number">04</span>
+                            <h3 class="question-title">¿Cuántas horas semanales pierdes en organización?</h3>
+                        </div>
+                        <div class="mt-6 space-y-3">
+                            <label class="option-card">
+                                <input type="radio" name="entry.1755668548" value="Menos de 5h" required onclick="saveResponse('hours', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">😐</div>
+                                    <div>
+                                        <div class="option-title">Menos de 5h</div>
+                                        <div class="option-description">Molesto pero manejable</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.1755668548" value="5-10h" onclick="saveResponse('hours', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">😟</div>
+                                    <div>
+                                        <div class="option-title">5-10h</div>
+                                        <div class="option-description">Afecta mi productividad seriamente</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.1755668548" value="10-15h" onclick="saveResponse('hours', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">😩</div>
+                                    <div>
+                                        <div class="option-title">10-15h</div>
+                                        <div class="option-description">Limita mi capacidad de crecimiento</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.1755668548" value="Más de 15h" onclick="saveResponse('hours', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">🚨</div>
+                                    <div>
+                                        <div class="option-title">Más de 15h</div>
+                                        <div class="option-description">Urgente, necesito solución ya</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="question-footer">
+                            <button type="button" onclick="prevQuestion(3)" class="btn-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                                Anterior
+                            </button>
+                            <button type="button" onclick="nextQuestion(5)" class="btn-next">
+                                Continuar
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 5 -->
+                    <div class="question-card" id="q5">
+                        <div class="question-header">
+                            <span class="question-number">05</span>
+                            <h3 class="question-title">¿Cuál es tu objetivo principal para los próximos 90 días?</h3>
+                        </div>
+                        <div class="mt-6 space-y-3">
+                            <label class="option-card">
+                                <input type="radio" name="entry.1765053966" value="Sistematizar" required onclick="saveResponse('goal', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">⚙️</div>
+                                    <div>
+                                        <div class="option-title">Sistematizar</div>
+                                        <div class="option-description">Trabajar menos horas con más resultados</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.1765053966" value="Crecer" onclick="saveResponse('goal', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">📈</div>
+                                    <div>
+                                        <div class="option-title">Crecer</div>
+                                        <div class="option-description">Aumentar clientes/ingresos significativamente</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.1765053966" value="Lanzar" onclick="saveResponse('goal', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">🚀</div>
+                                    <div>
+                                        <div class="option-title">Lanzar</div>
+                                        <div class="option-description">Sacar un producto/programa nuevo al mercado</div>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="option-card">
+                                <input type="radio" name="entry.1765053966" value="Sobrevivir" onclick="saveResponse('goal', this.value)">
+                                <div class="option-content">
+                                    <div class="option-icon">🆘</div>
+                                    <div>
+                                        <div class="option-title">Sobrevivir</div>
+                                        <div class="option-description">Solo quiero orden para no volverme loco/a</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="question-footer">
+                            <button type="button" onclick="prevQuestion(4)" class="btn-secondary">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                                Anterior
+                            </button>
+                            <button type="button" onclick="submitDiagnosis()" class="btn-primary-lg">
+                                Ver mi diagnóstico
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Resultados -->
+                <div id="resultContainer" class="hidden">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <div class="result-emoji" id="resultEmoji">🧠</div>
+                            <h2 class="result-title" id="resultTitle">Analizando tus respuestas...</h2>
+                        </div>
+                        
+                        <div class="result-content">
+                            <p class="result-text" id="resultText"></p>
+                            
+                            <div class="score-container">
+                                <div class="score-header">
+                                    <span class="score-label">Nivel de urgencia</span>
+                                    <span class="score-value" id="scoreValue">0%</span>
+                                </div>
+                                <div class="score-bar">
+                                    <div class="score-fill" id="scoreFill"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="recommendations">
+                                <h4 class="recommendations-title">Tu plan de acción recomendado:</h4>
+                                <ul class="recommendations-list" id="recommendationsList"></ul>
+                            </div>
+                            
+                            <div class="cta-section">
+                                <a href="https://calendar.app.google/nouPtky3ovsPPMmf8" 
+                                   target="_blank"
+                                   class="calendar-btn">
+                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    Agendar diagnóstico detallado (30 min gratis)
+                                </a>
+                                <p class="result-note">
+                                    Los datos de tu diagnóstico han sido guardados. Te contactaremos en 24 horas si no agendaste.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Iframe oculto para envío del formulario -->
+        <iframe name="hiddenFrame" style="display: none;"></iframe>
+    </section>
+
+    <!-- Footer minimalista -->
+    <footer class="py-8 border-t border-gray-200 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="text-primary">🧠</span>
+                    </div>
+                    <span class="font-display font-semibold text-gray-900">SistemaCerebro</span>
+                </div>
+                <div class="text-sm text-gray-500">
+                    <p>© 2024 Sistema Cerebro. Diseñado para creadores y coaches digitales.</p>
+                    <div class="mt-2 space-x-4">
+                        <a href="#" onclick="resetDiagnosis()" class="text-primary hover:text-primary-dark transition-colors">
+                            Reiniciar diagnóstico
+                        </a>
+                        <span>•</span>
+                        <a href="mailto:hola@sistemacerebro.com" class="text-primary hover:text-primary-dark transition-colors">
+                            Contacto
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>/* Reset y configuraciones base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Colores primarios - Confianza y calma */
+    --primary: #4F46E5;
+    --primary-light: #6366F1;
+    --primary-dark: #3730A3;
+    
+    /* Colores secundarios - Energía sutil */
+    --secondary: #06B6D4;
+    --secondary-light: #22D3EE;
+    
+    /* Escala de grises sofisticados */
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-400: #9CA3AF;
+    --gray-500: #6B7280;
+    --gray-600: #4B5563;
+    --gray-700: #374151;
+    --gray-800: #1F2937;
+    --gray-900: #111827;
+    
+    /* Colores de estado */
+    --success: #10B981;
+    --warning: #F59E0B;
+    --error: #EF4444;
+    
+    /* Efectos */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    /* Bordes */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-full: 9999px;
+}
+
+/* Tipografía */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--gray-800);
+    background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.font-display {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+/* Contenedores */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Botones */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    background: var(--primary);
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid var(--primary);
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary-lg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid var(--primary);
+    cursor: pointer;
+}
+
+.btn-primary-lg:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid var(--gray-200);
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: var(--gray-200);
+    border-color: var(--gray-300);
+}
+
+/* Tarjetas de estadísticas */
+.stat-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    min-width: 150px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+}
+
+.stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    margin-top: 0.5rem;
+}
+
+/* Tarjetas de preguntas */
+.question-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.question-card.active {
+    display: block;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.question-header {
+    margin-bottom: 1.5rem;
+}
+
+.question-number {
+    display: inline-block;
+    background: var(--primary-light);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 0.75rem;
+}
+
+.question-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.question-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+/* Campos de entrada */
+.input-field {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    border: 2px solid var(--gray-300);
+    border-radius: var(--radius-md);
+    background: white;
+    transition: all 0.2s ease;
+    color: var(--gray-900);
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.input-field::placeholder {
+    color: var(--gray-500);
+}
+
+/* Opciones */
+.option-card {
+    display: block;
+    cursor: pointer;
+}
+
+.option-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.option-content {
+    display: flex;
+    align-items: flex-start;
+    padding: 1.25rem;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    background: white;
+    transition: all 0.2s ease;
+    gap: 1rem;
+}
+
+.option-card:hover .option-content {
+    border-color: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+.option-card input[type="radio"]:checked + .option-content {
+    border-color: var(--primary);
+    background: rgba(79, 70, 229, 0.05);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+.option-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.option-title {
+    font
