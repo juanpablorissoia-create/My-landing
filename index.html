@@ -1,815 +1,519 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Cerebro | Diagnóstico</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+
+import React, { useState, useEffect } from 'react';
+import { Brain, CheckCircle, ArrowRight, ArrowLeft, Calendar, Mail } from 'lucide-react';
+
+const SistemaCerebro = () => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: '',
+    email: '',
+    dolorPrincipal: '',
+    horasPerdidas: '',
+    objetivo90Dias: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // URLs de integración - Reemplazar con las URLs reales
+  const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
+  const CALENDAR_URL = 'https://calendar.app.google/YOUR_CALENDAR_LINK';
+
+  const questions = [
+    {
+      id: 'nombre',
+      text: '¿Cómo te llamas?',
+      type: 'text',
+      placeholder: 'Tu nombre completo'
+    },
+    {
+      id: 'email',
+      text: '¿Cuál es tu email profesional?',
+      type: 'email',
+      placeholder: 'tu@email.com'
+    },
+    {
+      id: 'dolorPrincipal',
+      text: '¿Qué te duele más en este momento?',
+      type: 'choice',
+      options: [
+        { value: 'leads', label: 'Pérdida de leads', icon: '📞', desc: 'Mensajes que no contesto, oportunidades que se escapan', points: 30 },
+        { value: 'contenido', label: 'Contenido inconsistente', icon: '✍️', desc: 'Ideas que no publico, presencia irregular', points: 20 },
+        { value: 'tiempo', label: 'Tiempo perdido', icon: '⏰', desc: 'Buscando archivos, organizando caos', points: 25 },
+        { value: 'todo', label: 'Todo junto', icon: '🔥', desc: 'Caos general en mi operación', points: 40 }
+      ]
+    },
+    {
+      id: 'horasPerdidas',
+      text: '¿Cuántas horas semanales pierdes en organización?',
+      type: 'choice',
+      options: [
+        { value: '5', label: 'Menos de 5h', icon: '😐', desc: 'Molesto pero manejable', points: 10 },
+        { value: '5-10', label: '5-10h', icon: '😟', desc: 'Afecta mi productividad', points: 25 },
+        { value: '10-15', label: '10-15h', icon: '😩', desc: 'Limita mi crecimiento', points: 40 },
+        { value: '15+', label: 'Más de 15h', icon: '🚨', desc: 'Urgente, necesito solución ya', points: 50 }
+      ]
+    },
+    {
+      id: 'objetivo90Dias',
+      text: '¿Cuál es tu objetivo principal para los próximos 90 días?',
+      type: 'choice',
+      options: [
+        { value: 'sistematizar', label: 'Sistematizar', icon: '⚙️', desc: 'Trabajar menos con más resultados', points: 20 },
+        { value: 'crecer', label: 'Crecer', icon: '📈', desc: 'Aumentar clientes e ingresos', points: 25 },
+        { value: 'lanzar', label: 'Lanzar', icon: '🚀', desc: 'Producto o programa nuevo', points: 30 },
+        { value: 'sobrevivir', label: 'Sobrevivir', icon: '🆘', desc: 'Solo orden para no volverme loco', points: 35 }
+      ]
+    }
+  ];
+
+  // Calcular puntuación total
+  const calculateScore = () => {
+    let total = 0;
+    questions.forEach(q => {
+      if (q.type === 'choice' && formData[q.id]) {
+        const option = q.options.find(opt => opt.value === formData[q.id]);
+        if (option) total += option.points;
+      }
+    });
+    return total;
+  };
+
+  // Obtener resultado personalizado basado en puntuación
+  const getResult = () => {
+    const score = calculateScore();
+    if (score <= 59) {
+      return {
+        emoji: '🧠',
+        title: '¡Buen control operativo!',
+        description: `Hola ${formData.nombre}, tienes una base sólida pero hay oportunidades claras de optimización. Con algunos ajustes estratégicos, podrías recuperar entre 5-8 horas semanales adicionales.`,
+        urgency: 40,
+        recommendations: [
+          'Automatizar tareas repetitivas que aún haces manualmente',
+          'Implementar plantillas para acelerar tu creación de contenido',
+          'Centralizar información dispersa en múltiples herramientas'
+        ]
+      };
+    } else if (score <= 99) {
+      return {
+        emoji: '⚠️',
+        title: '¡Oportunidad de mejora significativa!',
+        description: `${formData.nombre}, tu operación tiene áreas críticas que están limitando tu crecimiento. El caos que experimentas te está costando entre 10-15 horas semanales que podrías invertir en escalar tu negocio.`,
+        urgency: 70,
+        recommendations: [
+          'Diseñar sistema de captura y seguimiento de leads automático',
+          'Crear flujos de trabajo estandarizados para tus procesos clave',
+          'Implementar herramientas de gestión centralizada sin código',
+          'Establecer rutinas diarias que prevengan el caos recurrente'
+        ]
+      };
+    } else {
+      return {
+        emoji: '🚨',
+        title: '¡Intervención prioritaria necesaria!',
+        description: `${formData.nombre}, tu situación requiere atención inmediata. El nivel de desorganización actual está afectando seriamente tu capacidad de generar ingresos y crecer. Estás perdiendo más de 15 horas semanales en caos operativo.`,
+        urgency: 95,
+        recommendations: [
+          'URGENTE: Auditoría completa de tu operación actual',
+          'Implementación inmediata de sistema CRM para recuperar leads perdidos',
+          'Automatización de respuestas y seguimientos críticos',
+          'Creación de tu "cerebro digital" centralizado en 7 días',
+          'Protocolo de emergencia para detener la sangría de oportunidades'
+        ]
+      };
+    }
+  };
+
+  // Validar campo actual
+  const validateCurrentField = () => {
+    const question = questions[currentQuestion];
+    const value = formData[question.id];
+    const newErrors = {};
+
+    if (question.type === 'text' && (!value || value.trim() === '')) {
+      newErrors[question.id] = 'Este campo es requerido';
+    } else if (question.type === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!value || !emailRegex.test(value)) {
+        newErrors[question.id] = 'Por favor ingresa un email válido';
+      }
+    } else if (question.type === 'choice' && !value) {
+      newErrors[question.id] = 'Por favor selecciona una opción';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Navegar a siguiente pregunta
+  const handleNext = () => {
+    if (validateCurrentField()) {
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+      } else {
+        submitToGoogleForms();
+      }
+    }
+  };
+
+  // Navegar a pregunta anterior
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+      setErrors({});
+    }
+  };
+
+  // Enviar datos a Google Forms
+  const submitToGoogleForms = async () => {
+    setIsSubmitting(true);
     
-    <section class="hero">
-        <div class="container">
-            <h1>Tu caos digital tiene <span>solución</span></h1>
-            <p>5 preguntas. 3 minutos. Un plan claro.</p>
-            <div class="stats">
-                <div><strong>10-15h</strong><span>recuperadas/semana</span></div>
-                <div><strong>+40%</strong><span>conversión</span></div>
-                <div><strong>7 días</strong><span>implementación</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="form-section">
-        <div class="container">
-            
-            <div class="progress-wrapper">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <p class="progress-text" id="progressText">Pregunta 1 de 5</p>
-
-            <form id="mainForm" 
-                  action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfrZJ6D9XYbEe7TeS7tDFRCsxCKrUvZ5eHwPWlurafa8y05Vg/formResponse"
-                  method="POST"
-                  target="hiddenFrame">
-                
-                <input type="hidden" name="fvv" value="1">
-                <input type="hidden" name="pageHistory" value="0">
-                
-                <div class="question active" data-q="1">
-                    <label>¿Cómo te llamas?</label>
-                    <input type="text" name="entry.2075494202" placeholder="Tu nombre" required>
-                    <button type="button" class="btn" onclick="next(1)">Siguiente</button>
-                </div>
-
-                <div class="question" data-q="2">
-                    <label>¿Tu email?</label>
-                    <input type="email" name="entry.1328353491" placeholder="tu@email.com" required>
-                    <div class="btn-group">
-                        <button type="button" class="btn-back" onclick="prev(2)">Atrás</button>
-                        <button type="button" class="btn" onclick="next(2)">Siguiente</button>
-                    </div>
-                </div>
-
-                <div class="question" data-q="3">
-                    <label>¿Qué te duele más ahora?</label>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="entry.966237849" value="Pérdida de leads">
-                            <span>📞 Pérdida de leads</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.966237849" value="Contenido inconsistente">
-                            <span>✍️ Contenido inconsistente</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.966237849" value="Tiempo perdido">
-                            <span>⏰ Tiempo perdido</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.966237849" value="Todo junto">
-                            <span>🔥 Todo junto</span>
-                        </label>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn-back" onclick="prev(3)">Atrás</button>
-                        <button type="button" class="btn" onclick="next(3)">Siguiente</button>
-                    </div>
-                </div>
-
-                <div class="question" data-q="4">
-                    <label>¿Cuántas horas pierdes a la semana?</label>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="entry.1755668548" value="Menos de 5h">
-                            <span>Menos de 5h</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.1755668548" value="5-10h">
-                            <span>5-10h</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.1755668548" value="10-15h">
-                            <span>10-15h</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.1755668548" value="Más de 15h">
-                            <span>Más de 15h</span>
-                        </label>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn-back" onclick="prev(4)">Atrás</button>
-                        <button type="button" class="btn" onclick="next(4)">Siguiente</button>
-                    </div>
-                </div>
-
-                <div class="question" data-q="5">
-                    <label>¿Tu objetivo para los próximos 90 días?</label>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="entry.1765053966" value="Sistematizar">
-                            <span>⚙️ Sistematizar</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.1765053966" value="Crecer">
-                            <span>📈 Crecer</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.1765053966" value="Lanzar">
-                            <span>🚀 Lanzar</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="entry.1765053966" value="Sobrevivir">
-                            <span>🆘 Sobrevivir</span>
-                        </label>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn-back" onclick="prev(5)">Atrás</button>
-                        <button type="button" class="btn" onclick="finish()">Ver resultado</button>
-                    </div>
-                </div>
-
-            </form>
-
-            <div class="result" id="result">
-                <div class="result-check">✓</div>
-                <h2>Listo</h2>
-                <p>Tu diagnóstico está procesado.<br>Ahora agenda tu llamada de 30 minutos.</p>
-                
-                <a href="https://calendar.app.google/nouPtky3ovsPPMmf8" 
-                   class="btn-calendar" 
-                   target="_blank">
-                    Agendar llamada gratuita
-                </a>
-
-                <p class="note">Te contactaremos en 24h si no agendas.</p>
-            </div>
-
-            <iframe name="hiddenFrame" style="display:none;"></iframe>
-
-        </div>
-    </section>
-
-    <script src="script.js"></script>
-</body>/* =====================
-   RESET
-   ===================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-}
-
-body {
-    font-family: 'DM Sans', -apple-system, sans-serif;
-    color: #0A1628;
-    background: #FAFBFC;
-    line-height: 1.6;
-}
-
-/* =====================
-   CONTAINER
-   ===================== */
-.container {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
-
-/* =====================
-   HERO
-   ===================== */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(135deg, #F0F4F8 0%, #E6EDF5 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
-    border-radius: 50%;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 80px 0;
-}
-
-.hero-badge {
-    display: inline-block;
-    padding: 8px 16px;
-    background: white;
-    border-radius: 100px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #3B82F6;
-    margin-bottom: 32px;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
-}
-
-.hero-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(40px, 8vw, 64px);
-    font-weight: 400;
-    line-height: 1.1;
-    color: #0A1628;
-    margin-bottom: 24px;
-    letter-spacing: -0.02em;
-}
-
-.italic {
-    font-style: italic;
-    color: #3B82F6;
-}
-
-.hero-text {
-    font-size: 20px;
-    color: #475569;
-    margin-bottom: 48px;
-    line-height: 1.6;
-}
-
-.hero-stats {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.stat {
-    text-align: center;
-}
-
-.stat-value {
-    font-size: 32px;
-    font-weight: 700;
-    color: #3B82F6;
-    line-height: 1;
-    margin-bottom: 8px;
-}
-
-.stat-label {
-    font-size: 13px;
-    color: #64748B;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* =====================
-   FORM SECTION
-   ===================== */
-.form-section {
-    min-height: 100vh;
-    padding: 80px 0;
-    background: white;
-}
-
-.progress-wrapper {
-    margin-bottom: 48px;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 3px;
-    background: #E2E8F0;
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 12px;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #3B82F6, #2563EB);
-    border-radius: 999px;
-    transition: width 0.4s ease;
-    width: 20%;
-}
-
-.progress-label {
-    text-align: center;
-    font-size: 13px;
-    color: #64748B;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* =====================
-   QUESTIONS
-   ===================== */
-.question {
-    display: none;
-}
-
-.question.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.question-number {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #EFF6FF;
-    color: #3B82F6;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 24px;
-}
-
-.question-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(28px, 5vw, 40px);
-    font-weight: 400;
-    color: #0A1628;
-    margin-bottom: 32px;
-    line-height: 1.2;
-}
-
-/* =====================
-   INPUTS
-   ===================== */
-.input {
-    width: 100%;
-    padding: 20px 24px;
-    border: 2px solid #E2E8F0;
-    border-radius: 16px;
-    font-size: 18px;
-    font-family: 'DM Sans', sans-serif;
-    color: #0A1628;
-    background: white;
-    transition: all 0.2s ease;
-    margin-bottom: 24px;
-}
-
-.input:focus {
-    outline: none;
-    border-color: #3B82F6;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-}
-
-.input::placeholder {
-    color: #94A3B8;
-}
-
-/* =====================
-   OPTIONS
-   ===================== */
-.options {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 32px;
-}
-
-.option {
-    display: block;
-    cursor: pointer;
-}
-
-.option input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.option-content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px 24px;
-    background: #F8FAFC;
-    border: 2px solid #E2E8F0;
-    border-radius: 16px;
-    transition: all 0.2s ease;
-}
-
-.option:hover .option-content {
-    background: white;
-    border-color: #3B82F6;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
-}
-
-.option input[type="radio"]:checked + .option-content {
-    background: #EFF6FF;
-    border-color: #3B82F6;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-}
-
-.option-icon {
-    font-size: 32px;
-    line-height: 1;
-    flex-shrink: 0;
-}
-
-.option-text {
-    flex: 1;
-}
-
-.option-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #0A1628;
-    margin-bottom: 4px;
-}
-
-.option-desc {
-    font-size: 14px;
-    color: #64748B;
-}
-
-/* =====================
-   BUTTONS
-   ===================== */
-.btn-primary,
-.btn-secondary {
-    padding: 18px 32px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-}
-
-.btn-primary {
-    width: 100%;
-    background: #3B82F6;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #2563EB;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-}
-
-.btn-secondary {
-    background: #F1F5F9;
-    color: #475569;
-}
-
-.btn-secondary:hover {
-    background: #E2E8F0;
-}
-
-.btn-group {
-    display: flex;
-    gap: 16px;
-}
-
-.btn-group .btn-primary {
-    flex: 1;
-}
-
-/* =====================
-   RESULTS
-   ===================== */
-.results {
-    display: none;
-    text-align: center;
-}
-
-.results.active {
-    display: block;
-    animation: fadeIn 0.4s ease;
-}
-
-.results-icon {
-    font-size: 64px;
-    line-height: 1;
-    margin-bottom: 24px;
-}
-
-.results-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 400;
-    color: #0A1628;
-    margin-bottom: 16px;
-    line-height: 1.2;
-}
-
-.results-text {
-    font-size: 18px;
-    color: #475569;
-    margin-bottom: 40px;
-    line-height: 1.6;
-}
-
-/* =====================
-   SCORE
-   ===================== */
-.score {
-    background: #F8FAFC;
-    border-radius: 20px;
-    padding: 32px;
-    margin-bottom: 40px;
-}
-
-.score-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #64748B;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 16px;
-}
-
-.score-bar {
-    width: 100%;
-    height: 12px;
-    background: white;
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 16px;
-}
-
-.score-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #3B82F6, #2563EB);
-    border-radius: 999px;
-    transition: width 1s ease;
-    width: 0;
-}
-
-.score-value {
-    font-size: 32px;
-    font-weight: 700;
-    color: #3B82F6;
-}
-
-/* =====================
-   RECOMMENDATIONS
-   ===================== */
-.recommendations {
-    text-align: left;
-    margin-bottom: 40px;
-}
-
-.recommendations h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #0A1628;
-    margin-bottom: 20px;
-}
-
-.recommendations ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.recommendations li {
-    padding: 16px 20px;
-    background: #F8FAFC;
-    border-left: 3px solid #3B82F6;
-    border-radius: 8px;
-    font-size: 15px;
-    color: #475569;
-}
-
-/* =====================
-   CALENDAR BUTTON
-   ===================== */
-.btn-calendar {
-    display: block;
-    width: 100%;
-    padding: 20px 32px;
-    background: #3B82F6;
-    color: white;
-    text-decoration: none;
-    text-align: center;
-    font-weight: 600;
-    font-size: 18px;
-    border-radius: 16px;
-    transition: all 0.2s ease;
-    margin-bottom: 24px;
-}
-
-.btn-calendar:hover {
-    background: #2563EB;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
-}
-
-.results-note {
-    font-size: 14px;
-    color: #64748B;
-    padding-top: 24px;
-    border-top: 1px solid #E2E8F0;
-}
-
-/* =====================
-   FOOTER
-   ===================== */
-.footer {
-    padding: 40px 0;
-    text-align: center;
-    background: #F8FAFC;
-    border-top: 1px solid #E2E8F0;
-}
-
-.footer p {
-    font-size: 14px;
-    color: #64748B;
-}
-
-/* =====================
-   RESPONSIVE
-   ===================== */
-@media (max-width: 640px) {
-    .container {
-        padding: 0 20px;
-    }
-
-    .hero-content {
-        padding: 60px 0;
-    }
-
-    .hero-badge {
-        font-size: 13px;
-        padding: 6px 14px;
-    }
-
-    .hero-stats {
-        gap: 24px;
-    }
-
-    .stat-value {
-        font-size: 28px;
-    }
-
-    .form-section {
-        padding: 60px 0;
-    }
-
-    .question-number {
-        width: 40px;
-        height: 40px;
-        font-size: 14px;
-    }
-
-    .input {
-        padding: 16px 20px;
-        font-size: 16px;
-    }
-
-    .option-content {
-        padding: 16px 20px;
-        gap: 16px;
-    }
-
-    .option-icon {
-        font-size: 28px;
-    }
-
-    .option-title {
-        font-size: 16px;
-    }
-
-    .option-desc {
-        font-size: 13px;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-        padding: 16px 24px;
-        font-size: 15px;
-    }
-
-    .btn-group {
-        gap: 12px;
-    }
-
-    .score {
-        padding: 24px;
-    }
-
-    .score-value {
-        font-size: 28px;
-    }
-
-    .btn-calendar {
-        padding: 18px 28px;
-        font-size: 16px;
-    }
-
-    .recommendations li {
-        font-size: 14px;
-    }
-}
-</html>let current = 1;
-const total = 5;
-
-function updateProgress() {
-    const bar = document.getElementById('progressBar');
-    const text = document.getElementById('progressText');
-    const percent = (current / total) * 100;
-    
-    bar.style.width = percent + '%';
-    text.textContent = `Pregunta ${current} de ${total}`;
-}
-
-function validate(q) {
-    const question = document.querySelector(`.question[data-q="${q}"]`);
-    
-    const input = question.querySelector('input[type="text"], input[type="email"]');
-    if (input) {
-        if (!input.value.trim()) {
-            input.focus();
-            return false;
-        }
-        if (input.type === 'email') {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(input.value)) {
-                input.focus();
-                return false;
-            }
-        }
-    }
-    
-    const radios = question.querySelectorAll('input[type="radio"]');
-    if (radios.length > 0) {
-        const checked = question.querySelector('input[type="radio"]:checked');
-        if (!checked) return false;
-    }
-    
-    return true;
-}
-
-function next(q) {
-    if (!validate(q)) {
-        alert('Por favor completa esta pregunta');
-        return;
-    }
-    
-    document.querySelector(`.question[data-q="${q}"]`).classList.remove('active');
-    current = q + 1;
-    document.querySelector(`.question[data-q="${current}"]`).classList.add('active');
-    updateProgress();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function prev(q) {
-    document.querySelector(`.question[data-q="${q}"]`).classList.remove('active');
-    current = q - 1;
-    document.querySelector(`.question[data-q="${current}"]`).classList.add('active');
-    updateProgress();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function finish() {
-    if (!validate(5)) {
-        alert('Por favor completa esta pregunta');
-        return;
-    }
-    
-    document.getElementById('mainForm').submit();
-    
+    // Aquí se enviarían los datos a Google Forms
+    // Por ahora simulamos el envío
     setTimeout(() => {
-        document.getElementById('mainForm').style.display = 'none';
-        document.querySelector('.progress-wrapper').style.display = 'none';
-        document.querySelector('.progress-text').style.display = 'none';
-        document.getElementById('result').style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 500);
-}
+      setIsSubmitting(false);
+      setShowResults(true);
+    }, 1000);
 
-updateProgress();
+    // Código real para Google Forms (descomentar y configurar):
+    /*
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('entry.XXXXXX', formData.nombre);
+      formDataToSend.append('entry.YYYYYY', formData.email);
+      formDataToSend.append('entry.ZZZZZZ', formData.dolorPrincipal);
+      formDataToSend.append('entry.AAAAAA', formData.horasPerdidas);
+      formDataToSend.append('entry.BBBBBB', formData.objetivo90Dias);
+      
+      await fetch(GOOGLE_FORM_URL, {
+        method: 'POST',
+        body: formDataToSend,
+        mode: 'no-cors'
+      });
+      
+      setIsSubmitting(false);
+      setShowResults(true);
+    } catch (error) {
+      console.error('Error al enviar formulario:', error);
+      setIsSubmitting(false);
+      setShowResults(true);
+    }
+    */
+  };
+
+  // Scroll suave al inicio al cambiar de pregunta
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentQuestion, showResults]);
+
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
+  const currentQ = questions[currentQuestion];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      {/* Header fijo */}
+      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Brain className="w-8 h-8 text-indigo-600" />
+            <span className="text-xl font-bold text-gray-900">SistemaCerebro</span>
+          </div>
+          {!showResults && (
+            <button
+              onClick={() => setCurrentQuestion(0)}
+              className="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+            >
+              Diagnóstico Gratis
+            </button>
+          )}
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      {currentQuestion === 0 && !showResults && (
+        <section className="pt-32 pb-20 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Tu caos digital tiene solución en{' '}
+              <span className="text-indigo-600">7 días</span>
+            </h1>
+            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+              Descubre en 5 preguntas tu plan personalizado para recuperar 10-15 horas semanales
+            </p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-3xl mx-auto">
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div className="text-2xl font-bold text-indigo-600 mb-1">10-15h</div>
+                <div className="text-sm text-gray-600">recuperadas/semana</div>
+              </div>
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div className="text-2xl font-bold text-indigo-600 mb-1">+40%</div>
+                <div className="text-sm text-gray-600">conversión leads</div>
+              </div>
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div className="text-2xl font-bold text-indigo-600 mb-1">7 días</div>
+                <div className="text-sm text-gray-600">implementación</div>
+              </div>
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                <div className="text-2xl font-bold text-indigo-600 mb-1">100%</div>
+                <div className="text-sm text-gray-600">sin código</div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mb-8">
+              <CheckCircle className="w-5 h-5 text-green-500" />
+              <span>Sin compromiso • 5 minutos • Resultados inmediatos</span>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Sección de Diagnóstico */}
+      {!showResults ? (
+        <section className="pb-20 px-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+              {/* Encabezado del cuestionario */}
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                  Diagnóstico de Productividad Digital
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Responde 5 preguntas cuidadosamente diseñadas para identificar exactamente dónde estás perdiendo tiempo y oportunidades.
+                </p>
+                
+                {/* Barra de progreso */}
+                <div className="relative">
+                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-indigo-600 to-cyan-500 transition-all duration-500 ease-out"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  <div className="text-sm text-gray-600 mt-2 text-right">
+                    Pregunta {currentQuestion + 1} de {questions.length} • {Math.round(progress)}% completado
+                  </div>
+                </div>
+              </div>
+
+              {/* Pregunta actual */}
+              <div className="mb-8">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-6">
+                  {currentQ.text}
+                </h3>
+
+                {/* Input de texto */}
+                {currentQ.type === 'text' && (
+                  <input
+                    type="text"
+                    value={formData[currentQ.id]}
+                    onChange={(e) => setFormData({ ...formData, [currentQ.id]: e.target.value })}
+                    placeholder={currentQ.placeholder}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none transition-colors text-lg"
+                  />
+                )}
+
+                {/* Input de email */}
+                {currentQ.type === 'email' && (
+                  <input
+                    type="email"
+                    value={formData[currentQ.id]}
+                    onChange={(e) => setFormData({ ...formData, [currentQ.id]: e.target.value })}
+                    placeholder={currentQ.placeholder}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none transition-colors text-lg"
+                  />
+                )}
+
+                {/* Opciones de selección */}
+                {currentQ.type === 'choice' && (
+                  <div className="space-y-3">
+                    {currentQ.options.map((option) => (
+                      <button
+                        key={option.value}
+                        onClick={() => setFormData({ ...formData, [currentQ.id]: option.value })}
+                        className={`w-full text-left p-5 rounded-xl border-2 transition-all hover:shadow-md ${
+                          formData[currentQ.id] === option.value
+                            ? 'border-indigo-500 bg-indigo-50'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="flex items-start gap-4">
+                          <span className="text-3xl">{option.icon}</span>
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900 mb-1">{option.label}</div>
+                            <div className="text-sm text-gray-600">{option.desc}</div>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Mensaje de error */}
+                {errors[currentQ.id] && (
+                  <div className="mt-3 text-red-600 text-sm flex items-center gap-2">
+                    <span>⚠️</span>
+                    <span>{errors[currentQ.id]}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Botones de navegación */}
+              <div className="flex gap-3">
+                {currentQuestion > 0 && (
+                  <button
+                    onClick={handlePrevious}
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                    Anterior
+                  </button>
+                )}
+                <button
+                  onClick={handleNext}
+                  disabled={isSubmitting}
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? (
+                    'Procesando...'
+                  ) : currentQuestion === questions.length - 1 ? (
+                    <>
+                      Ver mi diagnóstico
+                      <CheckCircle className="w-5 h-5" />
+                    </>
+                  ) : (
+                    <>
+                      Continuar
+                      <ArrowRight className="w-5 h-5" />
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        /* Sección de Resultados */
+        <section className="pt-32 pb-20 px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+              {/* Emoji animado */}
+              <div className="text-center mb-8">
+                <div className="text-7xl mb-4 animate-bounce inline-block">
+                  {getResult().emoji}
+                </div>
+                <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                  {getResult().title}
+                </h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {getResult().description}
+                </p>
+              </div>
+
+              {/* Barra de urgencia */}
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-700">Nivel de urgencia</span>
+                  <span className="text-sm font-bold text-indigo-600">{getResult().urgency}%</span>
+                </div>
+                <div className="h-4 bg-gray-200 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full transition-all duration-1000 ease-out ${
+                      getResult().urgency >= 80
+                        ? 'bg-red-500'
+                        : getResult().urgency >= 60
+                        ? 'bg-yellow-500'
+                        : 'bg-green-500'
+                    }`}
+                    style={{ width: `${getResult().urgency}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Plan de acción */}
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  Tu plan de acción personalizado:
+                </h3>
+                <div className="space-y-3">
+                  {getResult().recommendations.map((rec, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg">
+                      <CheckCircle className="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700">{rec}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTA principal */}
+              <div className="bg-gradient-to-br from-indigo-50 to-cyan-50 rounded-xl p-6 mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  Siguiente paso: Diagnóstico detallado gratuito
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  En una sesión de 30 minutos analizaremos tu situación específica y diseñaremos tu sistema personalizado. Sin compromiso, sin costo.
+                </p>
+                <a
+                  href={CALENDAR_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl"
+                >
+                  <Calendar className="w-5 h-5" />
+                  Agendar mi sesión gratuita de 30 minutos
+                </a>
+              </div>
+
+              {/* Nota de seguimiento */}
+              <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <Mail className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                <div className="text-sm text-green-800">
+                  <strong>Datos guardados.</strong> Nos pondremos en contacto contigo en las próximas 24 horas con recursos adicionales personalizados para tu situación.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-8 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <Brain className="w-6 h-6 text-indigo-400" />
+              <span className="font-semibold">SistemaCerebro</span>
+            </div>
+            <div className="flex gap-6 text-sm text-gray-400">
+              <button
+                onClick={() => {
+                  setCurrentQuestion(0);
+                  setShowResults(false);
+                  setFormData({
+                    nombre: '',
+                    email: '',
+                    dolorPrincipal: '',
+                    horasPerdidas: '',
+                    objetivo90Dias: ''
+                  });
+                  setErrors({});
+                }}
+                className="hover:text-white transition-colors"
+              >
+                Reiniciar diagnóstico
+              </button>
+              <a href="mailto:contacto@sistemacerebro.com" className="hover:text-white transition-colors">
+                Contacto
+              </a>
+            </div>
+          </div>
+          <div className="text-center text-sm text-gray-500 mt-4">
+            © 2026 SistemaCerebro. Todos los derechos reservados.
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default SistemaCerebro;
