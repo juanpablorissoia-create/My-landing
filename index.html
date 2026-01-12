@@ -1,80 +1,162 @@
-/* ===================================
-   VARIABLES Y FUNDAMENTOS
-   =================================== */
-:root {
-    /* Colores principales */
-    --color-primary: #0F172A;
-    --color-secondary: #6366F1;
-    --color-accent: #10B981;
-    --color-warning: #F59E0B;
-    --color-danger: #EF4444;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Cerebro | Diagnóstico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
     
-    /* Colores de texto */
-    --color-text: #1E293B;
-    --color-text-light: #64748B;
-    --color-text-lighter: #94A3B8;
-    
-    /* Colores de fondo */
-    --color-bg: #FFFFFF;
-    --color-bg-alt: #F8FAFC;
-    --color-bg-dark: #0F172A;
-    
-    /* Bordes y superficies */
-    --color-border: #E2E8F0;
-    --color-surface: #FFFFFF;
-    
-    /* Sombras */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    
-    /* Espaciado */
-    --spacing-xs: 0.5rem;
-    --spacing-sm: 1rem;
-    --spacing-md: 1.5rem;
-    --spacing-lg: 2rem;
-    --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
-    --spacing-3xl: 6rem;
-    
-    /* Tipografía */
-    --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-display: 'Instrument Serif', Georgia, serif;
-    
-    /* Tamaños de fuente */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-    --text-4xl: 2.25rem;
-    --text-5xl: 3rem;
-    --text-6xl: 3.75rem;
-    
-    /* Transiciones */
-    --transition-fast: 150ms ease;
-    --transition-base: 250ms ease;
-    --transition-slow: 350ms ease;
-    
-    /* Radio de bordes */
-    --radius-sm: 0.375rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.75rem;
-    --radius-xl: 1rem;
-    --radius-2xl: 1.5rem;
-    
-    /* Contenedores */
-    --container-max: 1200px;
-    --container-sm: 640px;
-    --container-md: 768px;
-}
+    <section class="hero">
+        <div class="container">
+            <h1>Tu caos digital tiene <span>solución</span></h1>
+            <p>5 preguntas. 3 minutos. Un plan claro.</p>
+            <div class="stats">
+                <div><strong>10-15h</strong><span>recuperadas/semana</span></div>
+                <div><strong>+40%</strong><span>conversión</span></div>
+                <div><strong>7 días</strong><span>implementación</span></div>
+            </div>
+        </div>
+    </section>
 
-/* ===================================
-   RESET Y CONFIGURACIÓN BASE
-   =================================== */
+    <section class="form-section">
+        <div class="container">
+            
+            <div class="progress-wrapper">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p class="progress-text" id="progressText">Pregunta 1 de 5</p>
+
+            <form id="mainForm" 
+                  action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfrZJ6D9XYbEe7TeS7tDFRCsxCKrUvZ5eHwPWlurafa8y05Vg/formResponse"
+                  method="POST"
+                  target="hiddenFrame">
+                
+                <input type="hidden" name="fvv" value="1">
+                <input type="hidden" name="pageHistory" value="0">
+                
+                <div class="question active" data-q="1">
+                    <label>¿Cómo te llamas?</label>
+                    <input type="text" name="entry.2075494202" placeholder="Tu nombre" required>
+                    <button type="button" class="btn" onclick="next(1)">Siguiente</button>
+                </div>
+
+                <div class="question" data-q="2">
+                    <label>¿Tu email?</label>
+                    <input type="email" name="entry.1328353491" placeholder="tu@email.com" required>
+                    <div class="btn-group">
+                        <button type="button" class="btn-back" onclick="prev(2)">Atrás</button>
+                        <button type="button" class="btn" onclick="next(2)">Siguiente</button>
+                    </div>
+                </div>
+
+                <div class="question" data-q="3">
+                    <label>¿Qué te duele más ahora?</label>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="entry.966237849" value="Pérdida de leads">
+                            <span>📞 Pérdida de leads</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.966237849" value="Contenido inconsistente">
+                            <span>✍️ Contenido inconsistente</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.966237849" value="Tiempo perdido">
+                            <span>⏰ Tiempo perdido</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.966237849" value="Todo junto">
+                            <span>🔥 Todo junto</span>
+                        </label>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn-back" onclick="prev(3)">Atrás</button>
+                        <button type="button" class="btn" onclick="next(3)">Siguiente</button>
+                    </div>
+                </div>
+
+                <div class="question" data-q="4">
+                    <label>¿Cuántas horas pierdes a la semana?</label>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="entry.1755668548" value="Menos de 5h">
+                            <span>Menos de 5h</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.1755668548" value="5-10h">
+                            <span>5-10h</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.1755668548" value="10-15h">
+                            <span>10-15h</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.1755668548" value="Más de 15h">
+                            <span>Más de 15h</span>
+                        </label>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn-back" onclick="prev(4)">Atrás</button>
+                        <button type="button" class="btn" onclick="next(4)">Siguiente</button>
+                    </div>
+                </div>
+
+                <div class="question" data-q="5">
+                    <label>¿Tu objetivo para los próximos 90 días?</label>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="entry.1765053966" value="Sistematizar">
+                            <span>⚙️ Sistematizar</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.1765053966" value="Crecer">
+                            <span>📈 Crecer</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.1765053966" value="Lanzar">
+                            <span>🚀 Lanzar</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="entry.1765053966" value="Sobrevivir">
+                            <span>🆘 Sobrevivir</span>
+                        </label>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn-back" onclick="prev(5)">Atrás</button>
+                        <button type="button" class="btn" onclick="finish()">Ver resultado</button>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="result" id="result">
+                <div class="result-check">✓</div>
+                <h2>Listo</h2>
+                <p>Tu diagnóstico está procesado.<br>Ahora agenda tu llamada de 30 minutos.</p>
+                
+                <a href="https://calendar.app.google/nouPtky3ovsPPMmf8" 
+                   class="btn-calendar" 
+                   target="_blank">
+                    Agendar llamada gratuita
+                </a>
+
+                <p class="note">Te contactaremos en 24h si no agendas.</p>
+            </div>
+
+            <iframe name="hiddenFrame" style="display:none;"></iframe>
+
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>/* =====================
+   RESET
+   ===================== */
 * {
     margin: 0;
     padding: 0;
@@ -82,109 +164,34 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    font-family: var(--font-primary);
-    font-size: var(--text-base);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    color: #0A1628;
+    background: #FAFBFC;
     line-height: 1.6;
-    color: var(--color-text);
-    background: var(--color-bg);
-    overflow-x: hidden;
 }
 
-/* ===================================
-   CONTENEDORES
-   =================================== */
+/* =====================
+   CONTAINER
+   ===================== */
 .container {
-    width: 100%;
-    max-width: var(--container-max);
+    max-width: 640px;
     margin: 0 auto;
-    padding: 0 var(--spacing-lg);
+    padding: 0 24px;
 }
 
-.container-header {
-    width: 100%;
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: 0 var(--spacing-lg);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* ===================================
-   HEADER
-   =================================== */
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--color-border);
-    padding: var(--spacing-md) 0;
-    animation: slideDown 0.4s ease;
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    font-weight: 700;
-    font-size: var(--text-xl);
-    color: var(--color-primary);
-    text-decoration: none;
-}
-
-.logo-icon {
-    font-size: var(--text-2xl);
-    line-height: 1;
-}
-
-.logo-text {
-    letter-spacing: -0.02em;
-}
-
-.cta-header {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--spacing-xs) var(--spacing-md);
-    background: var(--color-primary);
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: var(--text-sm);
-    border-radius: var(--radius-lg);
-    transition: all var(--transition-base);
-}
-
-.cta-header:hover {
-    background: var(--color-secondary);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
-/* ===================================
+/* =====================
    HERO
-   =================================== */
+   ===================== */
 .hero {
-    padding: var(--spacing-3xl) 0;
-    background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #F0F4F8 0%, #E6EDF5 100%);
     position: relative;
     overflow: hidden;
 }
@@ -192,33 +199,136 @@ body {
 .hero::before {
     content: '';
     position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
     border-radius: 50%;
-    animation: float 20s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(-30px, 30px) rotate(5deg); }
 }
 
 .hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
     position: relative;
     z-index: 1;
-    animation: fadeInUp 0.6s ease;
+    text-align: center;
+    padding: 80px 0;
 }
 
-@keyframes fadeInUp {
+.hero-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: white;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3B82F6;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(40px, 8vw, 64px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: #0A1628;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.italic {
+    font-style: italic;
+    color: #3B82F6;
+}
+
+.hero-text {
+    font-size: 20px;
+    color: #475569;
+    margin-bottom: 48px;
+    line-height: 1.6;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #3B82F6;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* =====================
+   FORM SECTION
+   ===================== */
+.form-section {
+    min-height: 100vh;
+    padding: 80px 0;
+    background: white;
+}
+
+.progress-wrapper {
+    margin-bottom: 48px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 3px;
+    background: #E2E8F0;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3B82F6, #2563EB);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    width: 20%;
+}
+
+.progress-label {
+    text-align: center;
+    font-size: 13px;
+    color: #64748B;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* =====================
+   QUESTIONS
+   ===================== */
+.question {
+    display: none;
+}
+
+.question.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
@@ -226,273 +336,71 @@ body {
     }
 }
 
-.hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(var(--text-4xl), 5vw, var(--text-6xl));
-    font-weight: 400;
-    line-height: 1.1;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-md);
-    letter-spacing: -0.03em;
-}
-
-.highlight {
-    color: var(--color-secondary);
-    font-style: italic;
-    position: relative;
-    display: inline-block;
-}
-
-.highlight::after {
-    content: '';
-    position: absolute;
-    bottom: 0.1em;
-    left: -0.1em;
-    right: -0.1em;
-    height: 0.4em;
-    background: rgba(99, 102, 241, 0.15);
-    border-radius: var(--radius-sm);
-    z-index: -1;
-}
-
-.hero-subtitle {
-    font-size: clamp(var(--text-lg), 2vw, var(--text-xl));
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-xl);
-    max-width: 650px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-}
-
-/* Stats */
-.stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: var(--spacing-lg);
-    margin: var(--spacing-2xl) 0;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.stat {
+.question-number {
+    width: 48px;
+    height: 48px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: var(--spacing-xs);
-    padding: var(--spacing-md);
-    background: white;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
-}
-
-.stat:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-}
-
-.stat-number {
-    font-size: var(--text-3xl);
-    font-weight: 800;
-    color: var(--color-secondary);
-    line-height: 1;
-}
-
-.stat-label {
-    font-size: var(--text-sm);
-    color: var(--color-text-light);
-    text-align: center;
-    line-height: 1.3;
-}
-
-.cta-hero {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--spacing-md) var(--spacing-xl);
-    background: var(--color-secondary);
-    color: white;
-    text-decoration: none;
+    justify-content: center;
+    background: #EFF6FF;
+    color: #3B82F6;
+    border-radius: 12px;
+    font-size: 16px;
     font-weight: 700;
-    font-size: var(--text-lg);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg);
-    transition: all var(--transition-base);
-    margin-top: var(--spacing-lg);
-}
-
-.cta-hero:hover {
-    background: var(--color-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-xl);
-}
-
-/* ===================================
-   CUESTIONARIO
-   =================================== */
-.questionnaire {
-    padding: var(--spacing-3xl) 0;
-    background: white;
-}
-
-.questionnaire-header {
-    text-align: center;
-    margin-bottom: var(--spacing-2xl);
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.questionnaire-header h2 {
-    font-family: var(--font-display);
-    font-size: clamp(var(--text-3xl), 4vw, var(--text-4xl));
-    font-weight: 400;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-sm);
-    letter-spacing: -0.02em;
-}
-
-.questionnaire-header > p {
-    font-size: var(--text-lg);
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-xl);
-}
-
-/* Progress */
-.progress-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-}
-
-.progress-bar {
-    width: 100%;
-    height: 8px;
-    background: var(--color-bg-alt);
-    border-radius: 999px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
-    border-radius: 999px;
-    transition: width var(--transition-slow);
-    width: 20%;
-}
-
-.progress-text {
-    text-align: center;
-    font-size: var(--text-sm);
-    color: var(--color-text-lighter);
-    font-weight: 500;
-}
-
-/* Preguntas */
-#diagnosisForm {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.question {
-    display: none;
-    animation: fadeInScale 0.4s ease;
-}
-
-.question.active {
-    display: block;
-}
-
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.question-content {
-    background: var(--color-surface);
-    border-radius: var(--radius-2xl);
-    padding: var(--spacing-2xl);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--color-border);
+    margin-bottom: 24px;
 }
 
 .question-title {
-    font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
-    font-weight: 700;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-xl);
-    line-height: 1.3;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-sm);
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 400;
+    color: #0A1628;
+    margin-bottom: 32px;
+    line-height: 1.2;
 }
 
-.question-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    background: var(--color-secondary);
-    color: white;
-    border-radius: var(--radius-md);
-    font-size: var(--text-base);
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.required {
-    color: var(--color-danger);
-    font-weight: 700;
-}
-
-/* Inputs */
-.input-group {
-    margin-bottom: var(--spacing-xl);
-}
-
-.form-input {
+/* =====================
+   INPUTS
+   ===================== */
+.input {
     width: 100%;
-    padding: var(--spacing-md) var(--spacing-lg);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    font-size: var(--text-lg);
-    font-family: var(--font-primary);
-    transition: all var(--transition-base);
+    padding: 20px 24px;
+    border: 2px solid #E2E8F0;
+    border-radius: 16px;
+    font-size: 18px;
+    font-family: 'DM Sans', sans-serif;
+    color: #0A1628;
     background: white;
+    transition: all 0.2s ease;
+    margin-bottom: 24px;
 }
 
-.form-input:focus {
+.input:focus {
     outline: none;
-    border-color: var(--color-secondary);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
-.form-input::placeholder {
-    color: var(--color-text-lighter);
+.input::placeholder {
+    color: #94A3B8;
 }
 
-/* Options */
+/* =====================
+   OPTIONS
+   ===================== */
 .options {
-    display: grid;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
 }
 
-.option-card {
-    position: relative;
+.option {
     display: block;
     cursor: pointer;
 }
 
-.option-card input[type="radio"] {
+.option input[type="radio"] {
     position: absolute;
     opacity: 0;
     pointer-events: none;
@@ -501,1556 +409,407 @@ body {
 .option-content {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md) var(--spacing-lg);
-    background: var(--color-bg-alt);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    transition: all var(--transition-base);
+    gap: 20px;
+    padding: 20px 24px;
+    background: #F8FAFC;
+    border: 2px solid #E2E8F0;
+    border-radius: 16px;
+    transition: all 0.2s ease;
 }
 
-.option-card:hover .option-content {
+.option:hover .option-content {
     background: white;
-    border-color: var(--color-secondary);
+    border-color: #3B82F6;
     transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
 }
 
-.option-card input[type="radio"]:checked + .option-content {
-    background: white;
-    border-color: var(--color-secondary);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+.option input[type="radio"]:checked + .option-content {
+    background: #EFF6FF;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
-.option-emoji {
-    font-size: var(--text-3xl);
+.option-icon {
+    font-size: 32px;
     line-height: 1;
     flex-shrink: 0;
 }
 
-.option-text-container {
+.option-text {
     flex: 1;
 }
 
-.option-text {
-    display: block;
-    font-size: var(--text-lg);
+.option-title {
+    font-size: 18px;
     font-weight: 600;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-xs);
+    color: #0A1628;
+    margin-bottom: 4px;
 }
 
 .option-desc {
-    font-size: var(--text-sm);
-    color: var(--color-text-light);
-    line-height: 1.4;
+    font-size: 14px;
+    color: #64748B;
 }
 
-/* Botones */
-.button-group {
-    display: flex;
-    gap: var(--spacing-md);
-    justify-content: space-between;
-}
-
-.btn-next,
-.btn-back {
-    padding: var(--spacing-md) var(--spacing-xl);
-    border: none;
-    border-radius: var(--radius-lg);
-    font-size: var(--text-base);
+/* =====================
+   BUTTONS
+   ===================== */
+.btn-primary,
+.btn-secondary {
+    padding: 18px 32px;
+    border-radius: 12px;
+    font-size: 16px;
     font-weight: 600;
-    font-family: var(--font-primary);
+    font-family: 'DM Sans', sans-serif;
     cursor: pointer;
-    transition: all var(--transition-base);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    transition: all 0.2s ease;
+    border: none;
 }
 
-.btn-next {
-    background: var(--color-secondary);
+.btn-primary {
+    width: 100%;
+    background: #3B82F6;
     color: white;
+}
+
+.btn-primary:hover {
+    background: #2563EB;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.btn-secondary {
+    background: #F1F5F9;
+    color: #475569;
+}
+
+.btn-secondary:hover {
+    background: #E2E8F0;
+}
+
+.btn-group {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-group .btn-primary {
     flex: 1;
 }
 
-.btn-next:hover {
-    background: var(--color-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.btn-back {
-    background: var(--color-bg-alt);
-    color: var(--color-text);
-    border: 2px solid var(--color-border);
-}
-
-.btn-back:hover {
-    background: white;
-    border-color: var(--color-primary);
-}
-
-/* Error messages */
-.error-message {
-    background: #FEF2F2;
-    border: 1px solid #FECACA;
-    color: var(--color-danger);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-md);
-    margin-top: var(--spacing-md);
-    font-size: var(--text-sm);
-    animation: shake 0.5s ease;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
-}
-
-/* ===================================
-   RESULTADO
-   =================================== */
-.result {
+/* =====================
+   RESULTS
+   ===================== */
+.results {
     display: none;
-    max-width: 700px;
-    margin: 0 auto;
-    animation: fadeInScale 0.5s ease;
-}
-
-.result-content {
-    background: var(--color-surface);
-    border-radius: var(--radius-2xl);
-    padding: var(--spacing-2xl);
-    box-shadow: var(--shadow-xl);
-    border: 1px solid var(--color-border);
-}
-
-.result-header {
     text-align: center;
-    margin-bottom: var(--spacing-2xl);
 }
 
-.result-emoji {
-    font-size: 4rem;
+.results.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+.results-icon {
+    font-size: 64px;
     line-height: 1;
-    margin-bottom: var(--spacing-md);
-    animation: bounce 1s ease;
+    margin-bottom: 24px;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
-.result-header h2 {
-    font-family: var(--font-display);
-    font-size: var(--text-3xl);
+.results-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 48px);
     font-weight: 400;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-sm);
+    color: #0A1628;
+    margin-bottom: 16px;
+    line-height: 1.2;
 }
 
-.result-text {
-    font-size: var(--text-lg);
-    color: var(--color-text-light);
+.results-text {
+    font-size: 18px;
+    color: #475569;
+    margin-bottom: 40px;
     line-height: 1.6;
 }
 
-/* Score display */
-.score-display {
-    background: var(--color-bg-alt);
-    border-radius: var(--radius-xl);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-2xl);
+/* =====================
+   SCORE
+   ===================== */
+.score {
+    background: #F8FAFC;
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 40px;
 }
 
 .score-label {
-    display: block;
-    font-size: var(--text-sm);
+    font-size: 13px;
     font-weight: 600;
-    color: var(--color-text-light);
+    color: #64748B;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 16px;
 }
 
 .score-bar {
     width: 100%;
-    height: 20px;
+    height: 12px;
     background: white;
     border-radius: 999px;
     overflow: hidden;
-    margin-bottom: var(--spacing-sm);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    margin-bottom: 16px;
 }
 
 .score-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-warning), var(--color-danger));
+    background: linear-gradient(90deg, #3B82F6, #2563EB);
     border-radius: 999px;
     transition: width 1s ease;
     width: 0;
 }
 
 .score-value {
-    display: block;
-    text-align: right;
-    font-size: var(--text-2xl);
-    font-weight: 800;
-    color: var(--color-primary);
-}
-
-/* Recommendations */
-.recommendation {
-    margin-bottom: var(--spacing-2xl);
-}
-
-.recommendation h4 {
-    font-size: var(--text-xl);
+    font-size: 32px;
     font-weight: 700;
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-md);
+    color: #3B82F6;
 }
 
-.recommendation ul {
+/* =====================
+   RECOMMENDATIONS
+   ===================== */
+.recommendations {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.recommendations h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0A1628;
+    margin-bottom: 20px;
+}
+
+.recommendations ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: 12px;
 }
 
-.recommendation li {
-    padding: var(--spacing-md);
-    background: var(--color-bg-alt);
-    border-radius: var(--radius-md);
-    border-left: 4px solid var(--color-secondary);
-    font-size: var(--text-base);
-    color: var(--color-text);
+.recommendations li {
+    padding: 16px 20px;
+    background: #F8FAFC;
+    border-left: 3px solid #3B82F6;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #475569;
 }
 
-.recommendation li::before {
-    content: '✓';
-    display: inline-block;
-    margin-right: var(--spacing-sm);
-    color: var(--color-accent);
-    font-weight: 700;
-}
-
-/* Calendar button */
+/* =====================
+   CALENDAR BUTTON
+   ===================== */
 .btn-calendar {
     display: block;
     width: 100%;
-    padding: var(--spacing-lg) var(--spacing-xl);
-    background: var(--color-accent);
+    padding: 20px 32px;
+    background: #3B82F6;
     color: white;
     text-decoration: none;
     text-align: center;
-    font-weight: 700;
-    font-size: var(--text-lg);
-    border-radius: var(--radius-xl);
-    transition: all var(--transition-base);
-    box-shadow: var(--shadow-lg);
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+    margin-bottom: 24px;
 }
 
 .btn-calendar:hover {
-    background: #059669;
+    background: #2563EB;
     transform: translateY(-2px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
 }
 
-.result-note {
-    text-align: center;
-    font-size: var(--text-sm);
-    color: var(--color-text-light);
-    margin-top: var(--spacing-lg);
-    padding-top: var(--spacing-lg);
-    border-top: 1px solid var(--color-border);
+.results-note {
+    font-size: 14px;
+    color: #64748B;
+    padding-top: 24px;
+    border-top: 1px solid #E2E8F0;
 }
 
-/* ===================================
+/* =====================
    FOOTER
-   =================================== */
+   ===================== */
 .footer {
-    background: var(--color-bg-dark);
-    color: white;
-    padding: var(--spacing-2xl) 0;
+    padding: 40px 0;
     text-align: center;
+    background: #F8FAFC;
+    border-top: 1px solid #E2E8F0;
 }
 
-.footer-main {
-    font-size: var(--text-base);
-    margin-bottom: var(--spacing-sm);
-    opacity: 0.9;
+.footer p {
+    font-size: 14px;
+    color: #64748B;
 }
 
-.footer-links {
-    font-size: var(--text-sm);
-    opacity: 0.7;
-}
-
-.footer-links a {
-    color: white;
-    text-decoration: none;
-    transition: opacity var(--transition-fast);
-}
-
-.footer-links a:hover {
-    opacity: 1;
-    text-decoration: underline;
-}
-
-.separator {
-    margin: 0 var(--spacing-sm);
-}
-
-/* ===================================
+/* =====================
    RESPONSIVE
-   =================================== */
-
-/* Tablet */
-@media (max-width: 768px) {
-    :root {
-        --spacing-3xl: 4rem;
-        --spacing-2xl: 3rem;
-    }
-    
-    .container,
-    .container-header {
-        padding: 0 var(--spacing-md);
-    }
-    
-    .hero {
-        padding: var(--spacing-2xl) 0;
-    }
-    
-    .hero-title {
-        margin-bottom: var(--spacing-md);
-    }
-    
-    .stats {
-        gap: var(--spacing-md);
-    }
-    
-    .stat {
-        padding: var(--spacing-sm);
-    }
-    
-    .questionnaire {
-        padding: var(--spacing-2xl) 0;
-    }
-    
-    .question-content {
-        padding: var(--spacing-lg);
-    }
-    
-    .result-content {
-        padding: var(--spacing-lg);
-    }
-}
-
-/* Mobile */
+   ===================== */
 @media (max-width: 640px) {
-    :root {
-        --spacing-3xl: 3rem;
-        --spacing-2xl: 2rem;
-        --spacing-xl: 2rem;
+    .container {
+        padding: 0 20px;
     }
-    
-    .container,
-    .container-header {
-        padding: 0 var(--spacing-md);
+
+    .hero-content {
+        padding: 60px 0;
     }
-    
-    .header {
-        padding: var(--spacing-sm) 0;
+
+    .hero-badge {
+        font-size: 13px;
+        padding: 6px 14px;
     }
-    
-    .logo {
-        font-size: var(--text-lg);
+
+    .hero-stats {
+        gap: 24px;
     }
-    
-    .logo-icon {
-        font-size: var(--text-xl);
+
+    .stat-value {
+        font-size: 28px;
     }
-    
-    .logo-text {
-        display: none;
+
+    .form-section {
+        padding: 60px 0;
     }
-    
-    .cta-header {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        font-size: var(--text-xs);
-    }
-    
-    .hero {
-        padding: var(--spacing-xl) 0;
-    }
-    
-    .stats {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-sm);
-        margin: var(--spacing-lg) 0;
-    }
-    
-    .stat {
-        flex-direction: row;
-        justify-content: space-between;
-        text-align: left;
-        padding: var(--spacing-md);
-    }
-    
-    .stat-number {
-        font-size: var(--text-2xl);
-    }
-    
-    .stat-label {
-        text-align: right;
-    }
-    
-    .questionnaire {
-        padding: var(--spacing-xl) 0;
-    }
-    
-    .questionnaire-header {
-        margin-bottom: var(--spacing-lg);
-    }
-    
-    .question-content {
-        padding: var(--spacing-md);
-        border-radius: var(--radius-xl);
-    }
-    
-    .question-title {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
+
     .question-number {
-        min-width: 36px;
-        height: 36px;
-        font-size: var(--text-sm);
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
     }
-    
+
+    .input {
+        padding: 16px 20px;
+        font-size: 16px;
+    }
+
     .option-content {
-        padding: var(--spacing-md);
-        gap: var(--spacing-sm);
+        padding: 16px 20px;
+        gap: 16px;
     }
-    
-    .option-emoji {
-        font-size: var(--text-2xl);
+
+    .option-icon {
+        font-size: 28px;
     }
-    
-    .option-text {
-        font-size: var(--text-base);
+
+    .option-title {
+        font-size: 16px;
     }
-    
+
     .option-desc {
-        font-size: var(--text-xs);
+        font-size: 13px;
     }
-    
-    .button-group {
-        flex-direction: column;
-        gap: var(--spacing-sm);
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 16px 24px;
+        font-size: 15px;
     }
-    
-    .btn-next,
-    .btn-back {
-        width: 100%;
-        padding: var(--spacing-sm) var(--spacing-md);
+
+    .btn-group {
+        gap: 12px;
     }
-    
-    .result-content {
-        padding: var(--spacing-md);
+
+    .score {
+        padding: 24px;
     }
-    
-    .result-emoji {
-        font-size: 3rem;
+
+    .score-value {
+        font-size: 28px;
     }
-    
-    .score-display {
-        padding: var(--spacing-md);
-    }
-    
+
     .btn-calendar {
-        padding: var(--spacing-md) var(--spacing-lg);
-        font-size: var(--text-base);
+        padding: 18px 28px;
+        font-size: 16px;
     }
-    
-    .footer {
-        padding: var(--spacing-xl) 0;
+
+    .recommendations li {
+        font-size: 14px;
     }
 }
+</html>let current = 1;
+const total = 5;
 
-/* Very small mobile */
-@media (max-width: 375px) {
-    .form-input {
-        padding: var(--spacing-sm) var(--spacing-md);
-        font-size: var(--text-base);
-    }
+function updateProgress() {
+    const bar = document.getElementById('progressBar');
+    const text = document.getElementById('progressText');
+    const percent = (current / total) * 100;
     
-    .option-content {
-        flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
-    }
-    
-    .option-emoji {
-        font-size: var(--text-xl);
-    }
-}// ===================================
-// CONFIGURACIÓN
-// ===================================
-const FORM_CONFIG = {
-    actionUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfrZJ6D9XYbEe7TeS7tDFRCsxCKrUvZ5eHwPWlurafa8y05Vg/formResponse",
-    fields: {
-        name: "entry.2075494202",
-        email: "entry.1328353491",
-        pain: "entry.966237849",
-        hours: "entry.1755668548",
-        goal: "entry.1765053966"
-    }
-};
-
-// Variables globales
-let currentQuestion = 1;
-let userScore = 0;
-const totalQuestions = 5;
-
-// ===================================
-// MAPEO DE PUNTUACIONES
-// ===================================
-const SCORE_MAP = {
-    pain: {
-        "Pérdida de leads": 25,
-        "Contenido inconsistente": 20,
-        "Tiempo perdido": 30,
-        "Todo junto": 40
-    },
-    hours: {
-        "Menos de 5h": 10,
-        "5-10h": 25,
-        "10-15h": 35,
-        "Más de 15h": 50
-    },
-    goal: {
-        "Sistematizar": 20,
-        "Crecer": 25,
-        "Lanzar": 35,
-        "Sobrevivir": 40
-    }
-};
-
-// ===================================
-// PLANTILLAS DE RESULTADOS
-// ===================================
-const RESULT_TEMPLATES = {
-    low: {
-        emoji: "😌",
-        title: "¡Buen control operativo!",
-        text: "Tienes bases sólidas, pero hay optimizaciones que pueden liberarte más tiempo.",
-        recommendations: [
-            "Automatización básica de seguimiento de leads",
-            "Plantillas para contenido recurrente",
-            "Sistema de archivo centralizado"
-        ]
-    },
-    medium: {
-        emoji: "🎯",
-        title: "¡Oportunidad de mejora significativa!",
-        text: "El desorden está limitando tu crecimiento. Con ajustes estratégicos, podrías duplicar tu productividad.",
-        recommendations: [
-            "Sistema operativo completo en Notion",
-            "Flujos automatizados para leads",
-            "Calendario editorial integrado",
-            "Kit de IA para respuestas frecuentes"
-        ]
-    },
-    high: {
-        emoji: "🚨",
-        title: "¡Intervención prioritaria necesaria!",
-        text: "Estás perdiendo oportunidades valiosas cada semana. Necesitas un sistema inmediato para no seguir dejando dinero sobre la mesa.",
-        recommendations: [
-            "Implementación URGENTE de sistema central",
-            "Recuperación de leads perdidos (protocolo especial)",
-            "Entrenamiento intensivo de 5 días",
-            "Soporte prioritario semanal"
-        ]
-    }
-};
-
-// ===================================
-// LOCAL STORAGE
-// ===================================
-function saveToLocalStorage(key, value) {
-    try {
-        localStorage.setItem(`sistema_cerebro_${key}`, value);
-    } catch (e) {
-        console.error('Error al guardar en localStorage:', e);
-    }
+    bar.style.width = percent + '%';
+    text.textContent = `Pregunta ${current} de ${total}`;
 }
 
-function loadFromLocalStorage(key) {
-    try {
-        return localStorage.getItem(`sistema_cerebro_${key}`);
-    } catch (e) {
-        console.error('Error al cargar de localStorage:', e);
-        return null;
-    }
-}
-
-function clearLocalStorage() {
-    const keys = ['name', 'email', 'pain', 'hours', 'goal', 'last_score', 'last_level'];
-    keys.forEach(key => {
-        try {
-            localStorage.removeItem(`sistema_cerebro_${key}`);
-        } catch (e) {
-            console.error('Error al limpiar localStorage:', e);
+function validate(q) {
+    const question = document.querySelector(`.question[data-q="${q}"]`);
+    
+    const input = question.querySelector('input[type="text"], input[type="email"]');
+    if (input) {
+        if (!input.value.trim()) {
+            input.focus();
+            return false;
         }
-    });
-}
-
-// ===================================
-// NAVEGACIÓN
-// ===================================
-function nextQuestion(nextId) {
-    if (!validateCurrentQuestion()) {
-        showError("Por favor, completa la pregunta actual.");
-        return;
-    }
-    
-    // Ocultar pregunta actual
-    document.getElementById(`q${currentQuestion}`).classList.remove('active');
-    
-    // Mostrar siguiente pregunta
-    document.getElementById(`q${nextId}`).classList.add('active');
-    
-    // Actualizar progreso
-    updateProgressBar(nextId);
-    
-    // Actualizar número de pregunta actual
-    currentQuestion = nextId;
-    
-    // Scroll suave hacia arriba
-    scrollToTop();
-}
-
-function prevQuestion(prevId) {
-    // Ocultar pregunta actual
-    document.getElementById(`q${currentQuestion}`).classList.remove('active');
-    
-    // Mostrar pregunta anterior
-    document.getElementById(`q${prevId}`).classList.add('active');
-    
-    // Actualizar progreso
-    updateProgressBar(prevId);
-    
-    // Actualizar número de pregunta actual
-    currentQuestion = prevId;
-    
-    // Scroll suave hacia arriba
-    scrollToTop();
-}
-
-function scrollToTop() {
-    const questionnaireSection = document.getElementById('cuestionario');
-    if (questionnaireSection) {
-        questionnaireSection.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
-// ===================================
-// VALIDACIÓN
-// ===================================
-function validateQuestion(qNumber, type) {
-    let isValid = false;
-    let errorMessage = "";
-    
-    switch(type) {
-        case 'text':
-            const textInput = document.querySelector(`#q${qNumber} .form-input`);
-            isValid = textInput && textInput.value.trim().length >= 2;
-            errorMessage = "Por favor, ingresa tu nombre completo (mínimo 2 caracteres).";
-            break;
-            
-        case 'email':
-            const emailInput = document.querySelector(`#q${qNumber} .form-input`);
+        if (input.type === 'email') {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            isValid = emailInput && emailRegex.test(emailInput.value.trim());
-            errorMessage = "Por favor, ingresa un email válido.";
-            break;
-            
-        case 'radio':
-            const radioSelected = document.querySelector(`#q${qNumber} input[type="radio"]:checked`);
-            isValid = radioSelected !== null;
-            errorMessage = "Por favor, selecciona una opción.";
-            break;
-    }
-    
-    if (isValid) {
-        nextQuestion(qNumber + 1);
-    } else {
-        showError(errorMessage);
-    }
-}
-
-function validateCurrentQuestion() {
-    const questionEl = document.getElementById(`q${currentQuestion}`);
-    if (!questionEl) return false;
-    
-    if (currentQuestion <= 2) {
-        // Preguntas 1-2: Campos de texto/email
-        const input = questionEl.querySelector('.form-input');
-        if (!input || !input.value.trim()) return false;
-        
-        if (currentQuestion === 2) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(input.value.trim());
-        }
-        return input.value.trim().length >= 2;
-    } else {
-        // Preguntas 3-5: Radio buttons
-        return questionEl.querySelector('input[type="radio"]:checked') !== null;
-    }
-}
-
-// ===================================
-// BARRA DE PROGRESO
-// ===================================
-function updateProgressBar(questionId) {
-    const progressPercentage = (questionId / totalQuestions) * 100;
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
-    
-    if (progressFill) {
-        progressFill.style.width = `${progressPercentage}%`;
-    }
-    
-    if (progressText) {
-        progressText.textContent = `Pregunta ${questionId} de ${totalQuestions}`;
-    }
-}
-
-// ===================================
-// MENSAJES DE ERROR
-// ===================================
-function showError(message) {
-    // Buscar o crear elemento de error
-    const currentQuestionEl = document.getElementById(`q${currentQuestion}`);
-    if (!currentQuestionEl) return;
-    
-    let errorEl = currentQuestionEl.querySelector('.error-message');
-    
-    if (!errorEl) {
-        errorEl = document.createElement('div');
-        errorEl.className = 'error-message';
-        const questionContent = currentQuestionEl.querySelector('.question-content');
-        if (questionContent) {
-            // Insertar antes de los botones
-            const buttonGroup = questionContent.querySelector('.button-group, .btn-next');
-            if (buttonGroup) {
-                buttonGroup.parentNode.insertBefore(errorEl, buttonGroup);
-            } else {
-                questionContent.appendChild(errorEl);
+            if (!emailRegex.test(input.value)) {
+                input.focus();
+                return false;
             }
         }
     }
     
-    errorEl.textContent = message;
-    errorEl.style.display = 'block';
+    const radios = question.querySelectorAll('input[type="radio"]');
+    if (radios.length > 0) {
+        const checked = question.querySelector('input[type="radio"]:checked');
+        if (!checked) return false;
+    }
     
-    // Ocultar después de 4 segundos
-    setTimeout(() => {
-        errorEl.style.display = 'none';
-    }, 4000);
+    return true;
 }
 
-// ===================================
-// CALCULAR PUNTUACIÓN Y ENVIAR
-// ===================================
-function calculateScoreAndSubmit() {
-    if (!validateCurrentQuestion()) {
-        showError("Por favor, completa la pregunta actual.");
+function next(q) {
+    if (!validate(q)) {
+        alert('Por favor completa esta pregunta');
         return;
     }
     
-    // Calcular puntuación
-    userScore = 0;
-    
-    // Obtener valores de las respuestas
-    const painValue = document.querySelector('input[name="entry.966237849"]:checked')?.value;
-    const hoursValue = document.querySelector('input[name="entry.1755668548"]:checked')?.value;
-    const goalValue = document.querySelector('input[name="entry.1765053966"]:checked')?.value;
-    
-    // Sumar puntuaciones
-    if (painValue && SCORE_MAP.pain[painValue]) {
-        userScore += SCORE_MAP.pain[painValue];
+    document.querySelector(`.question[data-q="${q}"]`).classList.remove('active');
+    current = q + 1;
+    document.querySelector(`.question[data-q="${current}"]`).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prev(q) {
+    document.querySelector(`.question[data-q="${q}"]`).classList.remove('active');
+    current = q - 1;
+    document.querySelector(`.question[data-q="${current}"]`).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function finish() {
+    if (!validate(5)) {
+        alert('Por favor completa esta pregunta');
+        return;
     }
-    if (hoursValue && SCORE_MAP.hours[hoursValue]) {
-        userScore += SCORE_MAP.hours[hoursValue];
-    }
-    if (goalValue && SCORE_MAP.goal[goalValue]) {
-        userScore += SCORE_MAP.goal[goalValue];
-    }
     
-    // Enviar formulario
-    submitToGoogleForms();
+    document.getElementById('mainForm').submit();
     
-    // Mostrar resultados después de un breve delay
     setTimeout(() => {
-        showResult();
+        document.getElementById('mainForm').style.display = 'none';
+        document.querySelector('.progress-wrapper').style.display = 'none';
+        document.querySelector('.progress-text').style.display = 'none';
+        document.getElementById('result').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 500);
 }
 
-// ===================================
-// ENVIAR A GOOGLE FORMS
-// ===================================
-function submitToGoogleForms() {
-    try {
-        const form = document.getElementById('diagnosisForm');
-        if (form) {
-            form.submit();
-            console.log('✓ Formulario enviado a Google Forms');
-            console.log('✓ Puntuación calculada:', userScore);
-        }
-    } catch (error) {
-        console.error('Error al enviar formulario:', error);
-    }
-}
-
-// ===================================
-// MOSTRAR RESULTADOS
-// ===================================
-function showResult() {
-    // Ocultar última pregunta y formulario
-    const lastQuestion = document.getElementById(`q${currentQuestion}`);
-    const form = document.getElementById('diagnosisForm');
-    
-    if (lastQuestion) {
-        lastQuestion.classList.remove('active');
-    }
-    if (form) {
-        form.style.display = 'none';
-    }
-    
-    // Determinar nivel según puntuación
-    let resultLevel;
-    if (userScore >= 100) {
-        resultLevel = 'high';
-    } else if (userScore >= 60) {
-        resultLevel = 'medium';
-    } else {
-        resultLevel = 'low';
-    }
-    
-    const template = RESULT_TEMPLATES[resultLevel];
-    
-    // Actualizar UI con resultados
-    const resultEmoji = document.getElementById('resultEmoji');
-    const resultTitle = document.getElementById('resultTitle');
-    const resultText = document.getElementById('resultText');
-    const urgencyScore = document.getElementById('urgencyScore');
-    const scoreValue = document.getElementById('scoreValue');
-    const recList = document.getElementById('recommendationList');
-    const calendarLink = document.getElementById('calendarLink');
-    
-    if (resultEmoji) resultEmoji.textContent = template.emoji;
-    if (resultTitle) resultTitle.textContent = template.title;
-    if (resultText) resultText.textContent = template.text;
-    
-    // Actualizar barra de puntuación con animación
-    const scorePercentage = Math.min(Math.round((userScore / 130) * 100), 100);
-    
-    if (urgencyScore) {
-        setTimeout(() => {
-            urgencyScore.style.width = `${scorePercentage}%`;
-        }, 300);
-    }
-    
-    if (scoreValue) {
-        scoreValue.textContent = `${scorePercentage}%`;
-    }
-    
-    // Actualizar recomendaciones
-    if (recList) {
-        recList.innerHTML = '';
-        template.recommendations.forEach(rec => {
-            const li = document.createElement('li');
-            li.textContent = rec;
-            recList.appendChild(li);
-        });
-    }
-    
-    // Configurar link de Google Calendar
-    if (calendarLink && resultLevel === 'high') {
-        calendarLink.innerHTML = '🚨 AGENDAR CONSULTA URGENTE (30 min gratis)';
-        calendarLink.style.background = '#EF4444';
-    }
-    
-    // Mostrar resultado
-    const resultEl = document.getElementById('result');
-    if (resultEl) {
-        resultEl.style.display = 'block';
-        
-        // Desplazar hacia el resultado
-        setTimeout(() => {
-            resultEl.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }, 100);
-    }
-    
-    // Guardar en localStorage
-    saveToLocalStorage('last_score', userScore);
-    saveToLocalStorage('last_level', resultLevel);
-}
-
-// ===================================
-// REINICIAR CUESTIONARIO
-// ===================================
-function resetQuestionnaire() {
-    // Reiniciar variables
-    currentQuestion = 1;
-    userScore = 0;
-    
-    // Reiniciar UI
-    const questions = document.querySelectorAll('.question');
-    questions.forEach(q => q.classList.remove('active'));
-    
-    const firstQuestion = document.getElementById('q1');
-    if (firstQuestion) {
-        firstQuestion.classList.add('active');
-    }
-    
-    const resultEl = document.getElementById('result');
-    if (resultEl) {
-        resultEl.style.display = 'none';
-    }
-    
-    const form = document.getElementById('diagnosisForm');
-    if (form) {
-        form.style.display = 'block';
-        form.reset();
-    }
-    
-    // Resetear barra de progreso
-    updateProgressBar(1);
-    
-    const urgencyScore = document.getElementById('urgencyScore');
-    if (urgencyScore) {
-        urgencyScore.style.width = '0';
-    }
-    
-    // Limpiar localStorage
-    clearLocalStorage();
-    
-    // Desplazar hacia el cuestionario
-    scrollToTop();
-}
-
-// ===================================
-// CARGAR DATOS GUARDADOS
-// ===================================
-function loadSavedData() {
-    const savedName = loadFromLocalStorage('name');
-    const savedEmail = loadFromLocalStorage('email');
-    
-    const nameInput = document.getElementById('entry_2075494202');
-    const emailInput = document.getElementById('entry_1328353491');
-    
-    if (savedName && nameInput) {
-        nameInput.value = savedName;
-    }
-    if (savedEmail && emailInput) {
-        emailInput.value = savedEmail;
-    }
-}
-
-// ===================================
-// INICIALIZACIÓN
-// ===================================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('✓ Sistema Cerebro inicializado');
-    
-    // Configurar progreso inicial
-    updateProgressBar(1);
-    
-    // Cargar datos guardados
-    loadSavedData();
-    
-    // Manejar envío del formulario
-    const form = document.getElementById('diagnosisForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            // El formulario se envía normalmente al iframe oculto
-            // Después de 1 segundo, verificar que se muestre el resultado
-            setTimeout(() => {
-                const resultEl = document.getElementById('result');
-                if (resultEl && resultEl.style.display !== 'block') {
-                    showResult();
-                }
-            }, 1000);
-        });
-    }
-    
-    // Smooth scroll para los CTAs
-    const ctaButtons = document.querySelectorAll('a[href="#cuestionario"]');
-    ctaButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.getElementById('cuestionario');
-            if (target) {
-                target.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    
-    console.log('✓ Event listeners configurados');
-});
-
-// ===================================
-// PREVENIR PÉRDIDA DE DATOS
-// ===================================
-window.addEventListener('beforeunload', function(e) {
-    // Solo advertir si el usuario está en medio del cuestionario
-    if (currentQuestion > 1 && currentQuestion <= totalQuestions) {
-        const confirmationMessage = '¿Seguro que quieres salir? Perderás tu progreso.';
-        e.returnValue = confirmationMessage;
-        return confirmationMessage;
-    }
-});// ===================================
-// CONFIGURACIÓN
-// ===================================
-const FORM_CONFIG = {
-    actionUrl: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSfrZJ6D9XYbEe7TeS7tDFRCsxCKrUvZ5eHwPWlurafa8y05Vg/formResponse",
-    fields: {
-        name: "entry.2075494202",
-        email: "entry.1328353491",
-        pain: "entry.966237849",
-        hours: "entry.1755668548",
-        goal: "entry.1765053966"
-    }
-};
-
-// Variables globales
-let currentQuestion = 1;
-let userScore = 0;
-const totalQuestions = 5;
-
-// ===================================
-// MAPEO DE PUNTUACIONES
-// ===================================
-const SCORE_MAP = {
-    pain: {
-        "Pérdida de leads": 25,
-        "Contenido inconsistente": 20,
-        "Tiempo perdido": 30,
-        "Todo junto": 40
-    },
-    hours: {
-        "Menos de 5h": 10,
-        "5-10h": 25,
-        "10-15h": 35,
-        "Más de 15h": 50
-    },
-    goal: {
-        "Sistematizar": 20,
-        "Crecer": 25,
-        "Lanzar": 35,
-        "Sobrevivir": 40
-    }
-};
-
-// ===================================
-// PLANTILLAS DE RESULTADOS
-// ===================================
-const RESULT_TEMPLATES = {
-    low: {
-        emoji: "😌",
-        title: "¡Buen control operativo!",
-        text: "Tienes bases sólidas, pero hay optimizaciones que pueden liberarte más tiempo.",
-        recommendations: [
-            "Automatización básica de seguimiento de leads",
-            "Plantillas para contenido recurrente",
-            "Sistema de archivo centralizado"
-        ]
-    },
-    medium: {
-        emoji: "🎯",
-        title: "¡Oportunidad de mejora significativa!",
-        text: "El desorden está limitando tu crecimiento. Con ajustes estratégicos, podrías duplicar tu productividad.",
-        recommendations: [
-            "Sistema operativo completo en Notion",
-            "Flujos automatizados para leads",
-            "Calendario editorial integrado",
-            "Kit de IA para respuestas frecuentes"
-        ]
-    },
-    high: {
-        emoji: "🚨",
-        title: "¡Intervención prioritaria necesaria!",
-        text: "Estás perdiendo oportunidades valiosas cada semana. Necesitas un sistema inmediato para no seguir dejando dinero sobre la mesa.",
-        recommendations: [
-            "Implementación URGENTE de sistema central",
-            "Recuperación de leads perdidos (protocolo especial)",
-            "Entrenamiento intensivo de 5 días",
-            "Soporte prioritario semanal"
-        ]
-    }
-};
-
-// ===================================
-// LOCAL STORAGE
-// ===================================
-function saveToLocalStorage(key, value) {
-    try {
-        localStorage.setItem(`sistema_cerebro_${key}`, value);
-    } catch (e) {
-        console.error('Error al guardar en localStorage:', e);
-    }
-}
-
-function loadFromLocalStorage(key) {
-    try {
-        return localStorage.getItem(`sistema_cerebro_${key}`);
-    } catch (e) {
-        console.error('Error al cargar de localStorage:', e);
-        return null;
-    }
-}
-
-function clearLocalStorage() {
-    const keys = ['name', 'email', 'pain', 'hours', 'goal', 'last_score', 'last_level'];
-    keys.forEach(key => {
-        try {
-            localStorage.removeItem(`sistema_cerebro_${key}`);
-        } catch (e) {
-            console.error('Error al limpiar localStorage:', e);
-        }
-    });
-}
-
-// ===================================
-// NAVEGACIÓN
-// ===================================
-function nextQuestion(nextId) {
-    if (!validateCurrentQuestion()) {
-        showError("Por favor, completa la pregunta actual.");
-        return;
-    }
-    
-    // Ocultar pregunta actual
-    document.getElementById(`q${currentQuestion}`).classList.remove('active');
-    
-    // Mostrar siguiente pregunta
-    document.getElementById(`q${nextId}`).classList.add('active');
-    
-    // Actualizar progreso
-    updateProgressBar(nextId);
-    
-    // Actualizar número de pregunta actual
-    currentQuestion = nextId;
-    
-    // Scroll suave hacia arriba
-    scrollToTop();
-}
-
-function prevQuestion(prevId) {
-    // Ocultar pregunta actual
-    document.getElementById(`q${currentQuestion}`).classList.remove('active');
-    
-    // Mostrar pregunta anterior
-    document.getElementById(`q${prevId}`).classList.add('active');
-    
-    // Actualizar progreso
-    updateProgressBar(prevId);
-    
-    // Actualizar número de pregunta actual
-    currentQuestion = prevId;
-    
-    // Scroll suave hacia arriba
-    scrollToTop();
-}
-
-function scrollToTop() {
-    const questionnaireSection = document.getElementById('cuestionario');
-    if (questionnaireSection) {
-        questionnaireSection.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
-// ===================================
-// VALIDACIÓN
-// ===================================
-function validateQuestion(qNumber, type) {
-    let isValid = false;
-    let errorMessage = "";
-    
-    switch(type) {
-        case 'text':
-            const textInput = document.querySelector(`#q${qNumber} .form-input`);
-            isValid = textInput && textInput.value.trim().length >= 2;
-            errorMessage = "Por favor, ingresa tu nombre completo (mínimo 2 caracteres).";
-            break;
-            
-        case 'email':
-            const emailInput = document.querySelector(`#q${qNumber} .form-input`);
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            isValid = emailInput && emailRegex.test(emailInput.value.trim());
-            errorMessage = "Por favor, ingresa un email válido.";
-            break;
-            
-        case 'radio':
-            const radioSelected = document.querySelector(`#q${qNumber} input[type="radio"]:checked`);
-            isValid = radioSelected !== null;
-            errorMessage = "Por favor, selecciona una opción.";
-            break;
-    }
-    
-    if (isValid) {
-        nextQuestion(qNumber + 1);
-    } else {
-        showError(errorMessage);
-    }
-}
-
-function validateCurrentQuestion() {
-    const questionEl = document.getElementById(`q${currentQuestion}`);
-    if (!questionEl) return false;
-    
-    if (currentQuestion <= 2) {
-        // Preguntas 1-2: Campos de texto/email
-        const input = questionEl.querySelector('.form-input');
-        if (!input || !input.value.trim()) return false;
-        
-        if (currentQuestion === 2) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(input.value.trim());
-        }
-        return input.value.trim().length >= 2;
-    } else {
-        // Preguntas 3-5: Radio buttons
-        return questionEl.querySelector('input[type="radio"]:checked') !== null;
-    }
-}
-
-// ===================================
-// BARRA DE PROGRESO
-// ===================================
-function updateProgressBar(questionId) {
-    const progressPercentage = (questionId / totalQuestions) * 100;
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
-    
-    if (progressFill) {
-        progressFill.style.width = `${progressPercentage}%`;
-    }
-    
-    if (progressText) {
-        progressText.textContent = `Pregunta ${questionId} de ${totalQuestions}`;
-    }
-}
-
-// ===================================
-// MENSAJES DE ERROR
-// ===================================
-function showError(message) {
-    // Buscar o crear elemento de error
-    const currentQuestionEl = document.getElementById(`q${currentQuestion}`);
-    if (!currentQuestionEl) return;
-    
-    let errorEl = currentQuestionEl.querySelector('.error-message');
-    
-    if (!errorEl) {
-        errorEl = document.createElement('div');
-        errorEl.className = 'error-message';
-        const questionContent = currentQuestionEl.querySelector('.question-content');
-        if (questionContent) {
-            // Insertar antes de los botones
-            const buttonGroup = questionContent.querySelector('.button-group, .btn-next');
-            if (buttonGroup) {
-                buttonGroup.parentNode.insertBefore(errorEl, buttonGroup);
-            } else {
-                questionContent.appendChild(errorEl);
-            }
-        }
-    }
-    
-    errorEl.textContent = message;
-    errorEl.style.display = 'block';
-    
-    // Ocultar después de 4 segundos
-    setTimeout(() => {
-        errorEl.style.display = 'none';
-    }, 4000);
-}
-
-// ===================================
-// CALCULAR PUNTUACIÓN Y ENVIAR
-// ===================================
-function calculateScoreAndSubmit() {
-    if (!validateCurrentQuestion()) {
-        showError("Por favor, completa la pregunta actual.");
-        return;
-    }
-    
-    // Calcular puntuación
-    userScore = 0;
-    
-    // Obtener valores de las respuestas
-    const painValue = document.querySelector('input[name="entry.966237849"]:checked')?.value;
-    const hoursValue = document.querySelector('input[name="entry.1755668548"]:checked')?.value;
-    const goalValue = document.querySelector('input[name="entry.1765053966"]:checked')?.value;
-    
-    // Sumar puntuaciones
-    if (painValue && SCORE_MAP.pain[painValue]) {
-        userScore += SCORE_MAP.pain[painValue];
-    }
-    if (hoursValue && SCORE_MAP.hours[hoursValue]) {
-        userScore += SCORE_MAP.hours[hoursValue];
-    }
-    if (goalValue && SCORE_MAP.goal[goalValue]) {
-        userScore += SCORE_MAP.goal[goalValue];
-    }
-    
-    // Enviar formulario
-    submitToGoogleForms();
-    
-    // Mostrar resultados después de un breve delay
-    setTimeout(() => {
-        showResult();
-    }, 500);
-}
-
-// ===================================
-// ENVIAR A GOOGLE FORMS
-// ===================================
-function submitToGoogleForms() {
-    try {
-        const form = document.getElementById('diagnosisForm');
-        if (form) {
-            form.submit();
-            console.log('✓ Formulario enviado a Google Forms');
-            console.log('✓ Puntuación calculada:', userScore);
-        }
-    } catch (error) {
-        console.error('Error al enviar formulario:', error);
-    }
-}
-
-// ===================================
-// MOSTRAR RESULTADOS
-// ===================================
-function showResult() {
-    // Ocultar última pregunta y formulario
-    const lastQuestion = document.getElementById(`q${currentQuestion}`);
-    const form = document.getElementById('diagnosisForm');
-    
-    if (lastQuestion) {
-        lastQuestion.classList.remove('active');
-    }
-    if (form) {
-        form.style.display = 'none';
-    }
-    
-    // Determinar nivel según puntuación
-    let resultLevel;
-    if (userScore >= 100) {
-        resultLevel = 'high';
-    } else if (userScore >= 60) {
-        resultLevel = 'medium';
-    } else {
-        resultLevel = 'low';
-    }
-    
-    const template = RESULT_TEMPLATES[resultLevel];
-    
-    // Actualizar UI con resultados
-    const resultEmoji = document.getElementById('resultEmoji');
-    const resultTitle = document.getElementById('resultTitle');
-    const resultText = document.getElementById('resultText');
-    const urgencyScore = document.getElementById('urgencyScore');
-    const scoreValue = document.getElementById('scoreValue');
-    const recList = document.getElementById('recommendationList');
-    const calendarLink = document.getElementById('calendarLink');
-    
-    if (resultEmoji) resultEmoji.textContent = template.emoji;
-    if (resultTitle) resultTitle.textContent = template.title;
-    if (resultText) resultText.textContent = template.text;
-    
-    // Actualizar barra de puntuación con animación
-    const scorePercentage = Math.min(Math.round((userScore / 130) * 100), 100);
-    
-    if (urgencyScore) {
-        setTimeout(() => {
-            urgencyScore.style.width = `${scorePercentage}%`;
-        }, 300);
-    }
-    
-    if (scoreValue) {
-        scoreValue.textContent = `${scorePercentage}%`;
-    }
-    
-    // Actualizar recomendaciones
-    if (recList) {
-        recList.innerHTML = '';
-        template.recommendations.forEach(rec => {
-            const li = document.createElement('li');
-            li.textContent = rec;
-            recList.appendChild(li);
-        });
-    }
-    
-    // Configurar link de Google Calendar
-    if (calendarLink && resultLevel === 'high') {
-        calendarLink.innerHTML = '🚨 AGENDAR CONSULTA URGENTE (30 min gratis)';
-        calendarLink.style.background = '#EF4444';
-    }
-    
-    // Mostrar resultado
-    const resultEl = document.getElementById('result');
-    if (resultEl) {
-        resultEl.style.display = 'block';
-        
-        // Desplazar hacia el resultado
-        setTimeout(() => {
-            resultEl.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }, 100);
-    }
-    
-    // Guardar en localStorage
-    saveToLocalStorage('last_score', userScore);
-    saveToLocalStorage('last_level', resultLevel);
-}
-
-// ===================================
-// REINICIAR CUESTIONARIO
-// ===================================
-function resetQuestionnaire() {
-    // Reiniciar variables
-    currentQuestion = 1;
-    userScore = 0;
-    
-    // Reiniciar UI
-    const questions = document.querySelectorAll('.question');
-    questions.forEach(q => q.classList.remove('active'));
-    
-    const firstQuestion = document.getElementById('q1');
-    if (firstQuestion) {
-        firstQuestion.classList.add('active');
-    }
-    
-    const resultEl = document.getElementById('result');
-    if (resultEl) {
-        resultEl.style.display = 'none';
-    }
-    
-    const form = document.getElementById('diagnosisForm');
-    if (form) {
-        form.style.display = 'block';
-        form.reset();
-    }
-    
-    // Resetear barra de progreso
-    updateProgressBar(1);
-    
-    const urgencyScore = document.getElementById('urgencyScore');
-    if (urgencyScore) {
-        urgencyScore.style.width = '0';
-    }
-    
-    // Limpiar localStorage
-    clearLocalStorage();
-    
-    // Desplazar hacia el cuestionario
-    scrollToTop();
-}
-
-// ===================================
-// CARGAR DATOS GUARDADOS
-// ===================================
-function loadSavedData() {
-    const savedName = loadFromLocalStorage('name');
-    const savedEmail = loadFromLocalStorage('email');
-    
-    const nameInput = document.getElementById('entry_2075494202');
-    const emailInput = document.getElementById('entry_1328353491');
-    
-    if (savedName && nameInput) {
-        nameInput.value = savedName;
-    }
-    if (savedEmail && emailInput) {
-        emailInput.value = savedEmail;
-    }
-}
-
-// ===================================
-// INICIALIZACIÓN
-// ===================================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('✓ Sistema Cerebro inicializado');
-    
-    // Configurar progreso inicial
-    updateProgressBar(1);
-    
-    // Cargar datos guardados
-    loadSavedData();
-    
-    // Manejar envío del formulario
-    const form = document.getElementById('diagnosisForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            // El formulario se envía normalmente al iframe oculto
-            // Después de 1 segundo, verificar que se muestre el resultado
-            setTimeout(() => {
-                const resultEl = document.getElementById('result');
-                if (resultEl && resultEl.style.display !== 'block') {
-                    showResult();
-                }
-            }, 1000);
-        });
-    }
-    
-    // Smooth scroll para los CTAs
-    const ctaButtons = document.querySelectorAll('a[href="#cuestionario"]');
-    ctaButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.getElementById('cuestionario');
-            if (target) {
-                target.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-    
-    console.log('✓ Event listeners configurados');
-});
-
-// ===================================
-// PREVENIR PÉRDIDA DE DATOS
-// ===================================
-window.addEventListener('beforeunload', function(e) {
-    // Solo advertir si el usuario está en medio del cuestionario
-    if (currentQuestion > 1 && currentQuestion <= totalQuestions) {
-        const confirmationMessage = '¿Seguro que quieres salir? Perderás tu progreso.';
-        e.returnValue = confirmationMessage;
-        return confirmationMessage;
-    }
-});
+updateProgress();
