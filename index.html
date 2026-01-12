@@ -13,11 +13,33 @@
         .animate-bounce {
             animation: bounce 1s infinite;
         }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-pulse-subtle {
+            animation: pulse 2s infinite;
+        }
         .transition-all {
             transition: all 0.3s ease;
         }
         .gradient-bg {
             background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+        .whatsapp-button {
+            animation: pulse 2s infinite;
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
@@ -37,16 +59,32 @@
         </div>
     </header>
 
+    <!-- Botón Flotante de WhatsApp con Leyenda Permanente -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/543517578864?text=Hola!%20Vi%20tu%20Sistema%20Cerebro%20y%20tengo%20preguntas" 
+           target="_blank" 
+           class="flex flex-col items-end gap-2">
+            <div class="bg-gray-900 text-white text-sm px-4 py-2 rounded-lg shadow-lg whitespace-nowrap">
+                ¡Sácate todas las dudas acá!
+            </div>
+            <div class="whatsapp-button w-14 h-14 md:w-16 md:h-16 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:shadow-green-500/50 transition-all hover:scale-110">
+                <svg class="w-8 h-8 md:w-9 md:h-9 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+            </div>
+        </a>
+    </div>
+
     <!-- Contenido Principal -->
     <div id="app-container">
         <!-- Hero Section -->
         <section id="hero-section" class="pt-32 pb-20 px-4">
             <div class="max-w-4xl mx-auto text-center">
                 <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                    Tu caos digital tiene solución en <span class="text-indigo-600">7 días</span>
+                    Ya no puedes seguir trabajando <span class="text-red-600">en el caos</span>
                 </h1>
                 <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-                    Descubre en 5 preguntas tu plan personalizado para recuperar 10-15 horas semanales
+                    Tienes clientes, generas ingresos... pero la desorganización te está robando 10-15 horas semanales y frenando tu crecimiento
                 </p>
                 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-3xl mx-auto">
@@ -55,16 +93,16 @@
                         <div class="text-sm text-gray-600">recuperadas/semana</div>
                     </div>
                     <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                        <div class="text-2xl font-bold text-indigo-600 mb-1">+40%</div>
-                        <div class="text-sm text-gray-600">conversión leads</div>
+                        <div class="text-2xl font-bold text-indigo-600 mb-1">7 días</div>
+                        <div class="text-sm text-gray-600">para implementar</div>
                     </div>
                     <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                        <div class="text-2xl font-bold text-indigo-600 mb-1">7 días</div>
-                        <div class="text-sm text-gray-600">implementación</div>
+                        <div class="text-2xl font-bold text-indigo-600 mb-1">0 leads</div>
+                        <div class="text-sm text-gray-600">perdidos nunca más</div>
                     </div>
                     <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
                         <div class="text-2xl font-bold text-indigo-600 mb-1">100%</div>
-                        <div class="text-sm text-gray-600">sin código</div>
+                        <div class="text-sm text-gray-600">claridad mental</div>
                     </div>
                 </div>
 
@@ -75,9 +113,134 @@
                     <span>Sin compromiso • 5 minutos • Resultados inmediatos</span>
                 </div>
 
-                <button onclick="startDiagnostico()" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl text-lg">
-                    Iniciar diagnóstico gratis
+                <button onclick="startDiagnostico()" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl text-lg animate-pulse-subtle">
+                    Descubre cuánto te está costando el caos
                 </button>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: La Solución a Tu Frustración -->
+        <section id="offer-section" class="py-16 px-4 bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 text-white">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                        Tu frustración tiene nombre:<br/>
+                        <span class="text-cyan-400">Trabajar duro sin ver resultados proporcionales</span>
+                    </h2>
+                    <p class="text-xl text-gray-300">
+                        Sabes que tu negocio podría estar 3x mejor organizado, pero no tienes tiempo ni claridad para construir la estructura que necesitas
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <!-- Tu cerebro centralizado -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-cyan-400/50 transition-all">
+                        <div class="text-4xl mb-4">🧠</div>
+                        <h3 class="text-2xl font-bold mb-4">Tu cerebro centralizado</h3>
+                        <p class="text-gray-300 mb-4">Todo lo que necesitas saber sobre tu negocio en un solo lugar, sin tener que recordar dónde guardaste qué.</p>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Visualiza tu negocio completo en una sola pantalla</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Ningún cliente se cae por falta de seguimiento</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Tu contenido planificado para el próximo mes</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Inteligencia que trabaja por ti -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-cyan-400/50 transition-all">
+                        <div class="text-4xl mb-4">⚡</div>
+                        <h3 class="text-2xl font-bold mb-4">Inteligencia que trabaja por ti</h3>
+                        <p class="text-gray-300 mb-4">Deja de inventar la rueda cada día. Acelera todo lo que haces con inteligencia integrada.</p>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>IA personalizada para tus conversaciones de venta</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Contenido listo para publicar en minutos</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Priorización automática de lo que realmente importa</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Acompañamiento real -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-cyan-400/50 transition-all">
+                        <div class="text-4xl mb-4">🤝</div>
+                        <h3 class="text-2xl font-bold mb-4">Acompañamiento real</h3>
+                        <p class="text-gray-300 mb-4">No te dejamos solo con una plantilla. Te ayudamos a implementar y ajustar hasta que funcione perfecto para ti.</p>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Sesión personalizada de 60 minutos</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>14 días de ajustes incluidos</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Comunidad de creadores en tu mismo camino</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- La transformación real -->
+                    <div class="bg-gradient-to-br from-cyan-600/20 to-indigo-600/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-cyan-400/50">
+                        <div class="text-4xl mb-4">🎯</div>
+                        <h3 class="text-2xl font-bold mb-4">La transformación real</h3>
+                        <p class="text-lg leading-relaxed">
+                            En 7 días dejas de <strong>apagar incendios</strong> y empiezas a <strong>construir tu negocio</strong> con estrategia y claridad.
+                        </p>
+                        <div class="mt-6 p-4 bg-white/10 rounded-lg">
+                            <p class="text-sm italic">
+                                "Finalmente puedo trabajar EN mi negocio, no solo PARA mi negocio"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA de la sección de oferta -->
+                <div class="text-center">
+                    <a href="https://calendar.app.google/nouPtky3ovsPPMmf8" 
+                       target="_blank"
+                       class="inline-flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-cyan-500 to-indigo-500 text-white rounded-xl font-bold text-lg hover:from-cyan-400 hover:to-indigo-400 transition-all shadow-2xl hover:shadow-cyan-500/50 hover:scale-105">
+                        <span>📞</span>
+                        <span>Agendar diagnóstico estratégico (30 min)</span>
+                    </a>
+                    <p class="mt-4 text-sm text-gray-300">
+                        Entendemos tu situación • Diseñamos tu roadmap • Sin presión
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -89,7 +252,7 @@
                     <div class="mb-8">
                         <h2 class="text-3xl font-bold text-gray-900 mb-3">Diagnóstico de Productividad Digital</h2>
                         <p class="text-gray-600 mb-6">
-                            Responde 5 preguntas cuidadosamente diseñadas para identificar exactamente dónde estás perdiendo tiempo y oportunidades.
+                            Responde 5 preguntas para identificar exactamente qué está frenando tu crecimiento y cuánto te está costando.
                         </p>
                         
                         <!-- Barra de progreso -->
@@ -155,13 +318,13 @@
                     <!-- CTA principal -->
                     <div class="bg-gradient-to-br from-indigo-50 to-cyan-50 rounded-xl p-6 mb-6">
                         <h3 class="text-xl font-bold text-gray-900 mb-3">
-                            Siguiente paso: Diagnóstico detallado gratuito
+                            Siguiente paso: Diagnóstico estratégico sin costo
                         </h3>
                         <p class="text-gray-600 mb-4">
-                            En una sesión de 30 minutos analizaremos tu situación específica y diseñaremos tu sistema personalizado. Sin compromiso, sin costo.
+                            En 30 minutos analizamos tu situación específica, identificamos las áreas de mayor oportunidad y diseñamos tu roadmap de implementación.
                         </p>
-                        <a href="https://calendar.app.google/RDVGp9yp9QYHf3J57" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl">
-                            📅 Agendar mi sesión gratuita de 30 minutos
+                        <a href="https://calendar.app.google/nouPtky3ovsPPMmf8" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl">
+                            📞 Agendar mi diagnóstico estratégico
                         </a>
                     </div>
 
@@ -169,7 +332,7 @@
                     <div class="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
                         <span class="text-green-600 text-xl">✉️</span>
                         <div class="text-sm text-green-800">
-                            <strong>Datos guardados.</strong> Nos pondremos en contacto contigo en las próximas 24 horas con recursos adicionales personalizados para tu situación.
+                            <strong>Diagnóstico guardado.</strong> Nos pondremos en contacto en las próximas 24 horas con un análisis más profundo de tu situación y recursos personalizados.
                         </div>
                     </div>
                 </div>
@@ -191,7 +354,7 @@
                     <button onclick="resetDiagnostico()" class="hover:text-white transition-colors">
                         Reiniciar diagnóstico
                     </button>
-                    <a href="mailto:contacto@sistemacerebro.com" class="hover:text-white transition-colors">
+                    <a href="mailto:juanpablorissoia@gmail.com" class="hover:text-white transition-colors">
                         Contacto
                     </a>
                 </div>
@@ -203,6 +366,18 @@
     </footer>
 
     <script>
+        // CONFIGURACIÓN DE GOOGLE FORMS
+        const GOOGLE_FORM_CONFIG = {
+            formId: 'YOUR_FORM_ID',
+            fields: {
+                nombre: 'entry.XXXXX',
+                email: 'entry.YYYYYY',
+                dolorPrincipal: 'entry.ZZZZZZ',
+                horasPerdidas: 'entry.AAAAAA',
+                objetivo90Dias: 'entry.BBBBBB'
+            }
+        };
+
         // Estado de la aplicación
         let currentQuestion = 0;
         let formData = {
@@ -229,35 +404,35 @@
             },
             {
                 id: 'dolorPrincipal',
-                text: '¿Qué te duele más en este momento?',
+                text: '¿Qué te está frenando más en este momento?',
                 type: 'choice',
                 options: [
-                    { value: 'leads', label: 'Pérdida de leads', icon: '📞', desc: 'Mensajes que no contesto, oportunidades que se escapan', points: 30 },
-                    { value: 'contenido', label: 'Contenido inconsistente', icon: '✍️', desc: 'Ideas que no publico, presencia irregular', points: 20 },
-                    { value: 'tiempo', label: 'Tiempo perdido', icon: '⏰', desc: 'Buscando archivos, organizando caos', points: 25 },
-                    { value: 'todo', label: 'Todo junto', icon: '🔥', desc: 'Caos general en mi operación', points: 40 }
+                    { value: 'leads', label: 'Clientes que se escapan', icon: '📞', desc: 'Mensajes sin responder, seguimientos que olvido, oportunidades que pierdo', points: 25 },
+                    { value: 'contenido', label: 'Inconsistencia visible', icon: '✍️', desc: 'Semanas sin publicar, ideas que nunca ejecuto, presencia irregular', points: 20 },
+                    { value: 'tiempo', label: 'Caos operativo', icon: '⏰', desc: 'Buscando archivos, reorganizando constantemente, sin claridad de prioridades', points: 25 },
+                    { value: 'todo', label: 'Estancamiento total', icon: '🔥', desc: 'Siento que trabajo mucho pero no avanzo, todo es urgente, nada tiene estructura', points: 35 }
                 ]
             },
             {
                 id: 'horasPerdidas',
-                text: '¿Cuántas horas semanales pierdes en organización?',
+                text: '¿Cuántas horas semanales pierdes en desorganización?',
                 type: 'choice',
                 options: [
-                    { value: '5', label: 'Menos de 5h', icon: '😐', desc: 'Molesto pero manejable', points: 10 },
-                    { value: '5-10', label: '5-10h', icon: '😟', desc: 'Afecta mi productividad', points: 25 },
-                    { value: '10-15', label: '10-15h', icon: '😩', desc: 'Limita mi crecimiento', points: 40 },
-                    { value: '15+', label: 'Más de 15h', icon: '🚨', desc: 'Urgente, necesito solución ya', points: 50 }
+                    { value: '5', label: 'Menos de 5h', icon: '😐', desc: 'Es molesto pero lo manejo', points: 10 },
+                    { value: '5-10', label: '5-10h', icon: '😟', desc: 'Está afectando mi productividad claramente', points: 20 },
+                    { value: '10-15', label: '10-15h', icon: '😩', desc: 'Me está impidiendo crecer', points: 35 },
+                    { value: '15+', label: 'Más de 15h', icon: '🚨', desc: 'Es insostenible, necesito cambiar esto ya', points: 45 }
                 ]
             },
             {
                 id: 'objetivo90Dias',
-                text: '¿Cuál es tu objetivo principal para los próximos 90 días?',
+                text: '¿Cuál es tu mayor necesidad para los próximos 90 días?',
                 type: 'choice',
                 options: [
-                    { value: 'sistematizar', label: 'Sistematizar', icon: '⚙️', desc: 'Trabajar menos con más resultados', points: 20 },
-                    { value: 'crecer', label: 'Crecer', icon: '📈', desc: 'Aumentar clientes e ingresos', points: 25 },
-                    { value: 'lanzar', label: 'Lanzar', icon: '🚀', desc: 'Producto o programa nuevo', points: 30 },
-                    { value: 'sobrevivir', label: 'Sobrevivir', icon: '🆘', desc: 'Solo orden para no volverme loco', points: 35 }
+                    { value: 'sistematizar', label: 'Estructura que funcione', icon: '⚙️', desc: 'Dejar de improvisar todo, tener procesos claros', points: 15 },
+                    { value: 'crecer', label: 'Escalar con orden', icon: '📈', desc: 'Aumentar ingresos sin aumentar el caos', points: 20 },
+                    { value: 'lanzar', label: 'Ejecutar un proyecto', icon: '🚀', desc: 'Lanzar algo nuevo con claridad y estructura', points: 25 },
+                    { value: 'sobrevivir', label: 'Recuperar el control', icon: '🆘', desc: 'Simplemente poder respirar y saber qué hacer cada día', points: 30 }
                 ]
             }
         ];
@@ -265,8 +440,10 @@
         // Iniciar diagnóstico
         function startDiagnostico() {
             document.getElementById('hero-section').classList.add('hidden');
+            document.getElementById('offer-section').classList.add('hidden');
             document.getElementById('diagnostico-section').classList.remove('hidden');
             renderQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Resetear diagnóstico
@@ -274,6 +451,7 @@
             currentQuestion = 0;
             formData = { nombre: '', email: '', dolorPrincipal: '', horasPerdidas: '', objetivo90Dias: '' };
             document.getElementById('hero-section').classList.remove('hidden');
+            document.getElementById('offer-section').classList.remove('hidden');
             document.getElementById('diagnostico-section').classList.add('hidden');
             document.getElementById('results-section').classList.add('hidden');
             hideError();
@@ -326,18 +504,15 @@
             hideError();
         }
 
-        // Actualizar datos del formulario
         function updateFormData(field, value) {
             formData[field] = value;
         }
 
-        // Seleccionar opción
         function selectOption(field, value) {
             formData[field] = value;
             renderQuestion();
         }
 
-        // Actualizar progreso
         function updateProgress() {
             const progress = ((currentQuestion + 1) / questions.length) * 100;
             document.getElementById('progress-bar').style.width = progress + '%';
@@ -345,7 +520,6 @@
                 `Pregunta ${currentQuestion + 1} de ${questions.length} • ${Math.round(progress)}% completado`;
         }
 
-        // Actualizar botones
         function updateButtons() {
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
@@ -363,7 +537,6 @@
             }
         }
 
-        // Validar campo actual
         function validateCurrentField() {
             const question = questions[currentQuestion];
             const value = formData[question.id];
@@ -389,18 +562,15 @@
             return true;
         }
 
-        // Mostrar error
         function showError(message) {
             document.getElementById('error-message').classList.remove('hidden');
             document.getElementById('error-text').textContent = message;
         }
 
-        // Ocultar error
         function hideError() {
             document.getElementById('error-message').classList.add('hidden');
         }
 
-        // Siguiente pregunta
         function nextQuestion() {
             if (!validateCurrentField()) return;
 
@@ -413,7 +583,6 @@
             }
         }
 
-        // Pregunta anterior
         function previousQuestion() {
             if (currentQuestion > 0) {
                 currentQuestion--;
@@ -422,14 +591,30 @@
             }
         }
 
-        // Enviar formulario
         function submitForm() {
-            // Aquí puedes agregar el código para enviar a Google Forms
-            // Por ahora solo mostramos los resultados
+            const score = calculateScore();
+            
+            const formUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/formResponse`;
+            const formDataToSend = new FormData();
+            formDataToSend.append(GOOGLE_FORM_CONFIG.fields.nombre, formData.nombre);
+            formDataToSend.append(GOOGLE_FORM_CONFIG.fields.email, formData.email);
+            formDataToSend.append(GOOGLE_FORM_CONFIG.fields.dolorPrincipal, formData.dolorPrincipal);
+            formDataToSend.append(GOOGLE_FORM_CONFIG.fields.horasPerdidas, formData.horasPerdidas);
+            formDataToSend.append(GOOGLE_FORM_CONFIG.fields.objetivo90Dias, formData.objetivo90Dias);
+            
+            fetch(formUrl, {
+                method: 'POST',
+                body: formDataToSend,
+                mode: 'no-cors'
+            }).then(() => {
+                console.log('Formulario enviado exitosamente');
+            }).catch(error => {
+                console.error('Error al enviar formulario:', error);
+            });
+            
             showResults();
         }
 
-        // Calcular puntuación
         function calculateScore() {
             let total = 0;
             questions.forEach(q => {
@@ -441,57 +626,56 @@
             return total;
         }
 
-        // Obtener resultado
         function getResult() {
             const score = calculateScore();
-            if (score <= 59) {
+            if (score <= 55) {
                 return {
                     emoji: '🧠',
-                    title: '¡Buen control operativo!',
-                    description: `Hola ${formData.nombre}, tienes una base sólida pero hay oportunidades claras de optimización. Con algunos ajustes estratégicos, podrías recuperar entre 5-8 horas semanales adicionales.`,
+                    title: 'Tienes base, pero hay fugas',
+                    description: `${formData.nombre}, tu negocio funciona pero está perdiendo potencial. Con la estructura correcta podrías recuperar 5-8 horas semanales que hoy se pierden en desorganización.`,
                     urgency: 40,
                     urgencyColor: 'bg-green-500',
                     recommendations: [
-                        'Automatizar tareas repetitivas que aún haces manualmente',
-                        'Implementar plantillas para acelerar tu creación de contenido',
-                        'Centralizar información dispersa en múltiples herramientas'
+                        'Centralizar toda tu operación en un solo lugar para dejar de buscar información',
+                        'Implementar procesos repetibles para las tareas que haces todas las semanas',
+                        'Crear un sistema de seguimiento de clientes para no perder oportunidades'
                     ]
                 };
-            } else if (score <= 99) {
+            } else if (score <= 90) {
                 return {
                     emoji: '⚠️',
-                    title: '¡Oportunidad de mejora significativa!',
-                    description: `${formData.nombre}, tu operación tiene áreas críticas que están limitando tu crecimiento. El caos que experimentas te está costando entre 10-15 horas semanales que podrías invertir en escalar tu negocio.`,
+                    title: 'El caos te está costando caro',
+                    description: `${formData.nombre}, la desorganización está limitando seriamente tu crecimiento. Estás perdiendo entre 10-15 horas semanales que podrías invertir en escalar tu negocio.`,
                     urgency: 70,
                     urgencyColor: 'bg-yellow-500',
                     recommendations: [
-                        'Diseñar sistema de captura y seguimiento de leads automático',
-                        'Crear flujos de trabajo estandarizados para tus procesos clave',
-                        'Implementar herramientas de gestión centralizada sin código',
-                        'Establecer rutinas diarias que prevengan el caos recurrente'
+                        'URGENTE: Implementar sistema de gestión de clientes antes de que se caigan más oportunidades',
+                        'Crear roadmap claro de los próximos 90 días para salir del modo reactivo',
+                        'Establecer procesos documentados para las actividades críticas de tu negocio',
+                        'Automatizar seguimientos y comunicaciones recurrentes'
                     ]
                 };
             } else {
                 return {
                     emoji: '🚨',
-                    title: '¡Intervención prioritaria necesaria!',
-                    description: `${formData.nombre}, tu situación requiere atención inmediata. El nivel de desorganización actual está afectando seriamente tu capacidad de generar ingresos y crecer. Estás perdiendo más de 15 horas semanales en caos operativo.`,
+                    title: 'Situación crítica - Acción inmediata necesaria',
+                    description: `${formData.nombre}, el nivel de desorganización actual está afectando gravemente tu capacidad de generar ingresos. Estás perdiendo más de 15 horas semanales y probablemente varios clientes potenciales cada mes.`,
                     urgency: 95,
                     urgencyColor: 'bg-red-500',
                     recommendations: [
-                        'URGENTE: Auditoría completa de tu operación actual',
-                        'Implementación inmediata de sistema CRM para recuperar leads perdidos',
-                        'Automatización de respuestas y seguimientos críticos',
-                        'Creación de tu "cerebro digital" centralizado en 7 días',
-                        'Protocolo de emergencia para detener la sangría de oportunidades'
+                        'CRÍTICO: Auditoría completa de tu operación en las próximas 48 horas',
+                        'Implementación inmediata de sistema de gestión para detener la pérdida de clientes',
+                        'Crear estructura mínima viable para recuperar el control de tu día a día',
+                        'Establecer protocolo de emergencia para priorizar lo verdaderamente importante',
+                        'Roadmap de 7 días para salir del caos y entrar en modo productivo'
                     ]
                 };
             }
         }
 
-        // Mostrar resultados
         function showResults() {
             const result = getResult();
+            const score = calculateScore();
             
             document.getElementById('diagnostico-section').classList.add('hidden');
             document.getElementById('results-section').classList.remove('hidden');
@@ -518,6 +702,7 @@
             `).join('');
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            console.log(`Diagnóstico completado - Puntuación: ${score}/130`);
         }
     </script>
 </body>
