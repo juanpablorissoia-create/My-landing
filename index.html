@@ -1,1 +1,517 @@
-<!DOCTYPE html> <html lang="es"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>SistemaCerebro - Diagnóstico Gratuito</title> <script src="https://cdn.tailwindcss.com"></script> <style> @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } } .animate-bounce { animation: bounce 1s infinite; } @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } } .animate-pulse-subtle { animation: pulse 2s infinite; } .transition-all { transition: all 0.3s ease; } .gradient-bg { background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%); } .whatsapp-float { position: fixed; bottom: 24px; right: 24px; z-index: 1000; } .whatsapp-button { animation: pulse 2s infinite; } @media (max-width: 768px) { .whatsapp-float { bottom: 20px; right: 20px; } } </style> </head> <body class="gradient-bg min-h-screen"> <!-- Header Fijo --> <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow-sm z-50"> <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between"> <div class="flex items-center gap-2"> <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path> </svg> <span class="text-xl font-bold text-gray-900">SistemaCerebro</span> </div> <button onclick="resetDiagnostico()" class="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"> Diagnóstico Gratis </button> </div> </header> <!-- Botón Flotante de WhatsApp con Leyenda Permanente --> <div class="whatsapp-float"> <a href="https://wa.me/543517578864?text=Hola!%20Vi%20tu%20Sistema%20Cerebro%20y%20tengo%20preguntas" target="_blank" class="flex flex-col items-end gap-2"> <div class="bg-gray-900 text-white text-sm px-4 py-2 rounded-lg shadow-lg whitespace-nowrap"> ¡Sácate todas las dudas acá! </div> <div class="whatsapp-button w-14 h-14 md:w-16 md:h-16 bg-green-500 rounded-full flex items-center justify-center shadow-2xl hover:shadow-green-500/50 transition-all hover:scale-110"> <svg class="w-8 h-8 md:w-9 md:h-9 text-white" fill="currentColor" viewBox="0 0 24 24"> <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/> </svg> </div> </a> </div> <!-- Contenido Principal --> <div id="app-container"> <!-- Hero Section --> <section id="hero-section" class="pt-32 pb-20 px-4"> <div class="max-w-4xl mx-auto text-center"> <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight"> Ya no puedes seguir trabajando <span class="text-red-600">en el caos</span> </h1> <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto"> Tienes clientes, generas ingresos... pero la desorganización te está robando 10-15 horas semanales y frenando tu crecimiento </p> <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 max-w-3xl mx-auto"> <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100"> <div class="text-2xl font-bold text-indigo-600 mb-1">10-15h</div> <div class="text-sm text-gray-600">recuperadas/semana</div> </div> <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100"> <div class="text-2xl font-bold text-indigo-600 mb-1">7 días</div> <div class="text-sm text-gray-600">para implementar</div> </div> <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100"> <div class="text-2xl font-bold text-indigo-600 mb-1">0 leads</div> <div class="text-sm text-gray-600">perdidos nunca más</div> </div> <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100"> <div class="text-2xl font-bold text-indigo-600 mb-1">100%</div> <div class="text-sm text-gray-600">claridad mental</div> </div> </div> <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-8"> <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>Sin compromiso • 5 minutos • Resultados inmediatos</span> </div> <button onclick="startDiagnostico()" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl text-lg animate-pulse-subtle"> Descubre cuánto te está costando el caos </button> </div> </section> <!-- SECCIÓN: La Solución a Tu Frustración --> <section id="offer-section" class="py-16 px-4 bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 text-white"> <div class="max-w-5xl mx-auto"> <div class="text-center mb-12"> <h2 class="text-4xl md:text-5xl font-bold mb-4"> Tu frustración tiene nombre:<br/> <span class="text-cyan-400">Trabajar duro sin ver resultados proporcionales</span> </h2> <p class="text-xl text-gray-300"> Sabes que tu negocio podría estar 3x mejor organizado, pero no tienes tiempo ni claridad para construir la estructura que necesitas </p> </div> <div class="grid md:grid-cols-2 gap-8 mb-12"> <!-- Tu cerebro centralizado --> <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-cyan-400/50 transition-all"> <div class="text-4xl mb-4">🧠</div> <h3 class="text-2xl font-bold mb-4">Tu cerebro centralizado</h3> <p class="text-gray-300 mb-4">Todo lo que necesitas saber sobre tu negocio en un solo lugar, sin tener que recordar dónde guardaste qué.</p> <ul class="space-y-3 text-gray-300"> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>Visualiza tu negocio completo en una sola pantalla</span> </li> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>Ningún cliente se cae por falta de seguimiento</span> </li> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>Tu contenido planificado para el próximo mes</span> </li> </ul> </div> <!-- Inteligencia que trabaja por ti --> <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-cyan-400/50 transition-all"> <div class="text-4xl mb-4">⚡</div> <h3 class="text-2xl font-bold mb-4">Inteligencia que trabaja por ti</h3> <p class="text-gray-300 mb-4">Deja de inventar la rueda cada día. Acelera todo lo que haces con inteligencia integrada.</p> <ul class="space-y-3 text-gray-300"> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>IA personalizada para tus conversaciones de venta</span> </li> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>Contenido listo para publicar en minutos</span> </li> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>Priorización automática de lo que realmente importa</span> </li> </ul> </div> <!-- Acompañamiento real --> <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-cyan-400/50 transition-all"> <div class="text-4xl mb-4">🤝</div> <h3 class="text-2xl font-bold mb-4">Acompañamiento real</h3> <p class="text-gray-300 mb-4">No te dejamos solo con una plantilla. Te ayudamos a implementar y ajustar hasta que funcione perfecto para ti.</p> <ul class="space-y-3 text-gray-300"> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>Sesión personalizada de 60 minutos</span> </li> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>14 días de ajustes incluidos</span> </li> <li class="flex items-start gap-3"> <svg class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span>Comunidad de creadores en tu mismo camino</span> </li> </ul> </div> <!-- La transformación real --> <div class="bg-gradient-to-br from-cyan-600/20 to-indigo-600/20 backdrop-blur-sm rounded-2xl p-8 border-2 border-cyan-400/50"> <div class="text-4xl mb-4">🎯</div> <h3 class="text-2xl font-bold mb-4">La transformación real</h3> <p class="text-lg leading-relaxed"> En 7 días dejas de <strong>apagar incendios</strong> y empiezas a <strong>construir tu negocio</strong> con estrategia y claridad. </p> <div class="mt-6 p-4 bg-white/10 rounded-lg"> <p class="text-sm italic"> "Finalmente puedo trabajar EN mi negocio, no solo PARA mi negocio" </p> </div> </div> </div> <!-- CTA de la sección de oferta --> <div class="text-center"> <a href="https://calendar.app.google/nouPtky3ovsPPMmf8" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-cyan-500 to-indigo-500 text-white rounded-xl font-bold text-lg hover:from-cyan-400 hover:to-indigo-400 transition-all shadow-2xl hover:shadow-cyan-500/50 hover:scale-105"> <span>📞</span> <span>Agendar diagnóstico estratégico (30 min)</span> </a> <p class="mt-4 text-sm text-gray-300"> Entendemos tu situación • Diseñamos tu roadmap • Sin presión </p> </div> </div> </section> <!-- Sección de Diagnóstico --> <section id="diagnostico-section" class="hidden pb-20 px-4 pt-32"> <div class="max-w-2xl mx-auto"> <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12"> <!-- Encabezado --> <div class="mb-8"> <h2 class="text-3xl font-bold text-gray-900 mb-3">Diagnóstico de Productividad Digital</h2> <p class="text-gray-600 mb-6"> Responde 5 preguntas para identificar exactamente qué está frenando tu crecimiento y cuánto te está costando. </p> <!-- Barra de progreso --> <div class="relative"> <div class="h-2 bg-gray-200 rounded-full overflow-hidden"> <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-600 to-cyan-500 transition-all duration-500" style="width: 20%"></div> </div> <div id="progress-text" class="text-sm text-gray-600 mt-2 text-right"> Pregunta 1 de 5 • 20% completado </div> </div> </div> <!-- Pregunta --> <div id="question-container" class="mb-8"></div> <!-- Error --> <div id="error-message" class="hidden mt-3 text-red-600 text-sm flex items-center gap-2 mb-4"> <span>⚠️</span> <span id="error-text"></span> </div> <!-- Botones de navegación --> <div class="flex gap-3"> <button id="prev-btn" onclick="previousQuestion()" class="hidden flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"> ← Anterior </button> <button id="next-btn" onclick="nextQuestion()" class="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl"> Continuar → </button> </div> </div> </div> </section> <!-- Sección de Resultados --> <section id="results-section" class="hidden pt-32 pb-20 px-4"> <div class="max-w-3xl mx-auto"> <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12"> <div class="text-center mb-8"> <div id="result-emoji" class="text-7xl mb-4 animate-bounce inline-block">🧠</div> <h2 id="result-title" class="text-4xl font-bold text-gray-900 mb-4"></h2> <p id="result-description" class="text-lg text-gray-600 leading-relaxed"></p> </div> <!-- Barra de urgencia --> <div class="mb-8"> <div class="flex items-center justify-between mb-2"> <span class="text-sm font-medium text-gray-700">Nivel de urgencia</span> <span id="urgency-percent" class="text-sm font-bold text-indigo-600">0%</span> </div> <div class="h-4 bg-gray-200 rounded-full overflow-hidden"> <div id="urgency-bar" class="h-full transition-all duration-1000" style="width: 0%"></div> </div> </div> <!-- Plan de acción --> <div class="mb-8"> <h3 class="text-xl font-bold text-gray-900 mb-4">Tu plan de acción personalizado:</h3> <div id="recommendations-list" class="space-y-3"></div> </div> <!-- CTA principal --> <div class="bg-gradient-to-br from-indigo-50 to-cyan-50 rounded-xl p-6 mb-6"> <h3 class="text-xl font-bold text-gray-900 mb-3"> Siguiente paso: Diagnóstico estratégico sin costo </h3> <p class="text-gray-600 mb-4"> En 30 minutos analizamos tu situación específica, identificamos las áreas de mayor oportunidad y diseñamos tu roadmap de implementación. </p> <a href="https://calendar.app.google/nouPtky3ovsPPMmf8" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-cyan-600 transition-all shadow-lg hover:shadow-xl"> 📞 Agendar mi diagnóstico estratégico </a> </div> <!-- Nota --> <div class="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg"> <span class="text-green-600 text-xl">✉️</span> <div class="text-sm text-green-800"> <strong>Diagnóstico guardado.</strong> Nos pondremos en contacto en las próximas 24 horas con un análisis más profundo de tu situación y recursos personalizados. </div> </div> </div> </div> </section> </div> <!-- Footer --> <footer class="bg-gray-900 text-white py-8 px-4"> <div class="max-w-6xl mx-auto"> <div class="flex flex-col md:flex-row items-center justify-between gap-4"> <div class="flex items-center gap-2"> <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path> </svg> <span class="font-semibold">SistemaCerebro</span> </div> <div class="flex gap-6 text-sm text-gray-400"> <button onclick="resetDiagnostico()" class="hover:text-white transition-colors"> Reiniciar diagnóstico </button> <a href="mailto:juanpablorissoia@gmail.com" class="hover:text-white transition-colors"> Contacto </a> </div> </div> <div class="text-center text-sm text-gray-500 mt-4"> © 2026 SistemaCerebro. Todos los derechos reservados. </div> </div> </footer> <script> // CONFIGURACIÓN DE GOOGLE FORMS const GOOGLE_FORM_CONFIG = { formId: 'YOUR_FORM_ID', fields: { nombre: 'entry.XXXXX', email: 'entry.YYYYYY', dolorPrincipal: 'entry.ZZZZZZ', horasPerdidas: 'entry.AAAAAA', objetivo90Dias: 'entry.BBBBBB' } }; // Estado de la aplicación let currentQuestion = 0; let formData = { nombre: '', email: '', dolorPrincipal: '', horasPerdidas: '', objetivo90Dias: '' }; // Definición de preguntas const questions = [ { id: 'nombre', text: '¿Cómo te llamas?', type: 'text', placeholder: 'Tu nombre completo' }, { id: 'email', text: '¿Cuál es tu email profesional?', type: 'email', placeholder: 'tu@email.com' }, { id: 'dolorPrincipal', text: '¿Qué te está frenando más en este momento?', type: 'choice', options: [ { value: 'leads', label: 'Clientes que se escapan', icon: '📞', desc: 'Mensajes sin responder, seguimientos que olvido, oportunidades que pierdo', points: 25 }, { value: 'contenido', label: 'Inconsistencia visible', icon: '✍️', desc: 'Semanas sin publicar, ideas que nunca ejecuto, presencia irregular', points: 20 }, { value: 'tiempo', label: 'Caos operativo', icon: '⏰', desc: 'Buscando archivos, reorganizando constantemente, sin claridad de prioridades', points: 25 }, { value: 'todo', label: 'Estancamiento total', icon: '🔥', desc: 'Siento que trabajo mucho pero no avanzo, todo es urgente, nada tiene estructura', points: 35 } ] }, { id: 'horasPerdidas', text: '¿Cuántas horas semanales pierdes en desorganización?', type: 'choice', options: [ { value: '5', label: 'Menos de 5h', icon: '😐', desc: 'Es molesto pero lo manejo', points: 10 }, { value: '5-10', label: '5-10h', icon: '😟', desc: 'Está afectando mi productividad claramente', points: 20 }, { value: '10-15', label: '10-15h', icon: '😩', desc: 'Me está impidiendo crecer', points: 35 }, { value: '15+', label: 'Más de 15h', icon: '🚨', desc: 'Es insostenible, necesito cambiar esto ya', points: 45 } ] }, { id: 'objetivo90Dias', text: '¿Cuál es tu mayor necesidad para los próximos 90 días?', type: 'choice', options: [ { value: 'sistematizar', label: 'Estructura que funcione', icon: '⚙️', desc: 'Dejar de improvisar todo, tener procesos claros', points: 15 }, { value: 'crecer', label: 'Escalar con orden', icon: '📈', desc: 'Aumentar ingresos sin aumentar el caos', points: 20 }, { value: 'lanzar', label: 'Ejecutar un proyecto', icon: '🚀', desc: 'Lanzar algo nuevo con claridad y estructura', points: 25 }, { value: 'sobrevivir', label: 'Recuperar el control', icon: '🆘', desc: 'Simplemente poder respirar y saber qué hacer cada día', points: 30 } ] } ]; // Iniciar diagnóstico function startDiagnostico() { document.getElementById('hero-section').classList.add('hidden'); document.getElementById('offer-section').classList.add('hidden'); document.getElementById('diagnostico-section').classList.remove('hidden'); renderQuestion(); window.scrollTo({ top: 0, behavior: 'smooth' }); } // Resetear diagnóstico function resetDiagnostico() { currentQuestion = 0; formData = { nombre: '', email: '', dolorPrincipal: '', horasPerdidas: '', objetivo90Dias: '' }; document.getElementById('hero-section').classList.remove('hidden'); document.getElementById('offer-section').classList.remove('hidden'); document.getElementById('diagnostico-section').classList.add('hidden'); document.getElementById('results-section').classList.add('hidden'); hideError(); window.scrollTo({ top: 0, behavior: 'smooth' }); } // Renderizar pregunta actual function renderQuestion() { const question = questions[currentQuestion]; const container = document.getElementById('question-container'); let html = `<h3 class="text-2xl font-semibold text-gray-900 mb-6">${question.text}</h3>`; if (question.type === 'text' || question.type === 'email') { html += ` <input type="${question.type}" id="input-${question.id}" value="${formData[question.id]}" placeholder="${question.placeholder}" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-indigo-500 focus:outline-none transition-colors text-lg" onchange="updateFormData('${question.id}', this.value)" /> `; } else if (question.type === 'choice') { html += '<div class="space-y-3">'; question.options.forEach(option => { const isSelected = formData[question.id] === option.value; html += ` <button onclick="selectOption('${question.id}', '${option.value}')" class="w-full text-left p-5 rounded-xl border-2 transition-all hover:shadow-md ${isSelected ? 'border-indigo-500 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'}" > <div class="flex items-start gap-4"> <span class="text-3xl">${option.icon}</span> <div class="flex-1"> <div class="font-semibold text-gray-900 mb-1">${option.label}</div> <div class="text-sm text-gray-600">${option.desc}</div> </div> </div> </button> `; }); html += '</div>'; } container.innerHTML = html; updateProgress(); updateButtons(); hideError(); } function updateFormData(field, value) { formData[field] = value; } function selectOption(field, value) { formData[field] = value; renderQuestion(); } function updateProgress() { const progress = ((currentQuestion + 1) / questions.length) * 100; document.getElementById('progress-bar').style.width = progress + '%'; document.getElementById('progress-text').textContent = `Pregunta ${currentQuestion + 1} de ${questions.length} • ${Math.round(progress)}% completado`; } function updateButtons() { const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn'); if (currentQuestion > 0) { prevBtn.classList.remove('hidden'); } else { prevBtn.classList.add('hidden'); } if (currentQuestion === questions.length - 1) { nextBtn.innerHTML = 'Ver mi diagnóstico ✓'; } else { nextBtn.innerHTML = 'Continuar →'; } } function validateCurrentField() { const question = questions[currentQuestion]; const value = formData[question.id]; if (question.type === 'text' && (!value || value.trim() === '')) { showError('Este campo es requerido'); return false; } if (question.type === 'email') { const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; if (!value || !emailRegex.test(value)) { showError('Por favor ingresa un email válido'); return false; } } if (question.type === 'choice' && !value) { showError('Por favor selecciona una opción'); return false; } return true; } function showError(message) { document.getElementById('error-message').classList.remove('hidden'); document.getElementById('error-text').textContent = message; } function hideError() { document.getElementById('error-message').classList.add('hidden'); } function nextQuestion() { if (!validateCurrentField()) return; if (currentQuestion < questions.length - 1) { currentQuestion++; renderQuestion(); window.scrollTo({ top: 0, behavior: 'smooth' }); } else { submitForm(); } } function previousQuestion() { if (currentQuestion > 0) { currentQuestion--; renderQuestion(); window.scrollTo({ top: 0, behavior: 'smooth' }); } } function submitForm() { const score = calculateScore(); const formUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_CONFIG.formId}/formResponse`; const formDataToSend = new FormData(); formDataToSend.append(GOOGLE_FORM_CONFIG.fields.nombre, formData.nombre); formDataToSend.append(GOOGLE_FORM_CONFIG.fields.email, formData.email); formDataToSend.append(GOOGLE_FORM_CONFIG.fields.dolorPrincipal, formData.dolorPrincipal); formDataToSend.append(GOOGLE_FORM_CONFIG.fields.horasPerdidas, formData.horasPerdidas); formDataToSend.append(GOOGLE_FORM_CONFIG.fields.objetivo90Dias, formData.objetivo90Dias); fetch(formUrl, { method: 'POST', body: formDataToSend, mode: 'no-cors' }).then(() => { console.log('Formulario enviado exitosamente'); }).catch(error => { console.error('Error al enviar formulario:', error); }); showResults(); } function calculateScore() { let total = 0; questions.forEach(q => { if (q.type === 'choice' && formData[q.id]) { const option = q.options.find(opt => opt.value === formData[q.id]); if (option) total += option.points; } }); return total; } function getResult() { const score = calculateScore(); if (score <= 55) { return { emoji: '🧠', title: 'Tienes base, pero hay fugas', description: `${formData.nombre}, tu negocio funciona pero está perdiendo potencial. Con la estructura correcta podrías recuperar 5-8 horas semanales que hoy se pierden en desorganización.`, urgency: 40, urgencyColor: 'bg-green-500', recommendations: [ 'Centralizar toda tu operación en un solo lugar para dejar de buscar información', 'Implementar procesos repetibles para las tareas que haces todas las semanas', 'Crear un sistema de seguimiento de clientes para no perder oportunidades' ] }; } else if (score <= 90) { return { emoji: '⚠️', title: 'El caos te está costando caro', description: `${formData.nombre}, la desorganización está limitando seriamente tu crecimiento. Estás perdiendo entre 10-15 horas semanales que podrías invertir en escalar tu negocio.`, urgency: 70, urgencyColor: 'bg-yellow-500', recommendations: [ 'URGENTE: Implementar sistema de gestión de clientes antes de que se caigan más oportunidades', 'Crear roadmap claro de los próximos 90 días para salir del modo reactivo', 'Establecer procesos documentados para las actividades críticas de tu negocio', 'Automatizar seguimientos y comunicaciones recurrentes' ] }; } else { return { emoji: '🚨', title: 'Situación crítica - Acción inmediata necesaria', description: `${formData.nombre}, el nivel de desorganización actual está afectando gravemente tu capacidad de generar ingresos. Estás perdiendo más de 15 horas semanales y probablemente varios clientes potenciales cada mes.`, urgency: 95, urgencyColor: 'bg-red-500', recommendations: [ 'CRÍTICO: Auditoría completa de tu operación en las próximas 48 horas', 'Implementación inmediata de sistema de gestión para detener la pérdida de clientes', 'Crear estructura mínima viable para recuperar el control de tu día a día', 'Establecer protocolo de emergencia para priorizar lo verdaderamente importante', 'Roadmap de 7 días para salir del caos y entrar en modo productivo' ] }; } } function showResults() { const result = getResult(); const score = calculateScore(); document.getElementById('diagnostico-section').classList.add('hidden'); document.getElementById('results-section').classList.remove('hidden'); document.getElementById('result-emoji').textContent = result.emoji; document.getElementById('result-title').textContent = result.title; document.getElementById('result-description').textContent = result.description; document.getElementById('urgency-percent').textContent = result.urgency + '%'; const urgencyBar = document.getElementById('urgency-bar'); urgencyBar.className = `h-full transition-all duration-1000 ${result.urgencyColor}`; setTimeout(() => { urgencyBar.style.width = result.urgency + '%'; }, 100); const recList = document.getElementById('recommendations-list'); recList.innerHTML = result.recommendations.map(rec => ` <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-lg"> <svg class="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> <span class="text-gray-700">${rec}</span> </div> `).join(''); window.scrollTo({ top: 0, behavior: 'smooth' }); console.log(`Diagnóstico completado - Puntuación: ${score}/130`); } </script> </body> </html> 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SistemaCerebro - Arquitectura de Flujos de Trabajo</title>
+    <!-- Fuentes: Quicksand y Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #FAFAFA;
+            color: #171717;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Títulos redondeados */
+        h1, h2, h3, .serif, .logo {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* --- Animaciones --- */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+
+        .animate-on-scroll { opacity: 0; }
+        .animate-on-scroll.visible { animation: fadeInUp 0.8s ease-out forwards; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            padding: 1rem 2rem;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* --- BOTONES --- */
+        .btn-base {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            border: 2px solid #4F46E5;
+            color: #4F46E5;
+            background: transparent;
+        }
+
+        .btn-secondary:hover {
+            background: #E0E7FF;
+        }
+
+        /* Botón WhatsApp */
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            width: 100%;
+            max-width: 400px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #20BA5C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: #E0E7FF;
+            color: #4F46E5;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            color: #525252;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        /* Background Dots */
+        .chaos-dots {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #D1D5DB;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Sections General */
+        section { padding: 6rem 2rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .section-desc {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: #525252;
+            font-size: 1.1rem;
+        }
+
+        /* Problem Section */
+        .problem-card {
+            display: flex;
+            gap: 1.5rem;
+            padding: 2rem;
+            border-left: 5px solid #4F46E5;
+            background: #FAFAFA;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border-radius: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            align-items: center;
+        }
+
+        .problem-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(79, 70, 229, 0.1); }
+        .problem-number {
+            flex-shrink: 0; width: 3rem; height: 3rem; background: #E0E7FF;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #4F46E5; font-weight: 700; font-size: 1.2rem;
+        }
+
+        /* Philosophy Section - Ampliada */
+        .philosophy { background: linear-gradient(180deg, #F3F4F6 0%, #E0E7FF 100%); }
+        
+        .comparison-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 2.5rem; 
+            margin-top: 3rem; 
+        }
+        
+        .comparison-card { 
+            padding: 2.5rem; 
+            background: rgba(255,255,255,0.7); 
+            backdrop-filter: blur(10px); 
+            border-radius: 1.5rem;
+            height: 100%;
+        }
+        
+        .new-way { 
+            border: 2px solid #4F46E5; 
+            background: #fff; 
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15);
+        }
+
+        .comparison-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .comparison-card p { font-size: 1.1rem; opacity: 0.9; }
+
+        /* Services Grid - Ajustado a 4 columnas */
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 1.5rem; 
+        }
+        
+        .service-card { 
+            background: #fff; 
+            padding: 2rem; 
+            border-radius: 1.5rem;
+            border: 1px solid #F3F4F6; 
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover { 
+            border-color: #4F46E5; 
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        /* CTA & Form Section */
+        .cta-section { background: #fff; }
+        .cta-box {
+            background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
+            padding: 3rem 2rem;
+            border-radius: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Footer */
+        footer { background: #171717; color: white; padding: 4rem 2rem; text-align: center; margin-top: 0; }
+        
+        @media (max-width: 768px) {
+            .hero-cta { flex-direction: column; }
+            .btn-base { width: 100%; }
+            .comparison-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                Sistema<span class="gradient-text">Cerebro</span>
+            </div>
+            <a href="#contact" class="btn-base btn-primary">Auditoría</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div id="chaos-container"></div>
+        
+        <div class="hero-content">
+            <span class="badge">Augmented Intelligence</span>
+            
+            <h1>
+                No necesitas más tiempo.<br>
+                <span class="gradient-text">Necesitas mejores sistemas.</span>
+            </h1>
+            
+            <p>
+                Integro Inteligencia Artificial para organizar el caos operativo y elevar la calidad de tu trabajo profesional.
+            </p>
+            
+            <div class="hero-cta">
+                <a href="#contact" class="btn-base btn-primary">
+                    Solicitar Diagnóstico
+                </a>
+                <a href="#philosophy" class="btn-base btn-secondary">
+                    Ver filosofía
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section style="background: white;">
+        <div class="container">
+            <h2 class="animate-on-scroll">
+                ¿Tu talento está <span class="gradient-text">atrapado</span>?
+            </h2>
+            
+            <div class="problem-card animate-on-scroll">
+                <div class="problem-number">1</div>
+                <p>Sientes un techo de cristal en tu crecimiento profesional. Trabajas muchas horas pero el impacto no escala.</p>
+            </div>
+            
+            <div class="problem-card animate-on-scroll">
+                <div class="problem-number">2</div>
+                <p>La tecnología actual te genera más ruido que soluciones reales. Tienes demasiadas herramientas desconectadas.</p>
+            </div>
+            
+            <div class="problem-card animate-on-scroll">
+                <div class="problem-number">3</div>
+                <p>Buscas trabajar con mayor criterio estratégico, no solo automatizar tareas simples a ciegas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section (AMPLIADO) -->
+    <section id="philosophy" class="philosophy">
+        <div class="container">
+            <h2 class="animate-on-scroll">Filosofía de Trabajo</h2>
+            <p class="section-desc animate-on-scroll">
+                Vivimos en una era donde la "productividad" se confunde con hacer más cosas en menos tiempo. Nosotros creemos en hacer <strong>mejores cosas</strong> con sistemas más inteligentes.
+            </p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card animate-on-scroll">
+                    <h3 style="color: #EF4444;">El enfoque tradicional ❌</h3>
+                    <p style="margin-bottom: 1rem;">
+                        Se centra en la velocidad pura. Busca reemplazar al humano para reducir costos, lo que a menudo resulta en una pérdida de calidad, un servicio al cliente robótico y procesos rígidos que se rompen ante cualquier imprevisto.
+                    </p>
+                    <p><em>"La herramienta controla al profesional."</em></p>
+                </div>
+
+                <div class="comparison-card new-way animate-on-scroll">
+                    <h3 style="color: #4F46E5;">El enfoque SistemaCerebro ✅</h3>
+                    <p style="margin-bottom: 1rem;">
+                        Usamos la IA como un exoesqueleto para tu mente. Automatizamos lo repetitivo para que tu criterio humano brille donde realmente aporta valor: en la estrategia, la creatividad y la toma de decisiones complejas.
+                    </p>
+                    <p><strong>"El profesional orquesta, la IA ejecuta."</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid (AHORA CON 4 ELEMENTOS) -->
+    <section>
+        <div class="container">
+            <h2 class="animate-on-scroll">Arquitectura de Flujos</h2>
+            <p class="section-desc animate-on-scroll">
+                Componentes clave para transformar tu operativa diaria.
+            </p>
+            
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                    <h3>Diagnóstico Profundo</h3>
+                    <p>Auditamos tus procesos actuales para encontrar fugas de energía y cuellos de botella invisibles.</p>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🧠</div>
+                    <h3>Segundo Cerebro</h3>
+                    <p>Centralización de tu conocimiento. Una base de datos que piensa y conecta ideas por ti.</p>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                    <h3>Sistemas Híbridos</h3>
+                    <p>Implementación de IA (GPT/Claude) integrada directamente en tu flujo de trabajo diario.</p>
+                </div>
+
+                <!-- 4to Elemento Agregado -->
+                <div class="service-card animate-on-scroll">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🧩</div>
+                    <h3>Escalabilidad Modular</h3>
+                    <p>Diseñamos sistemas que crecen contigo. Añade complejidad solo cuando sea necesario.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA & Form Section -->
+    <section id="contact" class="cta-section">
+        <div class="container" style="max-width: 800px;">
+            <div class="cta-box animate-on-scroll">
+                <h2 style="margin-bottom: 1rem;">Hablemos de tu sistema</h2>
+                <p style="margin-bottom: 2rem; color: #525252;">
+                    Completa el formulario para aplicar a una auditoría. Si calificas, diseñaremos un plan de ruta para ti.
+                </p>
+
+                <!-- FORMULARIO CONECTADO A TU FORMSPREE -->
+                <form action="https://formspree.io/f/xdaaodvr" method="POST" style="text-align: left; background: white; padding: 2rem; border-radius: 1rem; margin-bottom: 2rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 700;">Nombre Completo</label>
+                        <input type="text" name="name" required placeholder="Tu nombre" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 0.5rem; font-family: 'Nunito';">
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 700;">Correo Electrónico</label>
+                        <input type="email" name="email" required placeholder="tucorreo@ejemplo.com" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 0.5rem; font-family: 'Nunito';">
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 700;">¿Cuál es tu mayor obstáculo operativo hoy?</label>
+                        <textarea name="message" rows="4" required placeholder="Descríbenos brevemente tu situación..." style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 0.5rem; font-family: 'Nunito';"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-base btn-primary" style="width: 100%;">Enviar Aplicación</button>
+                </form>
+
+                <p style="font-size: 0.95rem; color: #888; margin-bottom: 0.5rem;">¿Todavía tienes preguntas?</p>
+                
+                <!-- BOTÓN WHATSAPP CONFIGURADO -->
+                <!-- Enlace formato: https://wa.me/CODIGOPAISNUMERO (sin signos +) -->
+                <a href="https://wa.me/543517578864" target="_blank" class="btn-base btn-whatsapp">
+                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                    Termina de sacarte todas las dudas acá
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="logo">Sistema<span class="gradient-text">Cerebro</span></div>
+            <p style="color: #9CA3AF; margin-top: 1rem;">© 2026 SistemaCerebro</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        });
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // Chaos Dots
+        const chaosContainer = document.getElementById('chaos-container');
+        for (let i = 0; i < 30; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'chaos-dots';
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.top = Math.random() * 100 + '%';
+            dot.style.animationDelay = Math.random() * 3 + 's';
+            chaosContainer.appendChild(dot);
+        }
+        
+        // Smooth Scroll
+         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
