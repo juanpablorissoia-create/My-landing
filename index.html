@@ -9,11 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Nunito', sans-serif;
@@ -23,14 +19,12 @@
             line-height: 1.6;
         }
 
-        /* Títulos redondeados */
-        h1, h2, h3, .serif, .logo {
-            font-family: 'Quicksand', sans-serif;
-        }
+        h1, h2, h3, .serif, .logo { font-family: 'Quicksand', sans-serif; }
 
         /* --- Animaciones --- */
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        @keyframes loadBar { from { width: 0%; } to { width: 100%; } }
 
         .animate-on-scroll { opacity: 0; }
         .animate-on-scroll.visible { animation: fadeInUp 0.8s ease-out forwards; }
@@ -43,259 +37,73 @@
         }
 
         /* Navbar */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            padding: 1rem 2rem;
-        }
-
-        nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; transition: all 0.3s ease; padding: 1rem 2rem; }
+        nav.scrolled { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
+        .nav-container { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; }
 
         /* --- BOTONES --- */
         .btn-base {
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            gap: 0.5rem;
+            padding: 0.6rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 700;
+            transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center;
+            border: none; cursor: pointer; font-size: 1rem; gap: 0.5rem; font-family: 'Nunito', sans-serif;
         }
+        .btn-primary { background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%); color: white; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2); }
+        .btn-primary:hover { transform: scale(1.03); box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4); }
+        .btn-secondary { border: 2px solid #4F46E5; color: #4F46E5; background: transparent; }
+        .btn-secondary:hover { background: #E0E7FF; }
+        .btn-whatsapp { background: #25D366; color: white; margin-top: 1rem; width: 100%; font-size: 1.1rem; }
+        .btn-whatsapp:hover { background: #20BA5C; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4); }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
-        }
+        /* Hero */
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; }
+        .hero-content { max-width: 1000px; text-align: center; position: relative; z-index: 10; }
+        .badge { display: inline-block; padding: 0.4rem 1.2rem; background: #E0E7FF; color: #4F46E5; border-radius: 50px; font-weight: 600; margin-bottom: 1.5rem; }
+        h1 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
+        .hero p { font-size: clamp(1.1rem, 2.5vw, 1.3rem); color: #525252; max-width: 700px; margin: 0 auto 2.5rem; }
+        .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .chaos-dots { position: absolute; width: 8px; height: 8px; background: #D1D5DB; border-radius: 50%; opacity: 0.3; animation: float 6s ease-in-out infinite; }
 
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
-        }
-
-        .btn-secondary {
-            border: 2px solid #4F46E5;
-            color: #4F46E5;
-            background: transparent;
-        }
-
-        .btn-secondary:hover {
-            background: #E0E7FF;
-        }
-
-        /* Botón WhatsApp */
-        .btn-whatsapp {
-            background: #25D366;
-            color: white;
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
-            width: 100%;
-            max-width: 400px;
-            padding: 0.8rem 1.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .btn-whatsapp:hover {
-            background: #20BA5C;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.4rem 1.2rem;
-            background: #E0E7FF;
-            color: #4F46E5;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 1s ease-out;
-        }
-
-        h1 {
-            font-size: clamp(2.2rem, 6vw, 4rem);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease-out 0.2s backwards;
-        }
-
-        .hero p {
-            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-            color: #525252;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-            animation: fadeInUp 0.8s ease-out 0.4s backwards;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease-out 0.6s backwards;
-        }
-
-        /* Background Dots */
-        .chaos-dots {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #D1D5DB;
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Sections General */
+        /* Secciones Generales */
         section { padding: 6rem 2rem; }
         .container { max-width: 1100px; margin: 0 auto; }
+        h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 1.5rem; text-align: center; }
+        .section-desc { text-align: center; max-width: 700px; margin: 0 auto 3rem; color: #525252; font-size: 1.1rem; }
 
-        h2 {
-            font-size: clamp(1.8rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .section-desc {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            color: #525252;
-            font-size: 1.1rem;
-        }
-
-        /* Problem Section */
-        .problem-card {
-            display: flex;
-            gap: 1.5rem;
-            padding: 2rem;
-            border-left: 5px solid #4F46E5;
-            background: #FAFAFA;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-            border-radius: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            align-items: center;
-        }
-
+        /* Problemas */
+        .problem-card { display: flex; gap: 1.5rem; padding: 2rem; border-left: 5px solid #4F46E5; background: #FAFAFA; border-radius: 1.5rem; margin-bottom: 1.5rem; transition: all 0.3s ease; align-items: center; }
         .problem-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(79, 70, 229, 0.1); }
-        .problem-number {
-            flex-shrink: 0; width: 3rem; height: 3rem; background: #E0E7FF;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: #4F46E5; font-weight: 700; font-size: 1.2rem;
-        }
+        .problem-number { flex-shrink: 0; width: 3rem; height: 3rem; background: #E0E7FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #4F46E5; font-weight: 700; font-size: 1.2rem; }
 
-        /* Philosophy Section - Ampliada */
+        /* Filosofía */
         .philosophy { background: linear-gradient(180deg, #F3F4F6 0%, #E0E7FF 100%); }
-        
-        .comparison-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 2.5rem; 
-            margin-top: 3rem; 
-        }
-        
-        .comparison-card { 
-            padding: 2.5rem; 
-            background: rgba(255,255,255,0.7); 
-            backdrop-filter: blur(10px); 
-            border-radius: 1.5rem;
-            height: 100%;
-        }
-        
-        .new-way { 
-            border: 2px solid #4F46E5; 
-            background: #fff; 
-            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15);
-        }
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
+        .comparison-card { padding: 2.5rem; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border-radius: 1.5rem; height: 100%; }
+        .new-way { border: 2px solid #4F46E5; background: #fff; box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15); }
 
-        .comparison-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
-        .comparison-card p { font-size: 1.1rem; opacity: 0.9; }
+        /* Servicios */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+        .service-card { background: #fff; padding: 2rem; border-radius: 1.5rem; border: 1px solid #F3F4F6; transition: all 0.3s ease; }
+        .service-card:hover { border-color: #4F46E5; transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 
-        /* Services Grid - Ajustado a 4 columnas */
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
-            gap: 1.5rem; 
-        }
-        
-        .service-card { 
-            background: #fff; 
-            padding: 2rem; 
-            border-radius: 1.5rem;
-            border: 1px solid #F3F4F6; 
-            transition: all 0.3s ease;
-        }
-        
-        .service-card:hover { 
-            border-color: #4F46E5; 
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        /* CTA & Form Section */
+        /* --- DIAGNÓSTICO ESTILOS --- */
         .cta-section { background: #fff; }
-        .cta-box {
-            background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
-            padding: 3rem 2rem;
-            border-radius: 2rem;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(79, 70, 229, 0.1);
-        }
+        .cta-box { background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); padding: 3rem; border-radius: 2rem; text-align: center; box-shadow: 0 10px 40px rgba(79, 70, 229, 0.1); max-width: 700px; margin: 0 auto; }
+        .diagnostic-step { display: none; }
+        .diagnostic-step.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        
+        .option-btn { background: white; border: 1px solid #E0E7FF; padding: 1.2rem; border-radius: 1rem; text-align: left; cursor: pointer; transition: all 0.2s ease; font-family: 'Nunito', sans-serif; font-size: 1.1rem; color: #171717; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+        .option-btn:hover { border-color: #4F46E5; background: #F5F3FF; transform: translateX(5px); }
 
-        /* Footer */
-        footer { background: #171717; color: white; padding: 4rem 2rem; text-align: center; margin-top: 0; }
+        .input-field { width: 100%; padding: 1rem; border: 1px solid #E0E7FF; border-radius: 0.8rem; font-family: 'Nunito', sans-serif; font-size: 1rem; margin-bottom: 1rem; outline: none; transition: all 0.3s ease; }
+        .input-field:focus { border-color: #4F46E5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+
+        footer { background: #171717; color: white; padding: 4rem 2rem; text-align: center; }
         
         @media (max-width: 768px) {
             .hero-cta { flex-direction: column; }
             .btn-base { width: 100%; }
-            .comparison-grid { grid-template-columns: 1fr; }
+            .cta-box { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
@@ -303,172 +111,130 @@
     <!-- Navbar -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">
-                Sistema<span class="gradient-text">Cerebro</span>
-            </div>
+            <div class="logo">Sistema<span class="gradient-text">Cerebro</span></div>
             <a href="#contact" class="btn-base btn-primary">Auditoría</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
         <div id="chaos-container"></div>
-        
         <div class="hero-content">
             <span class="badge">Augmented Intelligence</span>
-            
-            <h1>
-                No necesitas más tiempo.<br>
-                <span class="gradient-text">Necesitas mejores sistemas.</span>
-            </h1>
-            
-            <p>
-                Integro Inteligencia Artificial para organizar el caos operativo y elevar la calidad de tu trabajo profesional.
-            </p>
-            
+            <h1>No necesitas más tiempo.<br><span class="gradient-text">Necesitas mejores sistemas.</span></h1>
+            <p>Integro Inteligencia Artificial para organizar el caos operativo y elevar la calidad de tu trabajo profesional.</p>
             <div class="hero-cta">
-                <a href="#contact" class="btn-base btn-primary">
-                    Solicitar Diagnóstico
-                </a>
-                <a href="#philosophy" class="btn-base btn-secondary">
-                    Ver filosofía
-                </a>
+                <a href="#contact" class="btn-base btn-primary" style="padding: 1rem 2rem;">Solicitar Diagnóstico</a>
+                <a href="#philosophy" class="btn-base btn-secondary" style="padding: 1rem 2rem;">Ver filosofía</a>
             </div>
         </div>
     </section>
 
-    <!-- Problem Section -->
+    <!-- Problemas -->
     <section style="background: white;">
         <div class="container">
-            <h2 class="animate-on-scroll">
-                ¿Tu talento está <span class="gradient-text">atrapado</span>?
-            </h2>
-            
-            <div class="problem-card animate-on-scroll">
-                <div class="problem-number">1</div>
-                <p>Sientes un techo de cristal en tu crecimiento profesional. Trabajas muchas horas pero el impacto no escala.</p>
-            </div>
-            
-            <div class="problem-card animate-on-scroll">
-                <div class="problem-number">2</div>
-                <p>La tecnología actual te genera más ruido que soluciones reales. Tienes demasiadas herramientas desconectadas.</p>
-            </div>
-            
-            <div class="problem-card animate-on-scroll">
-                <div class="problem-number">3</div>
-                <p>Buscas trabajar con mayor criterio estratégico, no solo automatizar tareas simples a ciegas.</p>
-            </div>
+            <h2 class="animate-on-scroll">¿Tu talento está <span class="gradient-text">atrapado</span>?</h2>
+            <div class="problem-card animate-on-scroll"><div class="problem-number">1</div><p>Sientes un techo de cristal en tu crecimiento profesional. Trabajas muchas horas pero el impacto no escala.</p></div>
+            <div class="problem-card animate-on-scroll"><div class="problem-number">2</div><p>La tecnología actual te genera más ruido que soluciones reales. Tienes demasiadas herramientas desconectadas.</p></div>
+            <div class="problem-card animate-on-scroll"><div class="problem-number">3</div><p>Buscas trabajar con mayor criterio estratégico, no solo automatizar tareas simples a ciegas.</p></div>
         </div>
     </section>
 
-    <!-- Philosophy Section (AMPLIADO) -->
+    <!-- Filosofía -->
     <section id="philosophy" class="philosophy">
         <div class="container">
             <h2 class="animate-on-scroll">Filosofía de Trabajo</h2>
-            <p class="section-desc animate-on-scroll">
-                Vivimos en una era donde la "productividad" se confunde con hacer más cosas en menos tiempo. Nosotros creemos en hacer <strong>mejores cosas</strong> con sistemas más inteligentes.
-            </p>
-            
+            <p class="section-desc animate-on-scroll">No creemos en hacer más cosas en menos tiempo. Creemos en hacer <strong>mejores cosas</strong> con sistemas más inteligentes.</p>
             <div class="comparison-grid">
-                <div class="comparison-card animate-on-scroll">
-                    <h3 style="color: #EF4444;">El enfoque tradicional ❌</h3>
-                    <p style="margin-bottom: 1rem;">
-                        Se centra en la velocidad pura. Busca reemplazar al humano para reducir costos, lo que a menudo resulta en una pérdida de calidad, un servicio al cliente robótico y procesos rígidos que se rompen ante cualquier imprevisto.
-                    </p>
-                    <p><em>"La herramienta controla al profesional."</em></p>
-                </div>
-
-                <div class="comparison-card new-way animate-on-scroll">
-                    <h3 style="color: #4F46E5;">El enfoque SistemaCerebro ✅</h3>
-                    <p style="margin-bottom: 1rem;">
-                        Usamos la IA como un exoesqueleto para tu mente. Automatizamos lo repetitivo para que tu criterio humano brille donde realmente aporta valor: en la estrategia, la creatividad y la toma de decisiones complejas.
-                    </p>
-                    <p><strong>"El profesional orquesta, la IA ejecuta."</strong></p>
-                </div>
+                <div class="comparison-card animate-on-scroll"><h3 style="color: #EF4444;">El enfoque tradicional ❌</h3><p>Se centra en la velocidad pura. Busca reemplazar al humano para reducir costos, lo que genera pérdida de calidad y procesos rígidos.</p></div>
+                <div class="comparison-card new-way animate-on-scroll"><h3 style="color: #4F46E5;">El enfoque SistemaCerebro ✅</h3><p>Usamos la IA como un exoesqueleto. Automatizamos lo repetitivo para que tu criterio humano brille en la estrategia.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Services Grid (AHORA CON 4 ELEMENTOS) -->
+    <!-- Servicios -->
     <section>
         <div class="container">
             <h2 class="animate-on-scroll">Arquitectura de Flujos</h2>
-            <p class="section-desc animate-on-scroll">
-                Componentes clave para transformar tu operativa diaria.
-            </p>
-            
             <div class="services-grid">
-                <div class="service-card animate-on-scroll">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-                    <h3>Diagnóstico Profundo</h3>
-                    <p>Auditamos tus procesos actuales para encontrar fugas de energía y cuellos de botella invisibles.</p>
-                </div>
-                
-                <div class="service-card animate-on-scroll">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🧠</div>
-                    <h3>Segundo Cerebro</h3>
-                    <p>Centralización de tu conocimiento. Una base de datos que piensa y conecta ideas por ti.</p>
-                </div>
-                
-                <div class="service-card animate-on-scroll">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
-                    <h3>Sistemas Híbridos</h3>
-                    <p>Implementación de IA (GPT/Claude) integrada directamente en tu flujo de trabajo diario.</p>
-                </div>
-
-                <!-- 4to Elemento Agregado -->
-                <div class="service-card animate-on-scroll">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🧩</div>
-                    <h3>Escalabilidad Modular</h3>
-                    <p>Diseñamos sistemas que crecen contigo. Añade complejidad solo cuando sea necesario.</p>
-                </div>
+                <div class="service-card animate-on-scroll"><div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div><h3>Diagnóstico Profundo</h3><p>Auditamos tus procesos para encontrar fugas de energía.</p></div>
+                <div class="service-card animate-on-scroll"><div style="font-size: 3rem; margin-bottom: 1rem;">🧠</div><h3>Segundo Cerebro</h3><p>Centralización de tu conocimiento que conecta ideas por ti.</p></div>
+                <div class="service-card animate-on-scroll"><div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div><h3>Sistemas Híbridos</h3><p>Implementación de IA integrada en tu flujo de trabajo diario.</p></div>
+                <div class="service-card animate-on-scroll"><div style="font-size: 3rem; margin-bottom: 1rem;">🧩</div><h3>Escalabilidad</h3><p>Diseñamos sistemas que crecen contigo. Complejidad modular.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- CTA & Form Section -->
+    <!-- --- SECCIÓN DE DIAGNÓSTICO INTERACTIVO (7 PREGUNTAS) --- -->
     <section id="contact" class="cta-section">
-        <div class="container" style="max-width: 800px;">
+        <div class="container">
             <div class="cta-box animate-on-scroll">
-                <h2 style="margin-bottom: 1rem;">Hablemos de tu sistema</h2>
-                <p style="margin-bottom: 2rem; color: #525252;">
-                    Completa el formulario para aplicar a una auditoría. Si calificas, diseñaremos un plan de ruta para ti.
-                </p>
-
-                <!-- FORMULARIO CONECTADO A TU FORMSPREE -->
-                <form action="https://formspree.io/f/xdaaodvr" method="POST" style="text-align: left; background: white; padding: 2rem; border-radius: 1rem; margin-bottom: 2rem;">
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 700;">Nombre Completo</label>
-                        <input type="text" name="name" required placeholder="Tu nombre" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 0.5rem; font-family: 'Nunito';">
-                    </div>
-                    
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 700;">Correo Electrónico</label>
-                        <input type="email" name="email" required placeholder="tucorreo@ejemplo.com" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 0.5rem; font-family: 'Nunito';">
-                    </div>
-                    
-                    <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 700;">¿Cuál es tu mayor obstáculo operativo hoy?</label>
-                        <textarea name="message" rows="4" required placeholder="Descríbenos brevemente tu situación..." style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 0.5rem; font-family: 'Nunito';"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn-base btn-primary" style="width: 100%;">Enviar Aplicación</button>
-                </form>
-
-                <p style="font-size: 0.95rem; color: #888; margin-bottom: 0.5rem;">¿Todavía tienes preguntas?</p>
                 
-                <!-- BOTÓN WHATSAPP CONFIGURADO -->
-                <!-- Enlace formato: https://wa.me/CODIGOPAISNUMERO (sin signos +) -->
-                <a href="https://wa.me/543517578864" target="_blank" class="btn-base btn-whatsapp">
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                    </svg>
-                    Termina de sacarte todas las dudas acá
-                </a>
+                <!-- PASO 1: Inicio -->
+                <div id="step-start" class="diagnostic-step active">
+                    <h2 style="margin-bottom: 1rem;">Auditoría de Eficiencia Operativa</h2>
+                    <p style="margin-bottom: 2rem; color: #525252;">Descubre en 2 minutos cuál es tu nivel de "Deuda Operativa" y qué tan preparado estás para escalar con IA.</p>
+                    <button onclick="startDiagnostic()" class="btn-base btn-primary" style="padding: 1.2rem 2.5rem; font-size: 1.1rem;">Comenzar Diagnóstico Gratuito</button>
+                </div>
+
+                <!-- PASO 2: Preguntas -->
+                <div id="step-questions" class="diagnostic-step">
+                    <div style="color: #4F46E5; font-weight: 700; margin-bottom: 1rem;">Pregunta <span id="q-current">1</span> de <span id="q-total">7</span></div>
+                    <h3 id="question-text" style="margin-bottom: 2rem; font-size: 1.4rem;"></h3>
+                    <div id="options-container"></div>
+                </div>
+
+                <!-- PASO 3: Captura de Datos -->
+                <div id="step-lead" class="diagnostic-step">
+                    <h2 style="margin-bottom: 0.5rem;">¡Análisis completado!</h2>
+                    <p style="margin-bottom: 2rem; color: #525252;">Para ver tu puntaje de caos y el reporte de viabilidad, ingresa tus datos.</p>
+                    
+                    <form id="lead-form" style="text-align: left;">
+                        <label style="font-weight: 700; display: block; margin-bottom: 0.5rem;">Tu Nombre</label>
+                        <input type="text" id="lead-name" name="name" class="input-field" placeholder="Ej: Juan Pérez" required>
+                        
+                        <label style="font-weight: 700; display: block; margin-bottom: 0.5rem; margin-top: 1rem;">Tu Mejor Correo</label>
+                        <input type="email" id="lead-email" name="email" class="input-field" placeholder="tu@correo.com" required>
+                        
+                        <input type="hidden" name="puntaje_test" id="hidden-score">
+                        
+                        <button type="submit" class="btn-base btn-primary" style="width: 100%; padding: 1rem; margin-top: 1rem; font-size: 1.1rem;">Ver mis resultados →</button>
+                    </form>
+                </div>
+
+                <!-- PASO 4: Cargando -->
+                <div id="step-loading" class="diagnostic-step">
+                    <div style="font-size: 3rem; animation: float 1s infinite;">⚙️</div>
+                    <h3 style="margin-top: 1rem;">Procesando diagnóstico...</h3>
+                    <div style="width: 100%; background: #ddd; height: 10px; border-radius: 5px; margin-top: 1rem; overflow: hidden;">
+                        <div style="height: 100%; background: #4F46E5; width: 0%; animation: loadBar 2s forwards;"></div>
+                    </div>
+                </div>
+
+                <!-- PASO 5: Resultados -->
+                <div id="step-result" class="diagnostic-step">
+                    <p style="text-transform: uppercase; font-size: 0.9rem; color: #666; font-weight: 700;">Tu Resultado</p>
+                    <div style="margin: 1rem 0;"><span style="font-size: 4rem; font-weight: 800;" class="gradient-text" id="score-percentage">0%</span><p style="font-size: 1.2rem; font-weight: 700;" id="result-title">Nivel de Caos</p></div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 1rem; margin-bottom: 2rem;"><p id="result-description" style="color: #525252; margin: 0;"></p></div>
+                    
+                    <h3 style="margin-bottom: 1.5rem;">Próximo paso recomendado:</h3>
+                    
+                    <!-- LINK DE GOOGLE CALENDAR -->
+                    <a href="https://calendar.app.google/qZsUQUXa5HNssC11A" target="_blank" class="btn-base btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem; justify-content: center; margin-bottom: 1rem;">
+                        📅 Agendar Sesión de Estrategia
+                    </a>
+                    
+                    <a href="https://wa.me/543517578864" target="_blank" class="btn-base btn-whatsapp" style="justify-content: center;">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        Termina de sacarte las dudas acá
+                    </a>
+                </div>
+
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="logo">Sistema<span class="gradient-text">Cerebro</span></div>
@@ -476,42 +242,112 @@
         </div>
     </footer>
 
+    <!-- LÓGICA DE APLICACIÓN -->
     <script>
-        // Navbar Scroll
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        });
-
-        // Animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        });
+        // Animaciones y Scroll general
+        window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50));
+        const observer = new IntersectionObserver(entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')));
         document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
-        // Chaos Dots
         const chaosContainer = document.getElementById('chaos-container');
-        for (let i = 0; i < 30; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'chaos-dots';
-            dot.style.left = Math.random() * 100 + '%';
-            dot.style.top = Math.random() * 100 + '%';
-            dot.style.animationDelay = Math.random() * 3 + 's';
-            chaosContainer.appendChild(dot);
+        for (let i = 0; i < 30; i++) { const dot = document.createElement('div'); dot.className = 'chaos-dots'; dot.style.left = Math.random() * 100 + '%'; dot.style.top = Math.random() * 100 + '%'; dot.style.animationDelay = Math.random() * 3 + 's'; chaosContainer.appendChild(dot); }
+
+        // --- LÓGICA DEL DIAGNÓSTICO (7 PREGUNTAS INTROSPECTIVAS) ---
+        const questions = [
+            // Pregunta 1: Carga operativa (El costo del tiempo)
+            { text: "¿Cuánto tiempo de tu semana se va en tareas que NO generan ingresos directos?", options: [{ text: "Menos del 10% (Tengo equipo/sistemas)", value: 0 }, { text: "Alrededor del 30-40%", value: 5 }, { text: "Más del 70% (Soy un 'todólogo')", value: 10 }] },
+            
+            // Pregunta 2: Documentación (Activos vs Caos)
+            { text: "¿Si contratas a alguien hoy, qué tan rápido puede empezar a trabajar solo?", options: [{ text: "Inmediatamente, tengo manuales listos", value: 0 }, { text: "Necesito explicarle todo yo mismo", value: 7 }, { text: "No podría, el conocimiento solo está en mi cabeza", value: 10 }] },
+            
+            // Pregunta 3: Gestión de Datos (Fugas de dinero)
+            { text: "¿Cómo gestionas el seguimiento de tus prospectos y clientes?", options: [{ text: "CRM automatizado", value: 0 }, { text: "Excel o Google Sheets manual", value: 5 }, { text: "Notas dispersas, WhatsApp y memoria", value: 10 }] },
+            
+            // Pregunta 4: El factor 'Bus' (Riesgo vital)
+            { text: "¿Qué pasa con tus ingresos si te enfermas o viajas desconectado por 2 semanas?", options: [{ text: "Siguen entrando igual", value: 0 }, { text: "Bajan considerablemente", value: 7 }, { text: "Se detienen por completo", value: 10 }] },
+
+            // Pregunta 5: Creación de Contenido (Nuevo - Fricción de Marketing)
+            { text: "¿Cómo te sientes respecto a tu flujo de creación de contenido actual?", options: [{ text: "Sistematizado y sin estrés", value: 0 }, { text: "Inconsistente, publico cuando puedo", value: 5 }, { text: "Es una carga mental constante y agobiante", value: 10 }] },
+
+            // Pregunta 6: Fatiga de Decisión (Nuevo - Energía Mental)
+            { text: "¿Sientes que desperdicias energía respondiendo siempre las mismas dudas a equipo o clientes?", options: [{ text: "No, tengo bases de conocimiento/bots", value: 0 }, { text: "A veces me frustra", value: 5 }, { text: "Sí, soy un repetidor humano", value: 10 }] },
+
+            // Pregunta 7: Escalabilidad (Nuevo - El techo de cristal)
+            { text: "Si mañana te entran 10 clientes nuevos de golpe, ¿qué sucede?", options: [{ text: "Lo celebramos, el sistema aguanta", value: 0 }, { text: "Nos estresamos mucho pero cumplimos", value: 5 }, { text: "Colapsamos, la calidad se iría al suelo", value: 10 }] }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        const maxScore = questions.length * 10;
+
+        function showStep(id) {
+            document.querySelectorAll('.diagnostic-step').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
-        
-        // Smooth Scroll
-         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+
+        function startDiagnostic() { showStep('step-questions'); renderQuestion(); }
+
+        function renderQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('q-current').innerText = currentQ + 1;
+            document.getElementById('q-total').innerText = questions.length;
+            document.getElementById('question-text').innerText = q.text;
+            
+            const cont = document.getElementById('options-container');
+            cont.innerHTML = '';
+            q.options.forEach(opt => {
+                const btn = document.createElement('div');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${opt.text}</span> <span>➜</span>`;
+                btn.onclick = () => selectOption(opt.value);
+                cont.appendChild(btn);
+            });
+        }
+
+        function selectOption(val) {
+            score += val;
+            currentQ++;
+            if (currentQ < questions.length) { renderQuestion(); } 
+            else { showStep('step-lead'); } 
+        }
+
+        // ENVÍO DE FORMULARIO
+        document.getElementById('lead-form').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            const pct = Math.round((score / maxScore) * 100);
+            document.getElementById('hidden-score').value = `Caos: ${pct}%`;
+
+            showStep('step-loading');
+
+            const formData = new FormData(this);
+            fetch('https://formspree.io/f/xdaaodvr', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(() => {
+                setTimeout(() => showResult(pct), 1500);
+            }).catch(error => {
+                showResult(pct); // Mostrar resultados aunque falle el envío (fallback)
             });
         });
+
+        function showResult(pct) {
+            showStep('step-result');
+            const scoreEl = document.getElementById('score-percentage');
+            const titleEl = document.getElementById('result-title');
+            const descEl = document.getElementById('result-description');
+
+            scoreEl.innerText = pct + "%";
+            if (pct < 30) {
+                scoreEl.style.color = '#10B981'; titleEl.innerText = "Estructura Saludable";
+                descEl.innerText = "Tienes buenos cimientos. Sin embargo, estás en la etapa perfecta para integrar IA y liberar tu tiempo creativo. No repares lo que funciona, poténcialo.";
+            } else if (pct < 70) {
+                scoreEl.style.color = '#F59E0B'; titleEl.innerText = "Fricción Operativa";
+                descEl.innerHTML = "Tu negocio crece, pero tu libertad disminuye. Estás pagando el crecimiento con tu tiempo personal. <strong>Es el momento crítico para sistematizar antes de que el éxito te atrape.</strong>";
+            } else {
+                scoreEl.style.color = '#EF4444'; titleEl.innerText = "Estado de Emergencia";
+                descEl.innerHTML = "Estás operando en zona roja. Tu negocio es 100% dependiente de tu energía manual. Si no construimos un Segundo Cerebro pronto, el techo de crecimiento será permanente.";
+            }
+        }
     </script>
 </body>
 </html>
